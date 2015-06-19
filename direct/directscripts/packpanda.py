@@ -27,39 +27,39 @@ OPTIONLIST = [
 ]
 
 def ParseFailure():
-  print ""
-  print "packpanda usage:"
-  print ""
-  for (opt, hasval, explanation) in OPTIONLIST:
-    if (hasval):
-      print "  --%-10s    %s"%(opt+" x", explanation)
-    else:
-      print "  --%-10s    %s"%(opt+"  ", explanation)
-  sys.exit(1)
+    print ""
+    print "packpanda usage:"
+    print ""
+    for (opt, hasval, explanation) in OPTIONLIST:
+        if (hasval):
+            print "  --%-10s    %s"%(opt+" x", explanation)
+        else:
+            print "  --%-10s    %s"%(opt+"  ", explanation)
+    sys.exit(1)
 
 def ParseOptions(args):
-  try:
-    options = {}
-    longopts = []
-    for (opt, hasval, explanation) in OPTIONLIST:
-      if (hasval==2):
-        longopts.append(opt+"=")
-        options[opt] = []
-      elif (hasval==1):
-        longopts.append(opt+"=")
-        options[opt] = ""
-      else:
-        longopts.append(opt)
-        options[opt] = 0
-    opts, extras = getopt.getopt(args, "", longopts)
-    for option, value in opts:
-      for (opt, hasval, explanation) in OPTIONLIST:
-        if (option == "--"+opt):
-          if (hasval==2): options[opt].append(value)
-          elif (hasval==1): options[opt] = value
-          else: options[opt] = 1
-    return options
-  except: ParseFailure();
+    try:
+        options = {}
+        longopts = []
+        for (opt, hasval, explanation) in OPTIONLIST:
+            if (hasval==2):
+                longopts.append(opt+"=")
+                options[opt] = []
+            elif (hasval==1):
+                longopts.append(opt+"=")
+                options[opt] = ""
+            else:
+                longopts.append(opt)
+                options[opt] = 0
+        opts, extras = getopt.getopt(args, "", longopts)
+        for option, value in opts:
+            for (opt, hasval, explanation) in OPTIONLIST:
+                if (option == "--"+opt):
+                    if (hasval==2): options[opt].append(value)
+                    elif (hasval==1): options[opt] = value
+                    else: options[opt] = 1
+        return options
+    except: ParseFailure();
 
 OPTIONS = ParseOptions(sys.argv[1:])
 
@@ -74,17 +74,17 @@ for dir in sys.path:
     if (dir != "") and os.path.exists(os.path.join(dir,"direct")) and os.path.exists(os.path.join(dir,"pandac")):
         PANDA=os.path.abspath(dir)
 if (PANDA is None):
-  sys.exit("Cannot locate the panda root directory in the python path (cannot locate directory containing direct and pandac).")
+    sys.exit("Cannot locate the panda root directory in the python path (cannot locate directory containing direct and pandac).")
 print "PANDA located at "+PANDA
 
 if (os.path.exists(os.path.join(PANDA,"..","makepanda","makepanda.py"))) and (sys.platform != "win32" or os.path.exists(os.path.join(PANDA,"..","thirdparty","win-nsis","makensis.exe"))):
-  PSOURCE=os.path.abspath(os.path.join(PANDA,".."))
-  if (sys.platform == "win32"):
-    NSIS=os.path.abspath(os.path.join(PANDA,"..","thirdparty","win-nsis"))
+    PSOURCE=os.path.abspath(os.path.join(PANDA,".."))
+    if (sys.platform == "win32"):
+        NSIS=os.path.abspath(os.path.join(PANDA,"..","thirdparty","win-nsis"))
 else:
-  PSOURCE=PANDA
-  if (sys.platform == "win32"):
-    NSIS=os.path.join(PANDA,"nsis")
+    PSOURCE=PANDA
+    if (sys.platform == "win32"):
+        NSIS=os.path.join(PANDA,"nsis")
 
 ##############################################################################
 #
@@ -95,15 +95,15 @@ else:
 VER=OPTIONS["version"]
 DIR=OPTIONS["dir"]
 if (DIR==""):
-  print "You must specify the --dir option."
-  ParseFailure()
+    print "You must specify the --dir option."
+    ParseFailure()
 DIR=os.path.abspath(DIR)
 MYDIR=os.path.abspath(os.getcwd())
 BASENAME=os.path.basename(DIR)
 if (OPTIONS["name"] != ""):
-  NAME=OPTIONS["name"]
+    NAME=OPTIONS["name"]
 else:
-  NAME=BASENAME
+    NAME=BASENAME
 SMDIRECTORY=NAME
 if (VER!=""): SMDIRECTORY=SMDIRECTORY+" "+VER
 PYTHONV="python"+sys.version[:3]
@@ -111,51 +111,51 @@ LICENSE=os.path.join(DIR, "license.txt")
 OUTFILE=os.path.basename(DIR)
 if (VER!=""): OUTFILE=OUTFILE+"-"+VER
 if (sys.platform == "win32"):
-  ICON=os.path.join(DIR, "icon.ico")
-  BITMAP=os.path.join(DIR, "installer.bmp")
-  OUTFILE=os.path.abspath(OUTFILE+".exe")
-  INSTALLDIR='C:\\'+os.path.basename(DIR)
-  if (VER!=""): INSTALLDIR=INSTALLDIR+"-"+VER
-  COMPRESS="lzma"
-  if (OPTIONS["fast"]): COMPRESS="zlib"
+    ICON=os.path.join(DIR, "icon.ico")
+    BITMAP=os.path.join(DIR, "installer.bmp")
+    OUTFILE=os.path.abspath(OUTFILE+".exe")
+    INSTALLDIR='C:\\'+os.path.basename(DIR)
+    if (VER!=""): INSTALLDIR=INSTALLDIR+"-"+VER
+    COMPRESS="lzma"
+    if (OPTIONS["fast"]): COMPRESS="zlib"
 if (OPTIONS["pyc"]): MAIN="main.pyc"
 else: MAIN="main.py"
 
 def PrintFileStatus(label, file):
-  if (os.path.exists(file)):
-    print "%-15s: %s"%(label, file)
-  else:
-    print "%-15s: %s (MISSING)"%(label, file)
+    if (os.path.exists(file)):
+        print "%-15s: %s"%(label, file)
+    else:
+        print "%-15s: %s (MISSING)"%(label, file)
 
 PrintFileStatus("Dir", DIR)
 print "%-15s: %s"%("Name", NAME)
 print "%-15s: %s"%("Start Menu", SMDIRECTORY)
 PrintFileStatus("Main", os.path.join(DIR, MAIN))
 if (sys.platform == "win32"):
-  PrintFileStatus("Icon", ICON)
-  PrintFileStatus("Bitmap", BITMAP)
+    PrintFileStatus("Icon", ICON)
+    PrintFileStatus("Bitmap", BITMAP)
 PrintFileStatus("License", LICENSE)
 print "%-15s: %s"%("Output", OUTFILE)
 if (sys.platform == "win32"):
-  print "%-15s: %s"%("Install Dir", INSTALLDIR)
+    print "%-15s: %s"%("Install Dir", INSTALLDIR)
 
 if (os.path.isdir(DIR)==0):
-  sys.exit("Difficulty reading "+DIR+". Cannot continue.")
+    sys.exit("Difficulty reading "+DIR+". Cannot continue.")
 
 if (os.path.isfile(os.path.join(DIR, "main.py"))==0):
-  sys.exit("Difficulty reading main.py. Cannot continue.")
+    sys.exit("Difficulty reading main.py. Cannot continue.")
 
 if (os.path.isfile(LICENSE)==0):
-  LICENSE=os.path.join(PANDA,"LICENSE")
+    LICENSE=os.path.join(PANDA,"LICENSE")
 
 if (sys.platform == "win32") and (os.path.isfile(BITMAP)==0):
-  BITMAP=os.path.join(NSIS,"Contrib","Graphics","Wizard","nsis.bmp")
+    BITMAP=os.path.join(NSIS,"Contrib","Graphics","Wizard","nsis.bmp")
 
 if (sys.platform == "win32"):
-  if (os.path.isfile(ICON)==0):
-    PPICON="bin\\ppython.exe"
-  else:
-    PPICON="game\\icon.ico"
+    if (os.path.isfile(ICON)==0):
+        PPICON="bin\\ppython.exe"
+    else:
+        PPICON="game\\icon.ico"
 
 ##############################################################################
 #
@@ -176,11 +176,11 @@ def limitedCopyTree(src, dst, rmdir):
 
 TMPDIR=os.path.abspath("packpanda-TMP")
 if (sys.platform == "win32"):
-  TMPGAME=os.path.join(TMPDIR,"game")
-  TMPETC=os.path.join(TMPDIR,"etc")
+    TMPGAME=os.path.join(TMPDIR,"game")
+    TMPETC=os.path.join(TMPDIR,"etc")
 else:
-  TMPGAME=os.path.join(TMPDIR,"usr","share","games",BASENAME,"game")
-  TMPETC=os.path.join(TMPDIR,"usr","share","games",BASENAME,"etc")
+    TMPGAME=os.path.join(TMPDIR,"usr","share","games",BASENAME,"game")
+    TMPETC=os.path.join(TMPDIR,"usr","share","games",BASENAME,"etc")
 print ""
 print "Copying the game to "+TMPDIR+"..."
 if (os.path.exists(TMPDIR)):
@@ -197,10 +197,10 @@ try:
     if not os.path.isdir( TMPETC ):
         os.makedirs(TMPETC)
     if sys.platform == "win32":
-      limitedCopyTree(os.path.join(PANDA, "etc"), TMPETC, {})
+        limitedCopyTree(os.path.join(PANDA, "etc"), TMPETC, {})
     else:
-      shutil.copyfile("/etc/Config.prc", os.path.join(TMPETC, "Config.prc"))
-      shutil.copyfile("/etc/Confauto.prc", os.path.join(TMPETC, "Confauto.prc"))
+        shutil.copyfile("/etc/Config.prc", os.path.join(TMPETC, "Config.prc"))
+        shutil.copyfile("/etc/Confauto.prc", os.path.join(TMPETC, "Confauto.prc"))
 except: sys.exit("Cannot copy game to "+TMPDIR)
 
 ##############################################################################
@@ -239,9 +239,9 @@ if OPTIONS["bam"]:
 ##############################################################################
 
 if (sys.platform == "win32"):
-  EGG2BAM=os.path.join(PANDA,"bin","egg2bam.exe")
+    EGG2BAM=os.path.join(PANDA,"bin","egg2bam.exe")
 else:
-  EGG2BAM=os.path.join(PANDA,"bin","egg2bam")
+    EGG2BAM=os.path.join(PANDA,"bin","egg2bam")
 
 def egg2bam(file,bam):
     present = os.path.exists(bam)
@@ -249,9 +249,9 @@ def egg2bam(file,bam):
     cmd = 'egg2bam -noabs -ps rel -pd . "'+file+'" -o "'+bam+'"'
     print "Executing: "+cmd
     if (sys.platform == "win32"):
-      res = os.spawnl(os.P_WAIT, EGG2BAM, cmd)
+        res = os.spawnl(os.P_WAIT, EGG2BAM, cmd)
     else:
-      res = os.system(cmd)
+        res = os.system(cmd)
     if (res != 0): sys.exit("Problem in egg file: "+file)
     if (present) or (OPTIONS["bam"]==0):
         os.unlink(bam)
@@ -369,8 +369,8 @@ if (sys.platform == "win32"):
     CMD=CMD+'/DPPGAME="'+TMPGAME+'" '
     CMD=CMD+'/DPPMAIN="'+MAIN+'" '
     CMD=CMD+'/DPPICON="'+PPICON+'" '
-    CMD=CMD+'"'+PSOURCE+'\\direct\\directscripts\\packpanda.nsi"' 
-    
+    CMD=CMD+'"'+PSOURCE+'\\direct\\directscripts\\packpanda.nsi"'
+
     print ""
     print CMD
     print "packing..."
@@ -386,12 +386,12 @@ else:
     os.system("cp --recursive %s/Pmw             %s/usr/share/games/%s/Pmw" % (PANDA, TMPDIR, BASENAME))
     os.system("cp %s                             %s/usr/share/games/%s/LICENSE" % (LICENSE, TMPDIR, BASENAME))
     os.system("cp --recursive /usr/lib/panda3d/* %s/usr/lib/games/%s/" % (TMPDIR, BASENAME))
-    
+
     # Make the script to run the game
     txt = RUN_SCRIPT[1:].replace("BASENAME",BASENAME).replace("PYTHONV",PYTHONV).replace("MAIN",MAIN)
     WriteFile(TMPDIR+"/usr/bin/"+BASENAME, txt)
     os.system("chmod +x "+TMPDIR+"/usr/bin/"+BASENAME)
-    
+
     if (os.path.exists("/usr/bin/rpmbuild")):
         os.system("rm -rf %s/DEBIAN" % TMPDIR)
         os.system("rpm -E '%_target_cpu' > packpanda-TMP.txt")
@@ -404,7 +404,7 @@ else:
         os.system("mv "+ARCH+"/"+BASENAME+"-"+VER+"-1."+ARCH+".rpm .")
         os.rmdir(ARCH)
         os.remove("packpanda-TMP.spec")
-    
+
     if (os.path.exists("/usr/bin/dpkg-deb")):
         os.system("dpkg --print-architecture > packpanda-TMP.txt")
         ARCH=ReadFile("packpanda-TMP.txt").strip()
@@ -415,7 +415,6 @@ else:
         os.system("cd %s ; (find usr -type f -exec md5sum {} \;) >  DEBIAN/md5sums" % TMPDIR)
         WriteFile(TMPDIR+"/DEBIAN/control",txt)
         os.system("dpkg-deb -b "+TMPDIR+" "+BASENAME+"_"+VER+"_"+ARCH+".deb")
-    
+
     if not(os.path.exists("/usr/bin/rpmbuild") or os.path.exists("/usr/bin/dpkg-deb")):
         exit("To build an installer, either rpmbuild or dpkg-deb must be present on your system!")
-

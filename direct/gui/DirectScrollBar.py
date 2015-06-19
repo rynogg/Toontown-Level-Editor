@@ -165,4 +165,3 @@ class DirectScrollBar(DirectFrame):
 
         if self['command']:
             apply(self['command'], self['extraArgs'])
-

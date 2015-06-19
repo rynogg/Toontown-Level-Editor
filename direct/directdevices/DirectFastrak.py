@@ -65,4 +65,3 @@ class DirectFastrak(DirectObject):
                                3.280839895013123 * pos[1],
                                3.280839895013123 * pos[0])
         self.notify.debug("Tracker(%d) Pos = %s" % (self.deviceNo, repr(self.trackerPos)))
-

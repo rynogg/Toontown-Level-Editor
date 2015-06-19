@@ -62,7 +62,7 @@ def submit (recaptcha_challenge_field,
     if not (recaptcha_response_field and recaptcha_challenge_field and
             len (recaptcha_response_field) and len (recaptcha_challenge_field)):
         return RecaptchaResponse (is_valid = False, error_code = 'incorrect-captcha-sol')
-    
+
 
     def encode_if_necessary(s):
         if isinstance(s, unicode):
@@ -84,7 +84,7 @@ def submit (recaptcha_challenge_field,
             "User-agent": "reCAPTCHA Python"
             }
         )
-    
+
     httpresp = urllib2.urlopen (request)
 
     return_values = httpresp.read ().splitlines ();

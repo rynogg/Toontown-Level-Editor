@@ -194,4 +194,3 @@ def addZipTree(zip, sourceFile, zipName):
         zip.write(sourceFile, zipName)
 
 makeXpiFile()
-

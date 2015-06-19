@@ -34,10 +34,10 @@ class ShipPilot2(PhysicsWalker):
     useDSSolid = 0
     useLifter = 0
     useHeightRay = 0
-    
+
     MAX_STRAIGHT_SAIL_BONUS = 4.0
     STRAIGHT_SAIL_BONUS_TIME = 10.0
-    
+
     # special methods
     def __init__(self, gravity = -32.1740, standableGround=0.707,
             hardLandingForce=16.0):
@@ -98,7 +98,7 @@ class ShipPilot2(PhysicsWalker):
             #self.setupShip()
             self.setupPhysics(ship)
             self.ship = ship
-            
+
             """
             #*# Debug:
             if not hasattr(ship, "acceleration"):
@@ -111,7 +111,7 @@ class ShipPilot2(PhysicsWalker):
                 self.ship.anchorDrag = .9
                 self.ship.hullDrag = .9
             """
-            
+
     def setupRay(self, floorBitmask, floorOffset):
         # This is a ray cast from your head down to detect floor polygons
         # A toon is about 4.0 feet high, so start it there
@@ -207,7 +207,7 @@ class ShipPilot2(PhysicsWalker):
         self.pusher = PhysicsCollisionHandler()
         self.pusher.setInPattern("enter%in")
         self.pusher.setOutPattern("exit%in")
-        
+
         #self.pusher.addCollider(self.cSphereNodePath, self.avatarNodePath)
 
         if self.useBowSternSpheres:
@@ -291,7 +291,7 @@ class ShipPilot2(PhysicsWalker):
             self.cHullNode = cHullNode
 
             self.pusher.addCollider(
-                self.cHullNodePath, self.avatarNodePath)            
+                self.cHullNodePath, self.avatarNodePath)
 
             # hide other things on my ship that these spheres might collide
             # with and which I dont need anyways...
@@ -592,7 +592,7 @@ class ShipPilot2(PhysicsWalker):
         #assert self.debugPrint("handleAvatarControls(task=%s)"%(task,))
         physObject=self.actorNode.getPhysicsObject()
         contact=self.actorNode.getContactVector()
-        
+
         # get the button states:
         forward = inputState.isSet("forward")
         reverse = inputState.isSet("reverse")
@@ -603,19 +603,19 @@ class ShipPilot2(PhysicsWalker):
         slideRight = 0
         jump = inputState.isSet("jump")
         # Determine what the speeds are based on the buttons:
-        
+
         # Check for Auto-Sailing
         if self.ship.getIsAutoSailing():
             forward = 1
             reverse = 0
-            
+
         # How far did we move based on the amount of time elapsed?
         dt=ClockObject.getGlobalClock().getDt()
-        
+
         if reverse or turnLeft or turnRight:
             # Reset Straight Sailing Bonus
             self.straightHeading = 0
-            
+
         # Straight Sailing Acceleration Bonus
         straightSailDt += dt
         straightSailBonus = 0.0
@@ -626,7 +626,7 @@ class ShipPilot2(PhysicsWalker):
 
         print "##################"
         print straightSailBonus
-        
+
         # this was causing the boat to get stuck moving forward or back
         if 0:
             if not hasattr(self, "sailsDeployed"):
@@ -649,7 +649,7 @@ class ShipPilot2(PhysicsWalker):
                 (reverse and -self.ship.reverseAcceleration)
             #self.__speed=(forward and min(dt*(self.__speed + self.ship.acceleration), self.ship.maxSpeed) or
             #        reverse and min(dt*(self.__speed - self.ship.reverseAcceleration), self.ship.maxReverseSpeed))
-            
+
         avatarSlideSpeed=self.ship.acceleration*0.5
         #self.__slideSpeed=slide and (
         #        (turnLeft and -avatarSlideSpeed) or
@@ -663,7 +663,7 @@ class ShipPilot2(PhysicsWalker):
 
         # Add in Straight Sailing Multiplier
         self.__speed *= straightSailBonus
-         
+
         # Enable debug turbo mode
         maxSpeed = self.ship.maxSpeed * straightSailBonus
         debugRunning = inputState.isSet("debugRunning")
@@ -677,7 +677,7 @@ class ShipPilot2(PhysicsWalker):
         #self.__slideSpeed*=4.0
         #self.__rotationSpeed*=1.25
         #maxSpeed = self.ship.maxSpeed * 4.0
-        
+
         #*#
         self.currentTurning += self.__rotationSpeed
         if self.currentTurning > self.ship.maxTurn:

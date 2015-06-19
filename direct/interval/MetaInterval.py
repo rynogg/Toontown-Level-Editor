@@ -49,7 +49,7 @@ class MetaInterval(CMetaInterval):
         # (for instance, the connection to the server being lost) when
         # we have to exit right away; these keywords indicate
         # intervals that might not be cleaned up by their owners.
-        
+
         autoPause = 0
         autoFinish = 0
         if kw.has_key('autoPause'):
@@ -85,7 +85,7 @@ class MetaInterval(CMetaInterval):
         #else:
 
         self.ivals = ivals
-            
+
         self.__ivalsDirty = 1
 
         if name == None:
@@ -117,7 +117,7 @@ class MetaInterval(CMetaInterval):
 
     # Functions to make the MetaInterval object act just like a Python
     # list of intervals:
-    
+
     def append(self, ival):
         # Appends a single interval to the list so far.
         if isinstance(self.ivals, types.TupleType):
@@ -237,7 +237,7 @@ class MetaInterval(CMetaInterval):
         return copy
 
     # Functions to define sequence, parallel, and track behaviors:
-    
+
     def addSequence(self, list, name, relTime, relTo, duration):
         # Adds the given list of intervals to the MetaInterval to be
         # played one after the other.
@@ -262,7 +262,7 @@ class MetaInterval(CMetaInterval):
         maxDuration = 0
         for ival in list:
             maxDuration = max(maxDuration, ival.getDuration())
-        
+
         self.pushLevel(name, relTime, relTo)
         for ival in list:
             self.addInterval(ival, maxDuration - ival.getDuration(), TRACK_START)
@@ -378,7 +378,7 @@ class MetaInterval(CMetaInterval):
         self.__updateIvals()
         self.setupResumeUntil(endT)
         self.__manager.addInterval(self)
-        
+
     def finish(self):
         self.__updateIvals()
         state = self.getState()
@@ -434,7 +434,7 @@ class MetaInterval(CMetaInterval):
             self.clearIntervals()
             self.applyIvals(self, 0, TRACK_START)
             self.__ivalsDirty = 0
-        
+
     def clearIntervals(self):
         # This overrides the function defined at the C++ level to
         # reset the inPython flag.  Clearing out the intervals list
@@ -442,7 +442,7 @@ class MetaInterval(CMetaInterval):
         # Python interval gets added.
         CMetaInterval.clearIntervals(self)
         self.inPython = 0
-        
+
     def applyIvals(self, meta, relTime, relTo):
         # Add the intervals listed in this object to the given
         # MetaInterval object at the C++ level.  This will make the
@@ -465,7 +465,7 @@ class MetaInterval(CMetaInterval):
         already started, this changes its speed on-the-fly.  Note that
         since playRate is a parameter to start() and loop(), the next
         call to start() or loop() will reset this parameter. """
-        
+
         if self.isPlaying():
             self.pause()
             CMetaInterval.setPlayRate(self, playRate)
@@ -489,7 +489,7 @@ class MetaInterval(CMetaInterval):
                 t = self.getEventT()
                 eventType = self.getEventType()
                 self.popEvent()
-            
+
                 ival = self.pythonIvals[index]
                 ival.privDoEvent(t, eventType)
                 ival.privPostEvent()
@@ -538,8 +538,8 @@ class MetaInterval(CMetaInterval):
 
         self.__updateIvals()
         return CMetaInterval.getIntervalStartTime(self, *args, **kw)
-        
-        
+
+
     def getDuration(self):
         # This function overrides from the parent level to force it to
         # update the interval list first, if necessary.
@@ -547,14 +547,14 @@ class MetaInterval(CMetaInterval):
         self.__updateIvals()
         return CMetaInterval.getDuration(self)
 
-    def __repr__(self, *args, **kw): 
+    def __repr__(self, *args, **kw):
         # This function overrides from the parent level to force it to
         # update the interval list first, if necessary.
 
         self.__updateIvals()
         return CMetaInterval.__repr__(self, *args, **kw)
 
-    def __str__(self, *args, **kw): 
+    def __str__(self, *args, **kw):
         # This function overrides from the parent level to force it to
         # update the interval list first, if necessary.
 
@@ -562,7 +562,7 @@ class MetaInterval(CMetaInterval):
         return CMetaInterval.__str__(self, *args, **kw)
 
 
-    def timeline(self, out = None): 
+    def timeline(self, out = None):
         # This function overrides from the parent level to force it to
         # update the interval list first, if necessary.
 
@@ -604,7 +604,7 @@ class Track(MetaInterval):
                 isinstance(tuple, types.ListType)):
             # It's not a tuple.
             return 0
-        
+
         relTime = tuple[0]
         ival = tuple[1]
         if len(tuple) >= 3:

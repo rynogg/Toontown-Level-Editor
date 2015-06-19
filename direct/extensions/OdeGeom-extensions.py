@@ -1,7 +1,7 @@
 
 def convert(self):
     """
-    Do a sort of pseudo-downcast on this geom in 
+    Do a sort of pseudo-downcast on this geom in
     order to expose its specialized functions.
     """
     if self.getGeomClass() == OdeGeom.GCSphere:

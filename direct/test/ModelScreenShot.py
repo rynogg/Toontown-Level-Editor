@@ -66,6 +66,6 @@ class ModelScreenShot(DirectObject):
                 model.hide()
 
         generatePics()
-        
+
 mss = ModelScreenShot()
 run()

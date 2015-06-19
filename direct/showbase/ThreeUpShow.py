@@ -19,4 +19,3 @@ class ThreeUpShow(ShowBase.ShowBase):
         self.camUR=ShowBase.ShowBase.makeCamera(
                 self, win, displayRegion = (0, .5, .5, 1), camName='camUR')
         return self.camUR
-

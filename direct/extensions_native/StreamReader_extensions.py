@@ -15,6 +15,6 @@ def readlines(self):
         lines.append(line)
         line = self.readline()
     return lines
-    
-Dtool_funcToMethod(readlines, StreamReader)        
+
+Dtool_funcToMethod(readlines, StreamReader)
 del readlines

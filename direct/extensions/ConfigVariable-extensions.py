@@ -38,7 +38,7 @@
 
     def __len__(self):
         return self.getNumWords()
-    
+
     def __getitem__(self, n):
         if n < 0 or n >= self.getNumWords():
             raise IndexError

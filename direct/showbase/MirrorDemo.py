@@ -38,7 +38,7 @@ def setupMirror(name, width, height):
     cm.setFrame(width / 2.0, -width / 2.0, -height / 2.0, height / 2.0)
     cm.setHasUvs(1)
     card = root.attachNewNode(cm.generate())
-    
+
     # Create a PlaneNode to represent the mirror's position, for
     # computing where the mirror's camera belongs each frame.
     plane = Plane(Vec3(0, 1, 0), Point3(0, 0, 0))
@@ -92,7 +92,7 @@ def setupMirror(name, width, height):
         ll = cameraNP.getRelativePoint(card, Point3(-width / 2.0, 0, -height / 2.0))
         lr = cameraNP.getRelativePoint(card, Point3(width / 2.0, 0, -height / 2.0))
         lens.setFrustumFromCorners(ul, ur, ll, lr, Lens.FCCameraPlane | Lens.FCOffAxis | Lens.FCAspectRatio)
-        
+
         return Task.cont
 
     # Add it with a fairly high priority to make it happen late in the
@@ -105,7 +105,7 @@ def setupMirror(name, width, height):
     card.setTexture(buffer.getTexture())
 
     return root
-    
+
 def showFrustum(np):
     # Utility function to reveal the frustum for a particular camera.
     cameraNP = np.find('**/+Camera')
@@ -114,4 +114,3 @@ def showFrustum(np):
     geomNode = GeomNode('frustum')
     geomNode.addGeom(lens.makeGeometry())
     cameraNP.attachNewNode(geomNode)
-    

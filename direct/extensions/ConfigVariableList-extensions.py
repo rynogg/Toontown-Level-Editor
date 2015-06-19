@@ -11,7 +11,7 @@
 
     def __len__(self):
         return self.getNumValues()
-    
+
     def __getitem__(self, n):
         if n < 0 or n >= self.getNumUniqueValues():
             raise IndexError

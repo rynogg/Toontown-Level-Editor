@@ -22,7 +22,7 @@ class LandingPage:
         self.addQuickStat("Pages Served", 0, 0)
 
         self.favicon = self.readFavIcon()
-        
+
 
     def readFavIcon(self):
         vfs = VirtualFileSystem.getGlobalPtr()
@@ -84,7 +84,7 @@ class LandingPage:
             # contents </div>
             # </center>
             landingStr = landingStr[:landingStr.rindex('<')]
-        
+
         fileStr = StringIO()
         ET.ElementTree(bodyTag).write(fileStr, encoding='utf-8')
         bodyTagStr = unicodeUtf8(fileStr.getvalue())
@@ -105,7 +105,7 @@ class LandingPage:
 
     def getServicesPage(self, uriToHandler):
         output = ""
-        
+
         uriList = uriToHandler.keys()
 
         uriList.sort()
@@ -128,7 +128,7 @@ class LandingPage:
         output += LandingPageHTML.getURITable(title="Application",uriList=uriList,uriToHandler=uriToHandler)
 
         output += LandingPageHTML.getURITable(title="Admin",uriList=autoList,uriToHandler=uriToHandler)
-        
+
         return output
 
     def populateMainPage(self, body):
@@ -164,7 +164,7 @@ class LandingPage:
 
     def getFavIcon(self):
         return self.favicon
-    
+
     def skin(self, body, uri, headTag=None, bodyTag=None):
         title = self.uriToTitle.get(uri,"Services")
         return self.getHeader(title, headTag, bodyTag) + body + self.getFooter()
@@ -173,10 +173,10 @@ class LandingPage:
         if item in self.quickStats[1]:
             assert self.notify.warning("Ignoring duplicate addition of quickstat %s." % item)
             return
-                                
+
         self.quickStats[0].insert(position,item)
         self.quickStats[1][item] = value
-        
+
     def updateQuickStat(self,item,value):
         assert item in self.quickStats[1]
 

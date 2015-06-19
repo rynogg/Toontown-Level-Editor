@@ -116,5 +116,3 @@ class Pool:
 
     def __repr__(self):
         return "free = %s\nused = %s" % (self.__free, self.__used)
-
-

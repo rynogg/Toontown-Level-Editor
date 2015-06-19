@@ -46,7 +46,7 @@ class FilterManager(DirectObject):
             FilterManager.notify = directNotify.newCategory("FilterManager")
 
         # Find the appropriate display region.
-        
+
         region = None
         for i in range(win.getNumDisplayRegions()):
             dr = win.getDisplayRegion(i)
@@ -56,7 +56,7 @@ class FilterManager(DirectObject):
         if (region == None):
             self.notify.error('Could not find appropriate DisplayRegion to filter')
             return False
-        
+
         # Instance Variables.
 
         self.win = win
@@ -104,7 +104,7 @@ class FilterManager(DirectObject):
                 (self.region.getRight()  == 1.0) and
                 (self.region.getBottom() == 0.0) and
                 (self.region.getTop()    == 1.0))
-            
+
     def getScaledSize(self, mul, div, align):
 
         """ Calculate the size of the desired window. Not public. """
@@ -210,7 +210,7 @@ class FilterManager(DirectObject):
         lens.setNearFar(-1000, 1000)
         quadcamnode.setLens(lens)
         quadcam = quad.attachNewNode(quadcamnode)
-        
+
         self.region.setCamera(quadcam)
 
         dr = buffer.getDisplayRegion(0)
@@ -240,9 +240,9 @@ class FilterManager(DirectObject):
         texgroup = (depthtex, colortex, auxtex0, auxtex1)
 
         winx, winy = self.getScaledSize(mul, div, align)
-        
+
         depthbits = bool(depthtex != None)
-        
+
         buffer = self.createBuffer("filter-stage", winx, winy, texgroup, depthbits)
 
         if (buffer == None):
@@ -262,13 +262,13 @@ class FilterManager(DirectObject):
         lens.setNearFar(-1000, 1000)
         quadcamnode.setLens(lens)
         quadcam = quad.attachNewNode(quadcamnode)
-        
+
         buffer.getDisplayRegion(0).setCamera(quadcam)
         buffer.getDisplayRegion(0).setActive(1)
 
         self.buffers.append(buffer)
         self.sizes.append((mul, div, align))
-        
+
         return quad
 
     def createBuffer(self, name, xsize, ysize, texgroup, depthbits=1):
@@ -332,4 +332,3 @@ class FilterManager(DirectObject):
         self.nextsort = self.win.getSort() - 1000
         self.basex = 0
         self.basey = 0
-

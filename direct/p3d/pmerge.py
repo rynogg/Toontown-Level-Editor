@@ -51,7 +51,7 @@ installDir = None
 for opt, arg in opts:
     if opt == '-i':
         installDir = Filename.fromOsSpecific(arg)
-        
+
     elif opt == '-h':
         usage(0)
     else:
@@ -71,7 +71,7 @@ try:
     for dir in inputDirs:
         pm.merge(dir)
     pm.close()
-        
+
 except PackageMerger.PackageMergerError:
     # Just print the error message and exit gracefully.
     inst = sys.exc_info()[1]

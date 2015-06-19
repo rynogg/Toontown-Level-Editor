@@ -143,7 +143,7 @@ def doGetopts():
             doSqueeze = False
         elif (flag == '-s'):
             deleteSourceAfterSqueeze = False
-            
+
         else:
             FFIConstants.notify.error('illegal option: ' + flag)
 
@@ -168,7 +168,7 @@ def doGetopts():
         if codeLib not in newLibs:
             newLibs.append(codeLib)
     codeLibs = newLibs
-        
+
 
 def doErrorCheck():
     global outputCodeDir
@@ -283,7 +283,7 @@ def generateNativeWrappers():
                     extension = open(extensionFilename, 'r')
                     moduleModules.write(extension.read())
                     moduleModules.write('\n')
-        
+
 
 def run():
     global outputCodeDir

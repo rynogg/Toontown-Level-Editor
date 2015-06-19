@@ -17,7 +17,7 @@
 
     def getTightBounds(self):
         from pandac import Point3
-        
+
         if self.getNumPaths() == 0:
             return (Point3.Point3(0), Point3.Point3(0))
 
@@ -30,5 +30,5 @@
             v2 = Point3.Point3(max(v2[0], v2x[0]),
                                max(v2[1], v2x[1]),
                                max(v2[2], v2x[2]))
-        
+
         return v1, v2

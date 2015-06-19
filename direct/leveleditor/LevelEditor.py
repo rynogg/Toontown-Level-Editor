@@ -288,7 +288,7 @@ except NameError:
         loadDNAFile(DNASTORE, 'phase_6/dna/storage_GZ.dna', CSDefault, 1)
         loadDNAFile(DNASTORE, 'phase_6/dna/storage_GZ_sz.dna', CSDefault, 1)
     if 'CC' in hoods:
-        loadDNAFile(DNASTORE, 'phase_12/dna/storage_CC_sz.dna', CSDefault, 1)        
+        loadDNAFile(DNASTORE, 'phase_12/dna/storage_CC_sz.dna', CSDefault, 1)
     if 'PA' in hoods:
         loadDNAFile(DNASTORE, 'phase_13/dna/storage_party_sz.dna', CSDefault, 1)
     __builtin__.dnaLoaded = 1
@@ -297,7 +297,7 @@ except NameError:
 class LevelEditor(NodePath, DirectObject):
     """Class used to create a Toontown LevelEditor object"""
     notify = DirectNotifyGlobal.directNotify.newCategory('LevelEditor')
-        
+
     # Init the list of callbacks:
     selectedNodePathHookHooks=[]
     deselectedNodePathHookHooks=[]
@@ -518,8 +518,8 @@ class LevelEditor(NodePath, DirectObject):
 
         self.fov = 60
         self.isPageUp=0
-        self.isPageDown=0        
- 
+        self.isPageDown=0
+
     # ENABLE/DISABLE
     def enable(self):
         """ Enable level editing and show level """
@@ -530,7 +530,7 @@ class LevelEditor(NodePath, DirectObject):
         # [gjeon] Ignore overridden events
         for event in self.overrideEvents:
             event[1].ignore(event[0])
-        
+
         # Add all the action events
         for event in self.actionEvents:
             if len(event) == 3:
@@ -712,7 +712,7 @@ class LevelEditor(NodePath, DirectObject):
 
         if self.avatar:
             self.avatar.startUpdateSmartCamera()
-            
+
     def pageUp(self):
         if not self.isPageUp:
             self.lerpCameraP(36.8699, 0.6)
@@ -729,7 +729,7 @@ class LevelEditor(NodePath, DirectObject):
             self.isPageDown = 1
             #self.setCameraPositionByIndex(self.cameraIndex)
         else:
-            self.clearPageUpDown()            
+            self.clearPageUpDown()
 
     def useDriveMode(self):
         """ Lerp down to eye level then switch to Drive mode """
@@ -793,7 +793,7 @@ class LevelEditor(NodePath, DirectObject):
 
         #self.initializeSmartCameraCollisions()
         #self._smartCamEnabled = False
-        
+
         # Turn on collisions
         if self.panel.fColl.get():
             self.collisionsOn()
@@ -832,7 +832,7 @@ class LevelEditor(NodePath, DirectObject):
 
         self.avatarAnimTask = taskMgr.add(self.avatarAnimate, 'avatarAnimTask', 24)
         self.avatar.startUpdateSmartCamera()
-        
+
         self.avatarMoving = 0
 
     #--------------------------------------------------------------------------
@@ -1746,7 +1746,7 @@ class LevelEditor(NodePath, DirectObject):
             return
         else:
             self.mouseMayaCamera = False
-        
+
         # Initialize dna target
         self.DNATarget = None
 
@@ -1938,7 +1938,7 @@ class LevelEditor(NodePath, DirectObject):
     def levelHandleMouse3Up(self):
         if self.mouseMayaCamera:
             return
-        
+
         if self.activeMenu:
             self.activeMenu.removePieMenuTask()
         # Update panel color if appropriate
@@ -1952,7 +1952,7 @@ class LevelEditor(NodePath, DirectObject):
                 (objClass.eq(DNA_PROP))
                 ):
                 self.panel.setCurrentColor(self.DNATarget.getColor())
-                
+
 ##        b1 = DirectButton(text = ("Button1", "click!", "roll", "disabled"),
 ##                  text_scale=0.1, borderWidth = (0.01, 0.01),
 ##                  relief=2)
@@ -2178,7 +2178,7 @@ class LevelEditor(NodePath, DirectObject):
 
         # Let others know that something new may be selected:
         for i in self.selectedNodePathHookHooks:
-                i()
+            i()
 
         if self.fDrive:
             base.direct.deselect(nodePath)
@@ -2190,7 +2190,7 @@ class LevelEditor(NodePath, DirectObject):
         self.selectedSuitPoint = None
         # Let others know:
         for i in self.deselectedNodePathHookHooks:
-                i()
+            i()
 
     def findDNAParent(self, nodePath):
         """ Walk up a node path's ancestry looking for its DNA Root """
@@ -4201,14 +4201,14 @@ class LevelEditorPanel(Pmw.MegaToplevel):
                             label = 'Save DNA',
                             command = self.levelEditor.outputDNADefaultFile)
         if fUseCVS == True:
-          menuBar.addmenuitem('Level Editor', 'command',
-                              'CVS update directory',
-                              label = 'CVS update',
-                              command = self.levelEditor.cvsUpdateAll)
-          menuBar.addmenuitem('Level Editor', 'command',
-                              'CVS commit directory',
-                              label = 'CVS commit',
-                              command = self.levelEditor.cvsCommitAll)
+            menuBar.addmenuitem('Level Editor', 'command',
+                                'CVS update directory',
+                                label = 'CVS update',
+                                command = self.levelEditor.cvsUpdateAll)
+            menuBar.addmenuitem('Level Editor', 'command',
+                                'CVS commit directory',
+                                label = 'CVS commit',
+                                command = self.levelEditor.cvsCommitAll)
         menuBar.addmenuitem('Level Editor', 'command',
                             'Edit Visibility Groups',
                             label = 'Edit Vis Groups',
@@ -4819,7 +4819,7 @@ class LevelEditorPanel(Pmw.MegaToplevel):
                                       variable = self.fMaya,
                                       command = self.toggleMaya)
         self.mayaButton.pack(side = LEFT, expand = 1, fill = X)
-        
+
         #Make maya mode on by default
         self.toggleMaya()
 
@@ -5207,13 +5207,13 @@ class LevelEditorPanel(Pmw.MegaToplevel):
         if baseline:
             flags=baseline.getFlags()
             if newValue:
-                 if not flagChar in flags:
-                     # Add the flag:
-                     baseline.setFlags(flags+flagChar)
+                if not flagChar in flags:
+                    # Add the flag:
+                    baseline.setFlags(flags+flagChar)
             elif flagChar in flags:
-                 # Remove the flag:
-                 flags=string.join(flags.split(flagChar), '')
-                 baseline.setFlags(flags)
+                # Remove the flag:
+                flags=string.join(flags.split(flagChar), '')
+                baseline.setFlags(flags)
             self.levelEditor.replaceSelected()
 
     def setLandmarkSpecialType(self, type):
@@ -5581,4 +5581,3 @@ class LEAvatar(LocalAvatar.LocalAvatar):
 
 l = LevelEditor()
 run()
-

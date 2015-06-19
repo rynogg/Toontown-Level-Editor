@@ -22,10 +22,10 @@ class ExcelHandler(saxutils.DefaultHandler):
         self.cells=[]
         self.rows=[]
         self.tables=[]
-        
+
     def characters(self, content):
         self.chars.append(content)
-        
+
     def startElement(self, name, attrs):
         if name=="Data":
             if attrs.get('ss:Type') == "Number":
@@ -38,7 +38,7 @@ class ExcelHandler(saxutils.DefaultHandler):
             self.cells=[]
         elif name=="Table":
             self.rows=[]
-            
+
     def endElement(self, name):
         if name=="Data":
             pass
@@ -64,4 +64,3 @@ class ExcelHandler(saxutils.DefaultHandler):
             self.rows.append(self.cells)
         elif name=="Table":
             self.tables.append(self.rows)
-

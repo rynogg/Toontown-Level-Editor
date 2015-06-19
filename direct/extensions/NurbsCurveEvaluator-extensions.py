@@ -14,7 +14,7 @@
     def getVertices(self, relTo = None):
         """Returns the vertices as a Python list of Vec4's, relative
         to the indicated space if given."""
-        
+
         verts = []
         if relTo:
             for i in range(self.getNumVertices()):
@@ -23,4 +23,3 @@
             for i in range(self.getNumVertices()):
                 verts.append(self.getVertex(i))
         return verts
-

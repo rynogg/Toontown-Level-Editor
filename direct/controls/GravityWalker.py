@@ -701,4 +701,4 @@ class GravityWalker(DirectObject.DirectObject):
         cRayNode = oldNode.getChild(2)
         cRayNode.removeSolid(0)
         cRay = CollisionRay(0.0, 0.0, height, 0.0, 0.0, -1.0)
-        cRayNode.addSolid(cRay)        
+        cRayNode.addSolid(cRay)

@@ -17,13 +17,13 @@ class FileSpec:
     def fromFile(self, packageDir, filename, pathname = None, st = None):
         """ Reads the file information from the indicated file.  If st
         is supplied, it is the result of os.stat on the filename. """
-        
+
         vfs = VirtualFileSystem.getGlobalPtr()
 
         filename = Filename(filename)
         if pathname is None:
             pathname = Filename(packageDir, filename)
-        
+
         self.filename = filename.cStr()
         self.basename = filename.getBasename()
 
@@ -40,17 +40,17 @@ class FileSpec:
         hv = HashVal()
         hv.hashFile(pathname)
         self.hash = hv.asHex()
-                 
+
 
     def loadXml(self, xelement):
         """ Reads the file information from the indicated XML
         element. """
-        
+
         self.filename = xelement.Attribute('filename')
         self.basename = None
         if self.filename:
             self.basename = Filename(self.filename).getBasename()
-            
+
         size = xelement.Attribute('size')
         try:
             self.size = int(size)
@@ -86,7 +86,7 @@ class FileSpec:
             xelement.SetAttribute('size', str(self.size))
         if self.hash:
             xelement.SetAttribute('hash', self.hash)
-            
+
     def quickVerify(self, packageDir = None, pathname = None,
                     notify = None):
         """ Performs a quick test to ensure the file has not been
@@ -140,8 +140,8 @@ class FileSpec:
         self.__updateTimestamp(pathname, st)
 
         return True
-        
-            
+
+
     def fullVerify(self, packageDir = None, pathname = None, notify = None):
         """ Performs a more thorough test to ensure the file has not
         been modified.  This test is less vulnerable to malicious
@@ -205,4 +205,3 @@ class FileSpec:
         self.actualFile = fileSpec
 
         return (fileSpec.hash == self.hash)
-    

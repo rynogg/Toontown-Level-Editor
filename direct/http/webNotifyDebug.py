@@ -50,7 +50,7 @@ class webNotifyDebug:
             authToken = self.genToken()
             # Place the authToken in the list of valid auth tokens
             self.authTokens.append(authToken)
-            
+
             replyTo.respond('<HTML><HEAD><TITLE>Username and Password Good</TITLE></HEAD><BODY>Username and Password are good, please remember to logout when done. <A HREF=authDebug?authToken=%s>Click here to continue</a></BODY></HTML>' % (authToken))
             return
         else:
@@ -231,7 +231,7 @@ class webNotifyDebug:
         try:
             authToken = kw['authToken']
             try:
-                 pos = self.authTokens.index(authToken)
+                pos = self.authTokens.index(authToken)
             except ValueError:
                 # authToken passed is not in the list
                 replyTo.respond('Error: Client not authorized')

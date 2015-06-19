@@ -62,7 +62,7 @@ class WebRequest(object):
 
 
 # --------------------------------------------------------------------------------
-    
+
 class SkinningReplyTo:
     def __init__(self, replyTo, dispatcher, uri, doSkin):
         self._replyTo = replyTo
@@ -104,7 +104,7 @@ class WebRequestDispatcher(object):
     This is because we're wrapping a singleton webserver.
 
     How to use:
-    
+
     w = WebRequestDispatcher()
     w.listenOnPort(8888)
     def test(replyTo,**kw):
@@ -124,7 +124,7 @@ class WebRequestDispatcher(object):
     uriToHandler = {}
 
     requestTimeout = 10.0
-    
+
     notify = notify
 
     def __new__(self, *a, **kw):
@@ -167,15 +167,15 @@ class WebRequestDispatcher(object):
         assert req.getRequestType() == "GET"
 
         self.landingPage.incrementQuickStat("Pages Served")
-        
+
         uri = req.getURI()
         args = req.dictFromGET()
-        
+
         callable,returnsResponse,autoSkin = self.uriToHandler.get(uri, [self.invalidURI,False,False])
 
         if callable != self.invalidURI:
             self.notify.info("%s - %s - %s - 200" % (req.getSourceAddress(), uri, args))
-        
+
         if returnsResponse:
             result = apply(callable,(),args)
             if autoSkin:
@@ -242,14 +242,14 @@ class WebRequestDispatcher(object):
         if uri[0] != "/":
             uri = "/" + uri
         self.uriToHandler.pop(uri,None)
-        
+
 
     # -- Poll task wrappers --
 
     def pollHTTPTask(self,task):
         self.poll()
         return Task.again
-        
+
     def startCheckingIncomingHTTP(self, interval=0.3):
         taskMgr.remove('pollHTTPTask')
         taskMgr.doMethodLater(interval,self.pollHTTPTask,'pollHTTPTask')
@@ -275,7 +275,7 @@ class WebRequestDispatcher(object):
             self.unregisterGETHandler("/")
             self.unregisterGETHandler("/services")
 
-        
+
     def _main(self):
         return self.landingPage.getMainPage()
 

@@ -314,4 +314,3 @@ if __name__ == '__main__':
     s = scriptresource('finder.py', './finder.py')
     print "s.modules:", s.modules
     print "s.binaries:", s.binaries
-

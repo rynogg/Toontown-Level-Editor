@@ -286,7 +286,7 @@ class AppShell(Pmw.MegaWidget, DirectObject):
         newBtn = self.__buttonBox.add(buttonName)
         newBtn.configure(kw)
         if helpMessage:
-             self.bind(newBtn, helpMessage, statusMessage)
+            self.bind(newBtn, helpMessage, statusMessage)
         return newBtn
 
     def alignbuttons(self):
@@ -558,4 +558,3 @@ class TestAppShell(AppShell):
 
 if __name__ == '__main__':
     test = TestAppShell(balloon_state='none')
-

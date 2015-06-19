@@ -13,14 +13,14 @@ class DistributedCameraOV(DistributedObjectOV):
         self.ignore('escape')
         self.ignore('refresh-fixture')
         DistributedObjectOV.delete(self)
-        
+
     def getObject(self):
         return self.cr.getDo(self.getDoId())
-        
+
     def setCamParent(self, doId):
         self.parent = doId
         pass
-    
+
     def setFixtures(self, fixtures):
         self.fixtures = fixtures
         pass
@@ -35,7 +35,7 @@ class DistributedCameraOV(DistributedObjectOV):
         data = data.strip().replace('Camera','')
         pos,hpr,fov = eval(data)
         return pos,hpr,fov
-    
+
     def loadFromFile(self, name):
         self.b_setFixtures([])
         f = file('cameras-%s.txt' % name, 'r');
@@ -60,7 +60,7 @@ class DistributedCameraOV(DistributedObjectOV):
         # distributed only
         self.d_setFixtures(self.fixtures)
         pass
-        
+
     def b_setFixtures(self, fixtures):
         self.getObject().setFixtures(fixtures)
         self.setFixtures(fixtures)
@@ -117,7 +117,7 @@ class DistributedCameraOV(DistributedObjectOV):
                                 'Standby'],
                                index)
         pass
-    
+
     def startRecording(self):
         self.accept('escape', self.stopRecording)
         for fixture in self.fixtures:

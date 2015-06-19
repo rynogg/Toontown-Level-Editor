@@ -128,7 +128,7 @@ class MainMenuBar(Pmw.MegaArchetype):
         self._menuInfo[menuName] = (parentMenuName, [])
 
         menu.bind('<Leave>', self._resetHelpmessage)
-        menu.bind('<Motion>', 
+        menu.bind('<Motion>',
             lambda event=None, self=self, menuName=menuName:
                     self._menuHelp(event, menuName))
 

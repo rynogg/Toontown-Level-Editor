@@ -124,11 +124,11 @@ class Mopath(DirectObject):
                 node.lookAt(Point3(self.posPoint + self.tangentVec))
             else:
                 if (self.reverseUpVector == False):
-                     node.lookAt(Point3(self.posPoint + self.tangentVec),
-                                 self.upVectorNodePath.getPos() - self.posPoint)
+                    node.lookAt(Point3(self.posPoint + self.tangentVec),
+                                self.upVectorNodePath.getPos() - self.posPoint)
                 else:
-                     node.lookAt(Point3(self.posPoint + self.tangentVec),
-                                 self.posPoint - self.upVectorNodePath.getPos())
+                    node.lookAt(Point3(self.posPoint + self.tangentVec),
+                                self.posPoint - self.upVectorNodePath.getPos())
 
     def play(self, node, time = 0.0, loop = 0):
         if (self.xyzNurbsCurve == None) and (self.hprNurbsCurve == None):

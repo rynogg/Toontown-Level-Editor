@@ -741,4 +741,3 @@ def lightRGBPanel(light, style = 'mini'):
         pButton['bg'] = getTkColorString(color)
     vgp['command'] = setLightColor
     return vgp
-

@@ -74,7 +74,7 @@ class PieMenu(NodePath, DirectObject):
         if self.numItems == 0:
             self.currItem = -1
             return Task.cont
-        
+
         mouseX = self.dr.mouseX
         mouseY = self.dr.mouseY
         deltaX = mouseX - self.originX
@@ -172,6 +172,3 @@ class TextPieMenu(PieMenu):
         self.ignore('mouse3')
         self.ignore('mouse3-up')
         self.removeNode()
-
-
-

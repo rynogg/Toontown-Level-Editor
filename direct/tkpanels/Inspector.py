@@ -49,7 +49,7 @@ def initializeInspectorMap():
         'DictionaryType': 'DictionaryInspector',
         'DictType': 'DictionaryInspector',
         'FileType': 'Inspector',
-        'FloatType': 'Inspector', 
+        'FloatType': 'Inspector',
         'FunctionType': 'FunctionInspector',
         'Instance methodType': 'InstanceMethodInspector',
         'InstanceType': 'InstanceInspector',
@@ -69,7 +69,7 @@ def initializeInspectorMap():
     for each in notFinishedTypes:
         _InspectorMap[each] = 'Inspector'
 
-    
+
 ### Classes
 
 class Inspector:
@@ -89,7 +89,7 @@ class Inspector:
         for each in keys:
             self._partsList.append(each)
             #if not callable(getattr(self.object, each)):
-            #    self._partsList.append(each)  
+            #    self._partsList.append(each)
 
     def initializePartNames(self):
         self._partNames = ['up'] + map(lambda each: str(each), self._partsList)
@@ -103,7 +103,7 @@ class Inspector:
 
     def selectedPart(self):
         return self.partNumber(self.getLastPartNumber())
-        
+
     def namedParts(self):
         return dir(self.object)
 
@@ -132,16 +132,16 @@ class Inspector:
         return inspectorFor(part)
 
     def privatePartNumber(self, partNumber):
-        return self._partsList[partNumber - 1]        
+        return self._partsList[partNumber - 1]
 
     def partNames(self):
         return self._partNames
-    
+
     def objectType(self):
         return type(self.object)
 
 ###
-    
+
 class ModuleInspector(Inspector):
     def namedParts(self):
         return ['__dict__']
@@ -160,7 +160,7 @@ class InstanceInspector(Inspector):
         return ['__class__'] + dir(self.object)
 
 ###
-    
+
 class FunctionInspector(Inspector):
     def title(self):
         return self.object.__name__ + "()"
@@ -199,7 +199,7 @@ class DictionaryInspector(Inspector):
             return self.object[key]
         else:
             return getattr(self.object, key)
-        
+
 class SequenceInspector(Inspector):
     def initializePartsList(self):
         Inspector.initializePartsList(self)
@@ -215,7 +215,7 @@ class SequenceInspector(Inspector):
             return self.object[index]
         else:
             return getattr(self.object, index)
-    
+
 class SliceInspector(Inspector):
     def namedParts(self):
         return ['start', 'stop', 'step']
@@ -289,7 +289,7 @@ class InspectorWindow:
         self.commandWidget.component('text').bind(
             '<KeyRelease-Return>', self.evalCommand)
         self.textPane.pack(expand = 1, fill = BOTH)
-        
+
     def createMenus(self):
         self.menuBar = Menu(self.top)
         self.top.config(menu=self.menuBar)
@@ -349,8 +349,8 @@ class InspectorWindow:
         inspector = self.inspectorForSelectedPart()
         if inspector == None:
             return
-        InspectorWindow(inspector).open()        
-        
+        InspectorWindow(inspector).open()
+
     def pop(self):
         if len(self.inspectors) > 1:
             self.inspectors = self.inspectors[:-1]
@@ -439,7 +439,3 @@ class InspectorWindow:
                 label = item,
                 command = lambda p = part, f = func: f(p))
         return popupMenu
-        
-
-
-

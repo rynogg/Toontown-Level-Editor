@@ -101,7 +101,7 @@ class DirectNotify:
         else:
             print ("DirectNotify: unknown notify level: " + str(level)
                    + " for category: " + str(categoryName))
-            
+
 
     def setDconfigLevels(self):
         for categoryName in self.getCategories():
@@ -113,10 +113,10 @@ class DirectNotify:
             category.setWarning(1)
             category.setInfo(1)
             category.setDebug(1)
-            
+
     def popupControls(self, tl = None):
         from direct.tkpanels import NotifyPanel
         NotifyPanel.NotifyPanel(self, tl)
-        
+
     def giveNotify(self,cls):
         cls.notify = self.newCategory(cls.__name__)

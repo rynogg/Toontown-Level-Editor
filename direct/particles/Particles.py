@@ -464,7 +464,7 @@ class Particles(ParticleSystem):
                     t_b = seg.getTimeBegin()
                     t_e = seg.getTimeEnd()
                     mod = seg.isModulated()
-                    fun = seg.getFunction()                    
+                    fun = seg.getFunction()
                     typ = type(fun).__name__
                     if typ == 'ColorInterpolationFunctionConstant':
                         c_a = fun.getColorA()
@@ -560,7 +560,7 @@ class Particles(ParticleSystem):
             file.write('# Tangent Ring parameters\n')
             file.write(targ + '.emitter.setRadius(%.4f)\n' % self.emitter.getRadius())
             file.write(targ + '.emitter.setRadiusSpread(%.4f)\n' % self.emitter.getRadiusSpread())
-            
+
     def getPoolSizeRanges(self):
         litterRange = [max(1,self.getLitterSize()-self.getLitterSpread()),
                        self.getLitterSize(),
@@ -573,9 +573,9 @@ class Particles(ParticleSystem):
         print 'Litter Ranges:    ',litterRange
         print 'LifeSpan Ranges:  ',lifespanRange
         print 'BirthRate Ranges: ',birthRateRange
-        
+
         return dict(zip(('min','median','max'),[l*s/b for l,s,b in zip(litterRange,lifespanRange,birthRateRange)]))
-            
+
 
     def accelerate(self,time,stepCount = 1,stepTime=0.0):
         if time > 0.0:
@@ -585,14 +585,13 @@ class Particles(ParticleSystem):
             else:
                 stepCount = int(float(time)/stepTime)
                 remainder = time-stepCount*stepTime
-                
+
             for step in range(stepCount):
                 base.particleMgr.doParticles(stepTime,self,False)
                 base.physicsMgr.doPhysics(stepTime,self)
-                
+
             if(remainder):
                 base.particleMgr.doParticles(remainder,self,False)
                 base.physicsMgr.doPhysics(remainder,self)
-                
+
             self.render()
-        

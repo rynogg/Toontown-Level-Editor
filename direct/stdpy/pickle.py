@@ -37,7 +37,7 @@ class Pickler(pickle.Pickler):
 
     # We have to duplicate most of the save() method, so we can add
     # support for __reduce_persist__().
-    
+
     def save(self, obj):
         # Check for persistent id (defined by a subclass)
         pid = self.persistent_id(obj)
@@ -116,7 +116,7 @@ class Unpickler(pickle.Unpickler):
 
     # Duplicate the load_reduce() function, to provide a special case
     # for the reduction function.
-    
+
     def load_reduce(self):
         stack = self.stack
         args = stack.pop()

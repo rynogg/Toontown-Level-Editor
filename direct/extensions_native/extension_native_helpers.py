@@ -25,7 +25,7 @@ if sys.platform == "win32":
         dll_suffix = ''
         if sys.executable.endswith('_d.exe'):
             dll_suffix = '_d'
-            
+
 elif sys.platform == "darwin":
     # On OSX, the dynamic libraries usually end in .dylib, but
     # sometimes we need .so.
@@ -91,7 +91,5 @@ def Dtool_funcToMethod(func, clas, method_name=None):
     func.im_func=func
     func.im_self=None
     if not method_name:
-            method_name = func.__name__
+        method_name = func.__name__
     clas.DtoolClassDict[method_name] = func;
-
-

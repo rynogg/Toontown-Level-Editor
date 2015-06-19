@@ -4,7 +4,7 @@ class FileSpec:
     """ Used by make_package and make_contents.  Represents a single
     file in the directory, and its associated timestamp, size, and md5
     hash. """
-    
+
     def __init__(self, filename, pathname):
         self.filename = filename
         self.pathname = pathname

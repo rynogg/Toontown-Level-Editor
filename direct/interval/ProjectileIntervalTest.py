@@ -15,4 +15,3 @@ def doTest():
                             timeToWayPoint=3)
     pi.loop()
     return pi
-

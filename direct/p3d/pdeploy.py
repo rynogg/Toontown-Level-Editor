@@ -312,4 +312,3 @@ else:
 # An explicit call to exit() is required to exit the program, when
 # this module is packaged in a p3d file.
 sys.exit(0)
-

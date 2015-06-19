@@ -1,7 +1,7 @@
 
 def convert(self):
     """
-    Do a sort of pseudo-downcast on this space in 
+    Do a sort of pseudo-downcast on this space in
     order to expose its specialized functions.
     """
     if self.getClass() == OdeGeom.GCSimpleSpace:

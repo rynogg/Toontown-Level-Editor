@@ -428,7 +428,7 @@ class DirectGuiBase(DirectObject.DirectObject):
             info = optionInfo[option]
             func = info[DGG._OPT_FUNCTION]
             if func is not None:
-              func()
+                func()
 
     # Allow index style references
     def __setitem__(self, key, value):

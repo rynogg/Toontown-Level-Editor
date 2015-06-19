@@ -41,7 +41,7 @@ class ParticlePanel(AppShell):
         else:
             # Make sure particles are enabled
             base.enableParticles()
-        
+
             # Or create a new one if none given
             particles = Particles.Particles()
             particles.setBirthRate(0.02)
@@ -555,7 +555,7 @@ class ParticlePanel(AppShell):
         rendererGeomBlendPage = rendererGeomNotebook.add('Blend')
         rendererGeomScalePage = rendererGeomNotebook.add('Scale')
         rendererGeomInterpolationPage = rendererGeomNotebook.add('Interpolate')
-        
+
         ############################################################################
         # Blend tab
         p = Frame(rendererGeomBlendPage)
@@ -590,7 +590,7 @@ class ParticlePanel(AppShell):
         # Scale tab
         p = Frame(rendererGeomScalePage)
         p.pack(fill = X)
-        
+
         self.createCheckbutton(
             p, 'Geom Renderer', 'X Scale',
             ("On: x scale is interpolated over particle's life; " +
@@ -606,10 +606,10 @@ class ParticlePanel(AppShell):
             ("On: z scale is interpolated over particle's life; " +
              "Off: stays as start_Z_Scale"),
             self.toggleRendererGeomZScale, 0, side = LEFT)
-        
+
         p = Frame(rendererGeomScalePage)
         p.pack(fill = X)
-        
+
         self.createFloater(p, 'Geom Renderer',
                            'Initial X Scale',
                            'Initial X scaling factor',
@@ -768,7 +768,7 @@ class ParticlePanel(AppShell):
 ##################################################################################
         p = Frame(rendererSpriteScalePage)
         p.pack(fill = X)
-        
+
         self.createCheckbutton(
             p, 'Sprite Renderer', 'X Scale',
             ("On: x scale is interpolated over particle's life; " +
@@ -1634,7 +1634,7 @@ class ParticlePanel(AppShell):
         self.getVariable('Renderer', 'Alpha Mode').set(aMode)
         userAlpha = renderer.getUserAlpha()
         self.getWidget('Renderer', 'User Alpha').set(userAlpha)
-        
+
         if isinstance(renderer, LineParticleRenderer):
             headColor = renderer.getHeadColor() * 255.0
             self.getWidget('Line Renderer', 'Head Color').set(
@@ -1644,7 +1644,7 @@ class ParticlePanel(AppShell):
                 [tailColor[0], tailColor[1], tailColor[2], tailColor[3]])
             self.getWidget('Line Renderer', 'Line Scale Factor').set(
                 renderer.getLineScaleFactor())
-            
+
         elif isinstance(renderer, GeomParticleRenderer):
             self.getVariable('Geom Renderer', 'X Scale').set(
                 renderer.getXScaleFlag())
@@ -1709,7 +1709,7 @@ class ParticlePanel(AppShell):
             elif (blendMethod == BaseParticleRenderer.PPBLENDCUBIC):
                 bMethod = "PP_BLEND_CUBIC"
             self.getVariable('Point Renderer', 'Blend Method').set(bMethod)
-            
+
         elif isinstance(renderer, SparkleParticleRenderer):
             centerColor = renderer.getCenterColor() * 255.0
             self.getWidget('Sparkle Renderer', 'Center Color').set(
@@ -1727,7 +1727,7 @@ class ParticlePanel(AppShell):
             if (lifeScale == SparkleParticleRenderer.SPSCALE):
                 lScale = "SP_SCALE"
             self.getVariable('Sparkle Renderer', 'Life Scale').set(lScale)
-            
+
         elif isinstance(renderer, SpriteParticleRenderer):
             self.getWidget('Sprite Renderer','Frame Rate').set(renderer.getAnimateFramesRate(), 0)
             self.getVariable('Sprite Renderer','Enable Animation').set(
@@ -1780,7 +1780,7 @@ class ParticlePanel(AppShell):
     def selectRendererPage(self):
         type = self.particles.renderer.__class__.__name__
         if(type == 'SpriteParticleRendererExt'):
-           type = 'SpriteParticleRenderer'
+            type = 'SpriteParticleRenderer'
         self.rendererNotebook.selectpage(type)
         self.getVariable('Renderer', 'Renderer Type').set(type)
 
@@ -2010,22 +2010,22 @@ class ParticlePanel(AppShell):
     def toggleRendererGeomZScale(self):
         self.particles.renderer.setZScaleFlag(
             self.getVariable('Geom Renderer', 'Z Scale').get())
-        
+
     def setRendererGeomInitialXScale(self, xScale):
         self.particles.renderer.setInitialXScale(xScale)
     def setRendererGeomFinalXScale(self, xScale):
         self.particles.renderer.setFinalXScale(xScale)
-        
+
     def setRendererGeomInitialYScale(self, yScale):
         self.particles.renderer.setInitialYScale(yScale)
     def setRendererGeomFinalYScale(self, yScale):
         self.particles.renderer.setFinalYScale(yScale)
-        
+
     def setRendererGeomInitialZScale(self, zScale):
         self.particles.renderer.setInitialZScale(zScale)
     def setRendererGeomFinalZScale(self, zScale):
         self.particles.renderer.setFinalZScale(zScale)
-    
+
     def setRendererGeomColorBlendMethod(self, blendMethod):
         blendMethodStr = blendMethod
         incomingOperandStr = self.getVariable('Geom Renderer','Incoming Op.').get()
@@ -2072,7 +2072,7 @@ class ParticlePanel(AppShell):
             seg = cim.getSegment(cim.addLinear())
         else:
             seg = cim.getSegment(id)
-            
+
         if(ren.__class__.__name__ == 'SpriteParticleRendererExt'):
             parent = self.rendererSpriteSegmentFrame
             segName = repr(len(self.rendererSegmentWidgetList))+':Linear'
@@ -2092,7 +2092,7 @@ class ParticlePanel(AppShell):
             seg = cim.getSegment(cim.addStepwave())
         else:
             seg = cim.getSegment(id)
-            
+
         if(ren.__class__.__name__ == 'SpriteParticleRendererExt'):
             parent = self.rendererSpriteSegmentFrame
             segName = repr(len(self.rendererSegmentWidgetList))+':Stepwave'
@@ -2112,7 +2112,7 @@ class ParticlePanel(AppShell):
             seg = cim.getSegment(cim.addSinusoid())
         else:
             seg = cim.getSegment(id)
-            
+
         if(ren.__class__.__name__ == 'SpriteParticleRendererExt'):
             parent = self.rendererSpriteSegmentFrame
             segName = repr(len(self.rendererSegmentWidgetList))+':Sinusoid'
@@ -2140,7 +2140,7 @@ class ParticlePanel(AppShell):
             self.addLinearInterpolationSegment(id)
         elif isinstance(fun,ColorInterpolationFunctionConstant):
             self.addConstantInterpolationSegment(id)
-        
+
     def createInterpolationSegmentFrame(self, parent, segName, seg):
         frame = Frame(parent, relief = RAISED, borderwidth = 2)
         lFrame = Frame(frame, relief = FLAT)

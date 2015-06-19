@@ -12,4 +12,3 @@
             lines.append(line)
             line = self.readline()
         return lines
-    

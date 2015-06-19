@@ -108,7 +108,7 @@ class ClassicFSM(DirectObject):
         assert not self.__internalStateInFlux
         if self.__currentState == self.__initialState:
             return
-        
+
         assert self.__currentState == None
         self.__internalStateInFlux = 1
         self.__enter(self.__initialState, argList)
@@ -374,11 +374,3 @@ class ClassicFSM(DirectObject):
 
     def isInternalStateInFlux(self):
         return self.__internalStateInFlux
-
-
-
-
-
-
-
-

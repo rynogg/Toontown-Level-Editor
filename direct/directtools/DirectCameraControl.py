@@ -12,9 +12,9 @@ COA_MARKER_SF = 0.0075
 Y_AXIS = Vec3(0, 1, 0)
 
 class DirectCameraControl(DirectObject):
-    
+
     notify = DirectNotifyGlobal.directNotify.newCategory('DirectCameraControl')
-    
+
     def __init__(self):
         # Create the grid
         self.startT = 0.0
@@ -52,7 +52,7 @@ class DirectCameraControl(DirectObject):
 ##             ['c', self.centerCamIn, 0.5],
 ##             ['f', self.fitOnWidget],                  # Note: This function doesn't work as intended
 ##             ['h', self.homeCam],
-##             ['shift-v', self.toggleMarkerVis],          
+##             ['shift-v', self.toggleMarkerVis],
 ##             ['m', self.moveToFit],                      # Note: This function doesn't work as intended; the object dissappears and screen flashes
 ##             ['n', self.pickNextCOA],
 ##             ['u', self.orbitUprightCam],
@@ -73,12 +73,12 @@ class DirectCameraControl(DirectObject):
 ##             ['-', self.zoomCam, -2.0, t],
 ##             ['_', self.zoomCam, -2.0, t],
 ##             ]
-        
+
         self.keyEvents = [
             ['DIRECT-centerCamIn', self.centerCamIn, 0.5],
             ['DIRECT-fitOnWidget', self.fitOnWidget],                  # Note: This function doesn't work as intended
             ['DIRECT-homeCam', self.homeCam],
-            ['DIRECT-toggleMarkerVis', self.toggleMarkerVis],          
+            ['DIRECT-toggleMarkerVis', self.toggleMarkerVis],
             ['DIRECT-moveToFit', self.moveToFit],                      # Note: This function doesn't work as intended; the object dissappears and screen flashes
             ['DIRECT-pickNextCOA', self.pickNextCOA],
             ['DIRECT-orbitUprightCam', self.orbitUprightCam],
@@ -104,13 +104,13 @@ class DirectCameraControl(DirectObject):
         self.altDown = 0
         self.perspCollPlane = None # [gjeon] used for new LE
         self.perspCollPlane2 = None # [gjeon] used for new LE
-        
+
     def toggleMarkerVis(self):
 ##        if base.direct.cameraControl.coaMarker.isHidden():
 ##            base.direct.cameraControl.coaMarker.show()
 ##        else:
 ##            base.direct.cameraControl.coaMarker.hide()
-            
+
         if self.coaMarker.isHidden():
             self.coaMarker.show()
         else:
@@ -135,7 +135,7 @@ class DirectCameraControl(DirectObject):
             else:
                 # Start manipulation
                 self.spawnHPanYZoom()
-            
+
     def mouseDollyStop(self):
         taskMgr.remove('manipulateCamera')
 
@@ -209,7 +209,7 @@ class DirectCameraControl(DirectObject):
         self.coaMarker.show()
         # Resize it
         self.updateCoaMarkerSize()
-        
+
     def mouseFlyStartTopWin(self):
         print "Moving mouse 2 in new window"
         #altIsDown = base.getAlt()
@@ -260,7 +260,7 @@ class DirectCameraControl(DirectObject):
         taskMgr.remove('manipulateCamera')
         # Spawn new task
         t = Task.Task(self.OrthoZoomTask)
-        taskMgr.add(t, 'manipulateCamera')        
+        taskMgr.add(t, 'manipulateCamera')
 
     def spawnHPPan(self):
         # Kill any existing tasks
@@ -328,7 +328,7 @@ class DirectCameraControl(DirectObject):
             moveDir = Vec3(Y_AXIS)
 
         if self.useMayaCamControls : # use maya controls
-            moveDir.assign(moveDir * ((base.direct.dr.mouseDeltaX -1.0 * base.direct.dr.mouseDeltaY) 
+            moveDir.assign(moveDir * ((base.direct.dr.mouseDeltaX -1.0 * base.direct.dr.mouseDeltaY)
                                     * state.zoomSF))
             hVal = 0.0
         else:
@@ -361,7 +361,7 @@ class DirectCameraControl(DirectObject):
             base.direct.dr.orthoFactor = 0.0001
         base.direct.dr.updateFilmSize(x, y)
         return Task.cont
-    
+
     def HPPanTask(self, state):
         base.direct.camera.setHpr(base.direct.camera,
                              (0.5 * base.direct.dr.mouseDeltaX *
@@ -382,7 +382,7 @@ class DirectCameraControl(DirectObject):
             if base.direct.camera.getPos().getZ() >=0:
                 iRay.ct.traverse(self.perspCollPlane)
             else:
-                iRay.ct.traverse(self.perspCollPlane2)                
+                iRay.ct.traverse(self.perspCollPlane2)
 
             if iRay.getNumEntries() > 0:
                 entry = iRay.getEntry(0)
@@ -790,7 +790,7 @@ class DirectCameraControl(DirectObject):
 
         # How far do you move the camera to be this distance from the node?
         deltaMove = vWidget2Camera - centerVec
-        
+
         # Move a target there
         try:
             self.camManipRef.setPos(base.direct.camera, deltaMove)
@@ -867,4 +867,3 @@ class DirectCameraControl(DirectObject):
 
     def removeManipulateCameraTask(self):
         taskMgr.remove('manipulateCamera')
-

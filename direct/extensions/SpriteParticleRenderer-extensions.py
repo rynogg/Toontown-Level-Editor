@@ -69,7 +69,7 @@
         # Load model and get texture
         m = loader.loadModel(modelName)
         if (m == None):
-            print "SpriteParticleRenderer: Couldn't find model: %s!" % modelName 
+            print "SpriteParticleRenderer: Couldn't find model: %s!" % modelName
             return None
         nodeName = self.getSourceNodeName()
         np = m.find(nodeName)
@@ -79,5 +79,3 @@
             return None
         self.setFromNode(np)
         m.removeNode()
-        
-

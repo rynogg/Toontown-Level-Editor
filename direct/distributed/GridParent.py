@@ -97,5 +97,3 @@ class GridParent:
 
         #print "gridParent: reparent to %s" % self.av
         #print "gridParent: pos = %s, %s" % (self.av.getPos(), self.av.getParent().getPos())
-
-

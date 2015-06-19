@@ -260,7 +260,7 @@ class ClassTypeDescriptor(BaseTypeDescriptor):
                     self.CModules.append(method.typeDescriptor.moduleName)
             for method in parentType.upcastMethods:
                 if (not (method.typeDescriptor.moduleName in self.CModules)):
-                        self.CModules.append(method.typeDescriptor.moduleName)
+                    self.CModules.append(method.typeDescriptor.moduleName)
             self.getCModulesRecursively(parentType)
 
     def getCModules(self):
@@ -1024,4 +1024,3 @@ class FunctionTypeDescriptor(BaseTypeDescriptor):
         this parameter (if there was one)
         """
         return filter(lambda type: (not type.isThis), self.argumentTypes)
-

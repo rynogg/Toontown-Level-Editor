@@ -55,10 +55,10 @@ class ThreadBase:
 
     def getName(self):
         return self.name
-    
+
     def is_alive(self):
         return self.__thread.isStarted()
-    
+
     def isAlive(self):
         return self.__thread.isStarted()
 
@@ -68,9 +68,9 @@ class ThreadBase:
     def setDaemon(self, daemon):
         if self.is_alive():
             raise RuntimeError
-        
+
         self.__dict__['daemon'] = daemon
-        
+
     def __setattr__(self, key, value):
         if key == 'name':
             self.setName(value)
@@ -115,13 +115,13 @@ class Thread(ThreadBase):
     def __del__(self):
         # On interpreter shutdown, the _thread module might have
         # already been cleaned up.
-        if _thread and _thread._remove_thread_id: 
+        if _thread and _thread._remove_thread_id:
             _thread._remove_thread_id(self.ident)
 
     def start(self):
         if self.__thread.isStarted():
             raise RuntimeError
-        
+
         if not self.__thread.start(pm.TPNormal, True):
             raise RuntimeError
 
@@ -132,7 +132,7 @@ class Thread(ThreadBase):
             _sys.setprofile(_setprofile_func)
 
         self.__target(*self.__args, **self.__kwargs)
-        
+
     def join(self, timeout = None):
         # We don't support a timed join here, sorry.
         assert timeout is None
@@ -146,10 +146,10 @@ class Thread(ThreadBase):
 class ExternalThread(ThreadBase):
     """ Returned for a Thread object that wasn't created by this
     interface. """
-    
+
     def __init__(self, extThread, threadId):
         ThreadBase.__init__(self)
-        
+
         self.__thread = extThread
         self.__dict__['daemon'] = True
         self.__dict__['name'] = self.__thread.getName()
@@ -157,10 +157,10 @@ class ExternalThread(ThreadBase):
 
     def start(self):
         raise RuntimeError
-    
+
     def run(self):
         raise RuntimeError
-        
+
     def join(self, timeout = None):
         raise RuntimeError
 
@@ -169,7 +169,7 @@ class ExternalThread(ThreadBase):
 
 class MainThread(ExternalThread):
     """ Returned for the MainThread object. """
-    
+
     def __init__(self, extThread, threadId):
         ExternalThread.__init__(self, extThread, threadId)
         self.__dict__['daemon'] = False
@@ -188,7 +188,7 @@ class Lock(pm.Mutex):
             return True
         else:
             return pm.Mutex.tryAcquire(self)
-    
+
     __enter__ = acquire
 
     def __exit__(self, t, v, tb):
@@ -208,7 +208,7 @@ class RLock(pm.ReMutex):
             return True
         else:
             return pm.ReMutex.tryAcquire(self)
-    
+
     __enter__ = acquire
 
     def __exit__(self, t, v, tb):
@@ -247,7 +247,7 @@ class Condition(pm.ConditionVarFull):
         pm.ConditionVarFull.notifyAll(self)
 
     notify_all = notifyAll
-    
+
     __enter__ = acquire
 
     def __exit__(self, t, v, tb):
@@ -267,7 +267,7 @@ class Semaphore(pm.Semaphore):
             return True
         else:
             return pm.Semaphore.tryAcquire(self)
-    
+
     __enter__ = acquire
 
     def __exit__(self, t, v, tb):
@@ -310,7 +310,7 @@ class Event:
 
         finally:
             self.__lock.release()
-            
+
     def clear(self):
         self.__lock.acquire()
         try:
@@ -318,7 +318,7 @@ class Event:
 
         finally:
             self.__lock.release()
-            
+
     def wait(self, timeout = None):
         self.__lock.acquire()
         try:
@@ -332,9 +332,9 @@ class Event:
                     wait = expires - clock.getShortTime()
                     if wait < 0:
                         return
-                    
+
                     self.__cvar.wait(wait)
-                
+
         finally:
             self.__lock.release()
 

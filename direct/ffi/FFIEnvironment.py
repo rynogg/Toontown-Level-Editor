@@ -10,18 +10,18 @@ class FFIEnvironment:
         self.downcastFunctions = []
         self.globalValues = []
         self.manifests = []
-    
+
     def addType(self, typeDescriptor, name):
         if self.types.has_key(name):
             FFIConstants.notify.info('Redefining type named: ' + name)
         self.types[name] = typeDescriptor
-    
+
     def getTypeNamed(self, name):
         try:
             self.types[name]
         except KeyError:
             raise 'Type not found in FFIEnvironment'
-    
+
     def addGlobalFunction(self, typeDescriptors):
         self.globalFunctions.extend(typeDescriptors)
     def addDowncastFunction(self, typeDescriptor):

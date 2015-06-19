@@ -128,17 +128,17 @@ def processFunction(handle, function, isConstructor = False):
         wrapper = interrogate_function_python_wrapper(function, i_wrapper)
         if interrogate_wrapper_has_comment(wrapper):
             print >>handle, comment(interrogate_wrapper_comment(wrapper))
-        
+
         if not isConstructor:
             if not interrogate_wrapper_number_of_parameters(wrapper) > 0 or not interrogate_wrapper_parameter_is_this(wrapper, 0):
                 print >>handle, "static",
-            
+
             if interrogate_wrapper_has_return_value(wrapper):
                 print >>handle, translateTypeSpec(translated_type_name(interrogate_wrapper_return_type(wrapper))),
             else:
                 pass#print >>handle, "void",
         print >>handle, translateFunctionName(interrogate_function_name(function)) + "(",
-        
+
         first = True
         for i_param in range(interrogate_wrapper_number_of_parameters(wrapper)):
             if not interrogate_wrapper_parameter_is_this(wrapper, i_param):
@@ -148,16 +148,16 @@ def processFunction(handle, function, isConstructor = False):
                 if interrogate_wrapper_parameter_has_name(wrapper, i_param):
                     print >>handle, interrogate_wrapper_parameter_name(wrapper, i_param),
                 first = False
-        
+
         print >>handle, ");"
 
 def processType(handle, type):
     typename = translated_type_name(type)
     derivations = [ translated_type_name(interrogate_type_get_derivation(type, n)) for n in range(interrogate_type_number_of_derivations(type)) ]
-    
+
     if interrogate_type_has_comment(type):
         print >>handle, comment(interrogate_type_comment(type))
-    
+
     if interrogate_type_is_enum(type):
         print >>handle, "enum %s {" % typename
         for i_value in range(interrogate_type_number_of_enum_values(type)):
@@ -171,33 +171,33 @@ def processType(handle, type):
             classtype = "union"
         else:
             print "I don't know what type %s is" % typename
-        
+
         if len(derivations) > 0:
             print >>handle, "%s %s : public %s {" % (classtype, typename, ", public ".join(derivations))
         else:
             print >>handle, "%s %s {" % (classtype, typename)
         print >>handle, "public:"
-    
+
     for i_ntype in xrange(interrogate_type_number_of_nested_types(type)):
         processType(handle, interrogate_type_get_nested_type(type, i_ntype))
-    
+
     for i_method in xrange(interrogate_type_number_of_constructors(type)):
         processFunction(handle, interrogate_type_get_constructor(type, i_method), True)
-    
+
     for i_method in xrange(interrogate_type_number_of_methods(type)):
         processFunction(handle, interrogate_type_get_method(type, i_method))
-    
+
     for i_method in xrange(interrogate_type_number_of_make_seqs(type)):
         print >>handle, "list", translateFunctionName(interrogate_make_seq_seq_name(interrogate_type_get_make_seq(type, i_method))), "();"
-    
+
     print >>handle, "};"
 
 if __name__ == "__main__":
     handle = open("pandadoc.hpp", "w")
-    
+
     print >>handle, comment("Panda3D modules that are implemented in C++.")
     print >>handle, "namespace panda3d {}"
-    
+
     # Determine the path to the interrogatedb files
     interrogate_add_search_directory(os.path.join(os.path.dirname(pandac.__file__), "..", "..", "etc"))
     interrogate_add_search_directory(os.path.join(os.path.dirname(pandac.__file__), "input"))
@@ -221,8 +221,7 @@ if __name__ == "__main__":
             processType(handle, type)
         else:
             print "Type %s has no module name" % typename
-    
+
     if lastpkg is not None:
         print >>handle, "}"
     handle.close()
-

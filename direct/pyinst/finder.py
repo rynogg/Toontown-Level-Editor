@@ -18,7 +18,7 @@ _pcache = {}
 
 def _locate(nm, xtrapath=None, base=None):
     """Find a file / directory named NM in likely places.
-    
+
        XTRAPATH is a list of paths to prepend to BASE.
        If BASE is None, sys.path (as extended by packages) is used."""
     ppath = base
@@ -37,7 +37,7 @@ def _locate(nm, xtrapath=None, base=None):
 
 def _locatepython(name, xtrapath=None):
     """Locate a Python resource named NAME.
-    
+
        All of the standard file extensions will be tried.
        XTRAPATH is prepended to sys.path."""
     for ext in ('.py', '.pyc', '.pyw', '.pyo', '.pyd', '.dll'):
@@ -60,7 +60,7 @@ def ispackage(name):
     if os.path.exists(os.path.join(name, '__init__.pyo')):
         return 1
     return 0
-        
+
 def idtype(fullnm):
     """Figure out what type of resource FULLNM refers to."""
     if os.path.isdir(fullnm):
@@ -100,7 +100,7 @@ def identify(name, xtrapath=None):
             xtra = _pcache[id(xtrapath)]
         else:
             xtra = expand(xtrapath)
-            _pcache[id(xtrapath)] = xtra 
+            _pcache[id(xtrapath)] = xtra
         fullnm = _locate(name, xtra)
         if not fullnm:
             fullnm =  _locate(name, [], _bpath)
@@ -119,7 +119,7 @@ def identify(name, xtrapath=None):
                             break
                     else:
                         raise ValueError, "%s not found" % name
-                    
+
     typ = idtype(fullnm)
     nm = name
     if typ in (GSCRIPT, SCRIPT, MODULE, PACKAGE, PBINARY):
@@ -135,9 +135,9 @@ def identify(name, xtrapath=None):
     elif typ == BINARY:
         nm = os.path.basename(fullnm)
     return typ, nm, fullnm
- 
+
 def expand(plist):
-    """ expand a list of paths (like sys.path) to include all the 
+    """ expand a list of paths (like sys.path) to include all the
         directories that qualify as packages """
     pkgdirs = []
     for pth in plist:
@@ -172,7 +172,7 @@ if _bpath is None:
     _bpath.extend(string.split(os.environ.get('PATH', ''), ';'))
 if _ppath is None:
     _ppath = expand(sys.path)
-        
+
 def getpath():
     """Return the path that Windows will search for dlls."""
     return _bpath

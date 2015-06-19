@@ -240,4 +240,3 @@ def qSlerp(startQuat, endQuat, t):
         destQuat.setK(startScale * startQ.getK() +
                       endScale * endQuat.getK())
     return destQuat
-

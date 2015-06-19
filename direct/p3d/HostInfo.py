@@ -46,7 +46,7 @@ class HostInfo:
 
         if hostDir and not isinstance(hostDir, Filename):
             hostDir = Filename.fromOsSpecific(hostDir)
-            
+
         self.hostDir = hostDir
         self.asMirror = asMirror
         self.perPlatform = perPlatform
@@ -172,7 +172,7 @@ class HostInfo:
                         statusString = channel.getStatusString()
                         self.notify.warning("Could not contact download server at %s" % (url,))
                         self.notify.warning("Status code = %s %s" % (statusCode, statusString))
-                                    
+
                 if not rf:
                     self.notify.warning("Unable to download %s" % (url,))
                     try:
@@ -203,7 +203,7 @@ class HostInfo:
                         self.notify.warning("%s" % (str(e),))
                         pass
                     return False
-                    
+
         tempFilename = Filename.temporary('', 'p3d_', '.xml')
         if rf:
             f = open(tempFilename.toOsSpecific(), 'wb')
@@ -275,7 +275,7 @@ class HostInfo:
 
         now = int(time.time())
         return now < self.contentsExpiration and self.hasContentsFile
-        
+
     def readContentsFile(self, tempFilename = None, freshDownload = False):
         """ Reads the contents.xml file for this particular host, once
         it has been downloaded into the indicated temporary file.
@@ -339,7 +339,7 @@ class HostInfo:
             xorig.SetAttribute('expiration', str(self.contentsExpiration))
 
             xcontents.InsertEndChild(xorig)
-            
+
         else:
             # Read the download hash and expiration time from the XML.
             expiration = None
@@ -378,7 +378,7 @@ class HostInfo:
                 solo = int(xpackage.Attribute('solo') or '')
             except ValueError:
                 solo = False
-                
+
             package = self.__makePackage(name, platform, version, solo)
             package.descFile = FileSpec()
             package.descFile.loadXml(xpackage)
@@ -411,7 +411,7 @@ class HostInfo:
         """ Looks for the <host> or <alt_host> entry in the
         contents.xml that corresponds to the URL that we actually
         downloaded from. """
-        
+
         xhost = xcontents.FirstChildElement('host')
         while xhost:
             url = xhost.Attribute('url')
@@ -426,7 +426,7 @@ class HostInfo:
                     self.readHostXml(xalthost)
                     return
                 xalthost = xalthost.NextSiblingElement('alt_host')
-            
+
             xhost = xhost.NextSiblingElement('host')
 
     def __findHostXmlForHostDir(self, xcontents):
@@ -435,7 +435,7 @@ class HostInfo:
         contents.xml from.  This is used when reading a contents.xml
         file found on disk, as opposed to downloading it from a
         site. """
-        
+
         xhost = xcontents.FirstChildElement('host')
         while xhost:
             url = xhost.Attribute('url')
@@ -456,7 +456,7 @@ class HostInfo:
                     self.readHostXml(xalthost)
                     return
                 xalthost = xalthost.NextSiblingElement('alt_host')
-            
+
             xhost = xhost.NextSiblingElement('host')
 
     def readHostXml(self, xhost):
@@ -480,7 +480,7 @@ class HostInfo:
                 self.downloadUrlPrefix += '/'
         else:
             self.downloadUrlPrefix = self.hostUrlPrefix
-            
+
         xmirror = xhost.FirstChildElement('mirror')
         while xmirror:
             url = xmirror.Attribute('url')
@@ -603,7 +603,7 @@ class HostInfo:
         the list of packages that were NOT found. """
 
         packages = packages[:]
-        
+
         for key, platforms in self.packages.items():
             for platform, package in platforms.items():
                 if package in packages:

@@ -69,7 +69,7 @@ class DWBPackageInstaller(DirectWaitBar, PackageInstaller):
 
         if self['perPackage']:
             self['value'] = progress * self['range']
-        
+
     def downloadProgress(self, overallProgress):
         """ This callback is made repeatedly between downloadStarted()
         and downloadFinished() to update the current progress through
@@ -89,6 +89,6 @@ class DWBPackageInstaller(DirectWaitBar, PackageInstaller):
         call to downloadStarted(). """
 
         self.hide()
-        
+
         if self['finished']:
             self['finished'](success)

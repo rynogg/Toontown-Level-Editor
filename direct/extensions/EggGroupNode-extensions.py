@@ -8,4 +8,3 @@
             result.append(child)
             child = self.getNextChild()
         return result
-    

@@ -338,7 +338,7 @@ class OnscreenText(DirectObject, NodePath):
 
     def setWordwrap(self, wordwrap):
         self.wordwrap = wordwrap
-        
+
         if wordwrap:
             self.textNode.setWordwrap(wordwrap)
         else:
@@ -346,7 +346,7 @@ class OnscreenText(DirectObject, NodePath):
 
     def getWordwrap(self):
         return self.wordwrap
-    
+
     def setFg(self, fg):
         self.textNode.setTextColor(fg[0], fg[1], fg[2], fg[3])
 
@@ -409,4 +409,3 @@ class OnscreenText(DirectObject, NodePath):
 
     # Allow index style refererences
     __getitem__ = cget
-

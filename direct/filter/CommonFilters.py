@@ -10,7 +10,7 @@ the composition process isn't simply a question of concatenating them:
 you have to somehow make them work together.  I suspect that there
 exists some fairly simple framework that would make this automatable.
 However, until I write some more filters myself, I won't know what
-that framework is.  Until then, I'll settle for this 
+that framework is.  Until then, I'll settle for this
 clunky approach.  - Josh
 
 """
@@ -67,8 +67,8 @@ class CommonFilters:
         self.blur = []
         self.ssao = []
         if self.task != None:
-          taskMgr.remove(self.task)
-          self.task = None
+            taskMgr.remove(self.task)
+            self.task = None
 
     def reconfigure(self, fullrebuild, changed):
 
@@ -262,13 +262,13 @@ class CommonFilters:
             if (configuration.has_key("Inverted")):
                 text += "o_color = float4(1, 1, 1, 1) - o_color;\n"
             text += "}\n"
-            
+
             self.finalQuad.setShader(Shader.make(text))
             for tex in self.textures:
                 self.finalQuad.setShaderInput("tx"+tex, self.textures[tex])
-            
+
             self.task = taskMgr.add(self.update, "common-filters-update")
-        
+
         if (changed == "CartoonInk") or fullrebuild:
             if (configuration.has_key("CartoonInk")):
                 separation = configuration["CartoonInk"]
@@ -287,13 +287,13 @@ class CommonFilters:
                 self.bloom[0].setShaderInput("trigger", bloomconf.mintrigger, 1.0/(bloomconf.maxtrigger-bloomconf.mintrigger), 0.0, 0.0)
                 self.bloom[0].setShaderInput("desat", bloomconf.desat)
                 self.bloom[3].setShaderInput("intensity", intensity, intensity, intensity, intensity)
-        
+
         if (changed == "VolumetricLighting") or fullrebuild:
             if (configuration.has_key("VolumetricLighting")):
                 config = configuration["VolumetricLighting"]
                 tcparam = config.density / float(config.numsamples)
                 self.finalQuad.setShaderInput("vlparams", tcparam, config.decay, config.exposure, 0.0)
-        
+
         if (changed == "AmbientOcclusion") or fullrebuild:
             if (configuration.has_key("AmbientOcclusion")):
                 config = configuration["AmbientOcclusion"]
@@ -436,4 +436,3 @@ class CommonFilters:
             del self.configuration["AmbientOcclusion"]
             return self.reconfigure(True, "AmbientOcclusion")
         return True
-

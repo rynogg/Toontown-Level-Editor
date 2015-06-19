@@ -126,4 +126,3 @@ class SpriteParticleRendererExt(SpriteParticleRenderer):
         m.removeNode()
 
         return True
-
