@@ -3305,9 +3305,9 @@ class LevelEditor(NodePath, DirectObject):
         visGroups = self.getDNAVisGroups(self.NPToplevel)
         for visGroup in visGroups:
             np = visGroup[0]
-            np.setColor(0.5 + random()/2.0,
-                        0.5 + random()/2.0,
-                        0.5 + random()/2.0)
+            np.setColor(0.5 + random.random()/2.0,
+                        0.5 + random.random()/2.0,
+                        0.5 + random.random()/2.0)
 
     def clearZoneColors(self):
         # Clear random colors
