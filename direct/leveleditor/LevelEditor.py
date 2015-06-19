@@ -426,6 +426,8 @@ class LevelEditor(NodePath, DirectObject):
             ('control-arrow_right', self.keyboardXformSelected, ['right', 'rotate']),
             ('control-arrow_up', self.keyboardXformSelected, ['up', 'rotate']),
             ('control-arrow_down', self.keyboardXformSelected, ['down', 'rotate']),
+            ('shift-arrow_up', self.keyboardXformSelected, ['up','zlate']),
+            ('shift-arrow_down', self.keyboardXformSelected, ['down','zlate']),
             ('shift-s', self.placeSuitPoint),
             ('shift-c', self.placeBattleCell),
             ('k', self.addToLandmarkBlock),
@@ -1291,10 +1293,10 @@ class LevelEditor(NodePath, DirectObject):
                     # First snap selected node path to grid
                     pos = selectedNode.getPos(base.direct.grid)
                     snapPos = base.direct.grid.computeSnapPoint(pos)
-                    if self.panel.fPlaneSnap.get():
-                        zheight = 0
-                    else:
-                        zheight = snapPos[2]
+                    #if self.panel.fPlaneSnap.get():
+                    #    zheight = 0
+                    #else:
+                    zheight = snapPos[2]
                     selectedNode.setPos(base.direct.grid,
                                         snapPos[0], snapPos[1], zheight)
                     # Angle snap
@@ -2335,9 +2337,56 @@ class LevelEditor(NodePath, DirectObject):
             # Use back door to set grid spacing to avoid grid update
             base.direct.grid.gridSpacing = oldGridSpacing
 
+    def keyboardZTranslateSelected(self, arrowDirection):
+        gridToCamera = base.direct.grid.getMat(base.direct.camera)
+        camXAxis = gridToCamera.xformVec(X_AXIS)
+        xxDot = camXAxis.dot(X_AXIS)
+        xzDot = camXAxis.dot(Z_AXIS)
+
+        # what is the current grid spacing?
+        if base.direct.fShift:
+            # If shift, divide grid spacing by 10.0
+            oldGridSpacing = base.direct.grid.gridSpacing
+            # Use back door to set grid spacing to avoid grid update
+            base.direct.grid.gridSpacing = base.direct.grid.gridSpacing/10.0
+        deltaMove = base.direct.grid.gridSpacing
+
+        # Compute the specified delta
+        deltaPos = Vec3(0)
+        if (abs(xxDot) > abs(xzDot)):
+            if (xxDot < 0.0):
+                deltaMove = -deltaMove
+            # Compute delta
+            if (arrowDirection == 'down'):
+                deltaPos.setZ(deltaPos[1] + deltaMove)
+            elif (arrowDirection == 'up'):
+                deltaPos.setZ(deltaPos[1] - deltaMove)
+        else:
+            if (xzDot < 0.0):
+                deltaMove = -deltaMove
+            # Compute delta
+            if (arrowDirection == 'down'):
+                deltaPos.setZ(deltaPos[0] + deltaMove)
+            elif (arrowDirection == 'up'):
+                deltaPos.setZ(deltaPos[0] - deltaMove)
+
+        # Move selected objects
+        for selectedNode in base.direct.selected:
+            # Move it
+            selectedNode.setPos(base.direct.grid,
+                                selectedNode.getPos(base.direct.grid) + deltaPos)
+        # Snap objects to grid and update DNA if necessary
+        self.updateSelectedPose(base.direct.selected.getSelectedAsList())
+        # Restore grid spacing
+        if base.direct.fShift:
+            # Use back door to set grid spacing to avoid grid update
+            base.direct.grid.gridSpacing = oldGridSpacing
+
     def keyboardXformSelected(self, arrowDirection, mode):
         if mode == 'rotate':
             self.keyboardRotateSelected(arrowDirection)
+        elif mode == 'zlate':
+            self.keyboardZTranslateSelected(arrowDirection)
         else:
             self.keyboardTranslateSelected(arrowDirection)
 
