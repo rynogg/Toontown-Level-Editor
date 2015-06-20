@@ -26,7 +26,7 @@ WaterSprayColor = Point4(0.75, 0.75, 1.0, 0.8)
 def doSquirts(squirts):
     if len(squirts) == 0:
         return (None, None)
-    
+
     suitSquirtsDict = {}
     doneUber = 0
     skip = 0
@@ -50,7 +50,7 @@ def doSquirts(squirts):
                 suitSquirtsDict[suitId] = [squirt]
 
     suitSquirts = suitSquirtsDict.values()
-    
+
     def compFunc(a, b):
         if len(a) > len(b):
             return 1

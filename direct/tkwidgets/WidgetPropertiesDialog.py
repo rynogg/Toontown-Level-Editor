@@ -229,4 +229,3 @@ class WidgetPropertiesDialog(Toplevel):
         the dialog is destroyed. By default, it does nothing.
         """
         pass # override
-

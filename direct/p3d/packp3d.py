@@ -90,7 +90,7 @@ import os
 import getopt
 import glob
 import direct
-from direct.p3d import Packager 
+from direct.p3d import Packager
 from pandac.PandaModules import *
 
 # Temp hack for debugging.
@@ -110,7 +110,7 @@ def makePackedApp(args):
     configFlags = []
     requires = []
     allowPythonDev = False
-    
+
     for option, value in opts:
         if option == '-o':
             appFilename = Filename.fromOsSpecific(value)
@@ -158,7 +158,7 @@ def makePackedApp(args):
 
     appDir = Filename(appFilename.getDirname())
     if not appDir:
-      appDir = Filename('.')
+        appDir = Filename('.')
     appBase = appFilename.getBasenameWoExtension()
 
     if not main:
@@ -178,7 +178,7 @@ def makePackedApp(args):
     mainModule.setExtension('')
 
     mainModule = mainModule.cStr().replace('/', '.')
-    
+
     packager.installDir = appDir
     packager.allowPythonDev = allowPythonDev
 
@@ -197,7 +197,7 @@ def makePackedApp(args):
         # panda3d.
         if 'panda3d' not in map(lambda t: t[0], requires):
             packager.do_require('panda3d')
-        
+
         for name, version, host in requires:
             packager.do_require(name, version = version, host = host)
 
@@ -208,7 +208,7 @@ def makePackedApp(args):
         packager.do_mainModule(mainModule)
         packager.endPackage()
         packager.close()
-        
+
     except Packager.PackagerError:
         # Just print the error message and exit gracefully.
         inst = sys.exc_info()[1]

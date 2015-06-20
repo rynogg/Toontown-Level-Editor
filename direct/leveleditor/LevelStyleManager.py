@@ -1121,10 +1121,10 @@ class LevelStyleManager:
         newMenu.setScale(0.5)
         # Create and return a pie menu
         return PieMenu(newMenu, textList)
-    
+
     def createScrollMenu(self, dnaType, textList):
         newMenu = hidden.attachNewNode(dnaType+'ScrollMenu')
-        
+
         return ScrollMenu(newMenu, textList)
 
     # MISCELLANEOUS MENUS

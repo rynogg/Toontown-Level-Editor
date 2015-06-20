@@ -13,7 +13,7 @@ class ReferrerSearch(Job):
         self.depth = 0
         self.found = 0
         self.shouldPrintStats = False
-    
+
     def __call__(self):
         safeReprNotify = _getSafeReprNotify()
         info = safeReprNotify.getInfo()
@@ -25,7 +25,7 @@ class ReferrerSearch(Job):
         finally:
             self.obj = None
             pass
-        
+
         safeReprNotify.setInfo(info)
         pass
 
@@ -40,7 +40,7 @@ class ReferrerSearch(Job):
         for x in self.stepGenerator(0, [self.obj]):
             yield None
             pass
-        
+
         yield Job.Done
         pass
 
@@ -54,7 +54,7 @@ class ReferrerSearch(Job):
 
     def __del__(self):
         print 'ReferrerSearch garbage collected'
-        
+
     def truncateAtNewLine(self, s):
         if s.find('\n') == -1:
             return s
@@ -64,7 +64,7 @@ class ReferrerSearch(Job):
     def printStatsWhenAble(self):
         self.shouldPrintStats = True
         pass
-        
+
     def myrepr(self, referrer, refersTo):
         pre = ''
         if (isinstance(referrer, dict)):
@@ -90,17 +90,17 @@ class ReferrerSearch(Job):
             post = self.truncateAtNewLine(fastRepr(refersTo)) + "-> "
 
         return '%s%s' % (pre, post)
-        
+
     def step(self, depth, path):
         if self.shouldPrintStats:
             self.printStats(path)
             self.shouldPrintStats = False
-        
+
         at = path[-1]
 
         if id(at) in self.visited:
-               # don't continue down this path
-               return
+            # don't continue down this path
+            return
 
         # check for success
         if (self.isAtRoot(at, path)):
@@ -120,7 +120,7 @@ class ReferrerSearch(Job):
 
         if (self.isManyRef(at, path, referrers)):
             return
-            
+
         while(referrers):
             ref = referrers.pop()
             self.depth+=1
@@ -133,23 +133,23 @@ class ReferrerSearch(Job):
     def stepGenerator(self, depth, path):
         if self.shouldPrintStats:
             self.printStats(path)
-            
+
             self.shouldPrintStats = False
 
         at = path[-1]
 
         if id(at) in self.visited:
-               # don't continue down this path
-               raise StopIteration 
+            # don't continue down this path
+            raise StopIteration
 
         # check for success
         if (self.isAtRoot(at, path)):
             self.found += 1
-            raise StopIteration 
+            raise StopIteration
 
         # mark our progress after checking goal
         self.visited.add(id(at))
-        
+
         referrers = [ref for ref in gc.get_referrers(at) \
                      if not (ref is path or \
                        inspect.isframe(ref) or \
@@ -159,8 +159,8 @@ class ReferrerSearch(Job):
                        id(ref) in self.visited) ]
 
         if (self.isManyRef(at, path, referrers)):
-            raise StopIteration 
-            
+            raise StopIteration
+
         while(referrers):
             ref = referrers.pop()
             self.depth+=1
@@ -172,17 +172,17 @@ class ReferrerSearch(Job):
 
         yield None
         pass
-    
+
     def printStats(self, path):
         path = list(reversed(path))
         path.insert(0,0)
         print 'RefPath(%s) - Stats - visited(%s) | found(%s) | depth(%s) | CurrentPath(%s)' % \
               (self._id, len(self.visited), self.found, self.depth, ''.join(self.myrepr(path[x], path[x+1]) for x in xrange(len(path)-1)))
         pass
-    
+
     def isAtRoot(self, at, path):
         # Now we define our 'roots'
-        
+
         # __builtins__
         if at is __builtins__:
             sys.stdout.write("RefPath(%s): __builtins__-> " % self._id)
@@ -193,7 +193,7 @@ class ReferrerSearch(Job):
                 pass
             print
             return True
-        
+
         # any module scope
         if inspect.ismodule(at):
             sys.stdout.write("RefPath(%s): Module(%s)-> " % (self._id, at.__name__))
@@ -233,7 +233,7 @@ class ReferrerSearch(Job):
                 pass
             print
             return True
-        
+
         # messenger
         if at is messenger:
             sys.stdout.write("RefPath(%s): messenger-> " % self._id)
@@ -281,7 +281,7 @@ class ReferrerSearch(Job):
                 return True
             else:
                 sys.stdout.write("RefPath(%s): ManyRefsAllowed(%s)[%s]-> " % (self._id, len(referrers), fastRepr(at, maxLen = 1, strFactor = 30)))
-                print                
+                print
                 pass
             pass
         return False

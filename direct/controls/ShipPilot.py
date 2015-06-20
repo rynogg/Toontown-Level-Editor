@@ -26,12 +26,12 @@ class ShipPilot(PhysicsWalker):
     notify = directNotify.newCategory("ShipPilot")
     wantDebugIndicator = base.config.GetBool(
         'want-avatar-physics-indicator', 0)
-    
+
     MAX_STRAIGHT_SAIL_BONUS = 2.1     # 1.25 Old
     STRAIGHT_SAIL_BONUS_TIME = 18.0
     REVERSE_STRAIGHT_SAIL_BONUS_TIME = -8.0
     TURNING_BONUS_REDUCTION = 3.0
-    
+
     # special methods
     def __init__(self,
                  gravity = -32.1740,
@@ -42,23 +42,23 @@ class ShipPilot(PhysicsWalker):
             gravity, standableGround))
         PhysicsWalker.__init__(
             self, gravity, standableGround, hardLandingForce)
-        
+
         self.__speed=0.0
         self.__rotationSpeed=0.0
         self.__slideSpeed=0.0
         self.__vel=Vec3(0.0)
         self.currentTurning = 0.0
-        
+
         self.ship = None
         self.pusher = None
-        
+
         # Keeps track of the ship sailing in a straight heading
         # for long periods of time.  We slowly up the ship's max
         # acceleration as this increases.
         self.straightHeading = 0
 
         self.cNodePath = None
-        
+
     def setWalkSpeed(self, forward, jump, reverse, rotate):
         assert self.debugPrint("setWalkSpeed()")
         PhysicsWalker.setWalkSpeed(self, forward, 0, reverse, rotate)
@@ -74,13 +74,13 @@ class ShipPilot(PhysicsWalker):
 
         if self.cNodePath and not self.cNodePath.isEmpty():
             self.cNodePath.node().setFromCollideMask(self.wallBitmask)
-        
+
     def setFloorBitMask(self, bitMask):
         self.floorBitmask = bitMask
 
     def setShip(self, ship):
         self.setAvatar(ship)
-        
+
     def setAvatar(self, ship):
         if ship is None:
             # only clear out the global controlForce's physics object if it hasn't
@@ -224,7 +224,7 @@ class ShipPilot(PhysicsWalker):
         # these are used in collision setup and handleControls
         self.shipNodePath = shipNodePath
         self.actorNode = shipNodePath.node()
-        
+
     def takedownPhysics(self):
         assert self.debugPrint("takedownPhysics()")
 
@@ -369,20 +369,20 @@ class ShipPilot(PhysicsWalker):
         slideRight = 0
         jump = inputState.isSet("jump")
         # Determine what the speeds are based on the buttons:
-        
+
         # Check for Auto-Sailing
         if self.ship.getIsAutoSailing():
             forward = 1
             reverse = 0
         else:
             forward = 0
-            
+
         # How far did we move based on the amount of time elapsed?
         dt = ClockObject.getGlobalClock().getDt()
-        
+
         minSpeed = (self.ship.acceleration + self.ship.speedboost) * self.ship.speednerf
         minStraightSail = 1.0 / self.MAX_STRAIGHT_SAIL_BONUS * self.STRAIGHT_SAIL_BONUS_TIME * self.ship.speednerf
-        
+
         if reverse:
             # Decelerate while sails are up
             if (self.straightHeading < 0):
@@ -404,7 +404,7 @@ class ShipPilot(PhysicsWalker):
         elif forward:
             # Add in the Straight Sailing Time
             self.straightHeading += dt
-            
+
         if reverse:
             # Allow straightHeading to reach a negative value
             self.straightHeading = max(self.REVERSE_STRAIGHT_SAIL_BONUS_TIME, self.straightHeading)
@@ -418,7 +418,7 @@ class ShipPilot(PhysicsWalker):
         straightSailBonus = min(self.MAX_STRAIGHT_SAIL_BONUS, straightSailBonus * self.MAX_STRAIGHT_SAIL_BONUS)
         # self.__speed=(forward and self.ship.acceleration) or (reverse and self.ship.reverseAcceleration)
         self.__speed = self.ship.acceleration
-        
+
         avatarSlideSpeed = self.ship.acceleration * 0.5 * straightSailBonus
         self.__slideSpeed=(forward or reverse) and (
                 (slideLeft and -avatarSlideSpeed) or
@@ -432,7 +432,7 @@ class ShipPilot(PhysicsWalker):
         self.__speed += self.ship.speedboost
         self.__slideSpeed *= straightSailBonus
         maxSpeed = self.ship.maxSpeed
-        
+
         # Enable debug turbo modec
         debugRunning = inputState.isSet("debugRunning")
         if(debugRunning):
@@ -440,7 +440,7 @@ class ShipPilot(PhysicsWalker):
             self.__slideSpeed*=base.debugRunningMultiplier
             self.__rotationSpeed*=1.25
             maxSpeed = self.ship.maxSpeed * base.debugRunningMultiplier
-        
+
         #*#
         self.currentTurning += self.__rotationSpeed
         if self.currentTurning > self.ship.maxTurn:
@@ -460,14 +460,14 @@ class ShipPilot(PhysicsWalker):
 
         # Broadcast Event to Handlers (ShipStatusMeter)
         messenger.send("setShipSpeed-%s" % (self.ship.getDoId()), [self.__speed, self.getMaxSpeed()])
-        
+
         if self.wantDebugIndicator:
             self.displayDebugInfo()
-            
+
         if self.needToDeltaPos:
             self.setPriorParentVector()
             self.needToDeltaPos = 0
-            
+
         #------------------------------
         #debugTempH=self.shipNodePath.getH()
         if __debug__:
@@ -496,7 +496,7 @@ class ShipPilot(PhysicsWalker):
             rotation = self.__rotationSpeed
             if debugRunning:
                 rotation *= 4
-                
+
             # update pos:
             # Take a step in the direction of our previous heading.
             self.__vel=Vec3(Vec3.forward() * distance + Vec3.right() * slideDistance)
@@ -504,7 +504,7 @@ class ShipPilot(PhysicsWalker):
             # our previous heading.
             rotMat=Mat3.rotateMatNormaxis(self.shipNodePath.getH(), Vec3.up())
             step=rotMat.xform(self.__vel)
-            
+
             #newVector = self.acForce.getLocalVector()+Vec3(step)
             newVector = Vec3(step)
             #newVector=Vec3(rotMat.xform(newVector))
@@ -513,12 +513,12 @@ class ShipPilot(PhysicsWalker):
                 maxLen = self.__speed
             else:
                 maxLen = self.ship.reverseAcceleration
-            
+
             if newVector.length() > maxLen and \
                not (debugRunning or base.localAvatar.getTurbo()):
                 newVector.normalize()
                 newVector *= maxLen
-                
+
             if __debug__:
                 onScreenDebug.add(
                     "newVector", newVector)
@@ -526,22 +526,22 @@ class ShipPilot(PhysicsWalker):
                     "newVector length", newVector.length())
 
             base.controlForce.setVector(newVector)
-            
+
             assert base.controlForce.getLocalVector() == newVector,'1'
             assert base.controlForce.getPhysicsObject(),'2'
             assert base.controlForce.getPhysicsObject() == physObject,'3'
-            
+
             #momentum = self.momentumForce.getLocalVector()
             #momentum *= 0.9
             #self.momentumForce.setVector(momentum)
-            
+
             # update hpr:
             o=physObject.getOrientation()
             r=LRotationf()
             # factor in dt since we're directly setting the rotation here
             r.setHpr(Vec3(rotation * dt, 0.0, 0.0))
             physObject.setOrientation(o*r)
-            
+
             # sync the change:
             self.actorNode.updateTransform()
             #assert self.shipNodePath.getH()==debugTempH-rotation
@@ -551,7 +551,7 @@ class ShipPilot(PhysicsWalker):
             assert physObject.getVelocity().almostEqual(Vec3(0),0.1)
             #base.controlForce.setVector(Vec3.zero())
             goForward = True
-        
+
         #*#
         speed = physVel
         if (goForward):
@@ -562,13 +562,13 @@ class ShipPilot(PhysicsWalker):
             if physVelLen > self.ship.maxReverseSpeed:
                 speed.normalize()
                 speed *= self.ship.maxReverseSpeed
-            
+
         #speed *= 1.0 - dt * 0.05
 
         # modify based on sail damage
         speed *= self.ship.Sp
         speed /= self.ship.maxSp
-        
+
         if __debug__:
             q1=self.shipNodePath.getQuat()
             q2=physObject.getOrientation()
@@ -623,7 +623,7 @@ class ShipPilot(PhysicsWalker):
         self.straightHeading = 0
 
         self.setCollisionsActive(1)
-        
+
         if __debug__:
             #self.accept("control-f3", self.spawnTest) #*#
             self.accept("f3", self.reset) # for debugging only.
@@ -637,7 +637,7 @@ class ShipPilot(PhysicsWalker):
             taskMgr.add(
                 self.avatarPhysicsIndicator,
                 "ShipControlsIndicator%s"%(id(self),), 35)
-            
+
     def disableAvatarControls(self):
         """
         Ignore the arrow keys, etc.
@@ -647,23 +647,23 @@ class ShipPilot(PhysicsWalker):
 
         # Reset our straight heading timer (to clear the straight-line sailing bonus)
         self.straightHeading = 0
-        
+
         assert self.debugPrint("disableShipControls()")
         taskName = "ShipControls-%s"%(id(self),)
         taskMgr.remove(taskName)
-        
+
         taskName = "ShipControlsIndicator%s"%(id(self),)
         taskMgr.remove(taskName)
 
         if self.ship:
             self.ship.worldVelocity = Vec3(0)
-        
+
         if __debug__:
             self.ignore("control-f3") #*#
             self.ignore("f3")
 
         self.__speed = 0;
-        
+
         # Broadcast Event to Handlers (ShipStatusMeter)
         if self.ship:
             messenger.send("setShipSpeed-%s" % (self.ship.getDoId()), [self.__speed, self.getMaxSpeed()])

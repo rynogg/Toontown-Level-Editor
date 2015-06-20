@@ -244,7 +244,7 @@ class FFIMethodArgumentTreeCollection:
         if (self.methodSpecList[0].isStatic() and
             (not self.methodSpecList[0].isConstructor()) and
             (not isinstance(self.methodSpecList[0], FFISpecs.GlobalFunctionSpecification))):
-                self.outputOverloadedStaticFooter(file, nesting)
+            self.outputOverloadedStaticFooter(file, nesting)
         else:
             if self.classTypeDesc:
                 indent(file, nesting,   "FFIExternalObject.funcToMethod("+methodName+','+ self.classTypeDesc.foreignTypeName+ ",'"+methodName+"')\n")
@@ -469,4 +469,3 @@ class FFIMethodArgumentTree:
                 return tree.isSinglePath()
             else:
                 return self.tree[key][1]
-

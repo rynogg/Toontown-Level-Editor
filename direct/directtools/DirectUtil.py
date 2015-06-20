@@ -82,4 +82,3 @@ def getFileData(filename, separator = ','):
             data = map(lambda s: s.strip(), l.split(separator))
             fileData.append(data)
     return fileData
-

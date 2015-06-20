@@ -57,7 +57,7 @@ class NotifyPanel:
             items = categoryNames,
             selectioncommand = self.setActivePandaCategory)
         self.categoryList.pack(expand = 1, fill = 'both')
-                                           
+
         # Severity frame
         Label(severityFrame, text = 'Severity:',
               font=('MSSansSerif', 10, 'bold'),
@@ -152,4 +152,3 @@ class NotifyPanel:
     def setActiveSeverity(self):
         if self.activeCategory:
             self.activeCategory.setSeverity(self.severity.get())
-

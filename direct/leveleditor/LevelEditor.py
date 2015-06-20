@@ -26,6 +26,7 @@ import types
 from direct.task import Task
 import Pmw
 import __builtin__
+from direct.interval.IntervalGlobal import *
 
 # [gjeon] to control avatar movement in drive mode
 from direct.controls import ControlManager
@@ -288,7 +289,7 @@ except NameError:
         loadDNAFile(DNASTORE, 'phase_6/dna/storage_GZ.dna', CSDefault, 1)
         loadDNAFile(DNASTORE, 'phase_6/dna/storage_GZ_sz.dna', CSDefault, 1)
     if 'CC' in hoods:
-        loadDNAFile(DNASTORE, 'phase_12/dna/storage_CC_sz.dna', CSDefault, 1)        
+        loadDNAFile(DNASTORE, 'phase_12/dna/storage_CC_sz.dna', CSDefault, 1)
     if 'PA' in hoods:
         loadDNAFile(DNASTORE, 'phase_13/dna/storage_party_sz.dna', CSDefault, 1)
     __builtin__.dnaLoaded = 1
@@ -297,7 +298,7 @@ except NameError:
 class LevelEditor(NodePath, DirectObject):
     """Class used to create a Toontown LevelEditor object"""
     notify = DirectNotifyGlobal.directNotify.newCategory('LevelEditor')
-        
+
     # Init the list of callbacks:
     selectedNodePathHookHooks=[]
     deselectedNodePathHookHooks=[]
@@ -358,6 +359,8 @@ class LevelEditor(NodePath, DirectObject):
         # Pass in the new toplevel group and don't clear out the old
         # toplevel group (since it doesn't exist yet)
         self.reset(fDeleteToplevel = 0, fCreateToplevel = 1)
+
+        base.accept('o', base.oobe)
 
         # The list of events the level editor responds to
         self.actionEvents = [
@@ -424,6 +427,8 @@ class LevelEditor(NodePath, DirectObject):
             ('control-arrow_right', self.keyboardXformSelected, ['right', 'rotate']),
             ('control-arrow_up', self.keyboardXformSelected, ['up', 'rotate']),
             ('control-arrow_down', self.keyboardXformSelected, ['down', 'rotate']),
+            ('shift-arrow_up', self.keyboardXformSelected, ['up','zlate']),
+            ('shift-arrow_down', self.keyboardXformSelected, ['down','zlate']),
             ('shift-s', self.placeSuitPoint),
             ('shift-c', self.placeBattleCell),
             ('k', self.addToLandmarkBlock),
@@ -514,8 +519,8 @@ class LevelEditor(NodePath, DirectObject):
 
         self.fov = 60
         self.isPageUp=0
-        self.isPageDown=0        
- 
+        self.isPageDown=0
+
     # ENABLE/DISABLE
     def enable(self):
         """ Enable level editing and show level """
@@ -526,7 +531,7 @@ class LevelEditor(NodePath, DirectObject):
         # [gjeon] Ignore overridden events
         for event in self.overrideEvents:
             event[1].ignore(event[0])
-        
+
         # Add all the action events
         for event in self.actionEvents:
             if len(event) == 3:
@@ -669,11 +674,11 @@ class LevelEditor(NodePath, DirectObject):
         base.direct.enable()
 
         # [gjeon]  disable avatar and controlManager
-        if (self.avatar):
-            self.avatar.reparentTo(hidden)
-            self.avatar.stopUpdateSmartCamera()
         if (self.controlManager):
             self.controlManager.disable()
+        if (self.avatar):
+            self.avatar.stopUpdateSmartCamera()
+            Sequence(Func(self.avatar.robot.animFSM.request, 'TeleportOut'), Wait(3.5), Func(self.avatar.reparentTo, hidden)).start()
 
         self.fDrive = False
 
@@ -708,7 +713,7 @@ class LevelEditor(NodePath, DirectObject):
 
         if self.avatar:
             self.avatar.startUpdateSmartCamera()
-            
+
     def pageUp(self):
         if not self.isPageUp:
             self.lerpCameraP(36.8699, 0.6)
@@ -725,7 +730,7 @@ class LevelEditor(NodePath, DirectObject):
             self.isPageDown = 1
             #self.setCameraPositionByIndex(self.cameraIndex)
         else:
-            self.clearPageUpDown()            
+            self.clearPageUpDown()
 
     def useDriveMode(self):
         """ Lerp down to eye level then switch to Drive mode """
@@ -738,11 +743,13 @@ class LevelEditor(NodePath, DirectObject):
             self.avatar.robot = RobotToon.RobotToon()
             self.avatar.robot.reparentTo(self.avatar)
             self.avatar.setHeight(self.avatar.robot.getHeight())
-            self.avatar.setName("The Inspector")
-            self.avatar.robot.loop('neutral')
-
+            self.avatar.robot.setDNAString('t\x01\x01\x01\x01\x03\x03\x03\x03\x07\x02\x11\x00\x11\x11')
+            self.avatar.setName("Flippy")
+            #self.avatar.robot.loop('neutral')
+            
         self.avatar.setPos(base.camera.getPos())
         self.avatar.reparentTo(render)
+        Sequence(Func(self.avatar.robot.animFSM.request, 'TeleportIn'), Wait(1.5), Func(self.avatar.robot.animFSM.request, 'neutral')).start()
 
 ##         pos = base.direct.camera.getPos()
 ##         pos.setZ(4.0)
@@ -755,7 +762,10 @@ class LevelEditor(NodePath, DirectObject):
         self.switchToDriveMode(None)
         self.fDrive = True
         #[gjeon] deselect
-        base.direct.selected.deselect(base.direct.selected.last)
+        try:
+            base.direct.selected.deselect(base.direct.selected.last)
+        except:
+            pass
 
     def switchToDriveMode(self, state):
         """ Disable direct camera manipulation and enable player drive mode """
@@ -789,7 +799,7 @@ class LevelEditor(NodePath, DirectObject):
 
         #self.initializeSmartCameraCollisions()
         #self._smartCamEnabled = False
-        
+
         # Turn on collisions
         if self.panel.fColl.get():
             self.collisionsOn()
@@ -828,7 +838,7 @@ class LevelEditor(NodePath, DirectObject):
 
         self.avatarAnimTask = taskMgr.add(self.avatarAnimate, 'avatarAnimTask', 24)
         self.avatar.startUpdateSmartCamera()
-        
+
         self.avatarMoving = 0
 
     #--------------------------------------------------------------------------
@@ -1289,10 +1299,10 @@ class LevelEditor(NodePath, DirectObject):
                     # First snap selected node path to grid
                     pos = selectedNode.getPos(base.direct.grid)
                     snapPos = base.direct.grid.computeSnapPoint(pos)
-                    if self.panel.fPlaneSnap.get():
-                        zheight = 0
-                    else:
-                        zheight = snapPos[2]
+                    #if self.panel.fPlaneSnap.get():
+                    #    zheight = 0
+                    #else:
+                    zheight = snapPos[2]
                     selectedNode.setPos(base.direct.grid,
                                         snapPos[0], snapPos[1], zheight)
                     # Angle snap
@@ -1571,7 +1581,7 @@ class LevelEditor(NodePath, DirectObject):
         if type == 'dna':
             newDNANode = DNANode('group_' + `self.getGroupNum()`)
         else:
-            newDNANode = DNAVisGroup('VisGroup_' + `self.getGroupNum()`)
+            newDNANode = DNAVisGroup('VisGroup' + `self.getGroupNum()`)
             # Increment group counter
         self.setGroupNum(self.getGroupNum() + 1)
         # Add new DNA Node group to the current parent DNA Object
@@ -1742,7 +1752,7 @@ class LevelEditor(NodePath, DirectObject):
             return
         else:
             self.mouseMayaCamera = False
-        
+
         # Initialize dna target
         self.DNATarget = None
 
@@ -1934,7 +1944,7 @@ class LevelEditor(NodePath, DirectObject):
     def levelHandleMouse3Up(self):
         if self.mouseMayaCamera:
             return
-        
+
         if self.activeMenu:
             self.activeMenu.removePieMenuTask()
         # Update panel color if appropriate
@@ -1948,7 +1958,7 @@ class LevelEditor(NodePath, DirectObject):
                 (objClass.eq(DNA_PROP))
                 ):
                 self.panel.setCurrentColor(self.DNATarget.getColor())
-                
+
 ##        b1 = DirectButton(text = ("Button1", "click!", "roll", "disabled"),
 ##                  text_scale=0.1, borderWidth = (0.01, 0.01),
 ##                  relief=2)
@@ -2174,7 +2184,7 @@ class LevelEditor(NodePath, DirectObject):
 
         # Let others know that something new may be selected:
         for i in self.selectedNodePathHookHooks:
-                i()
+            i()
 
         if self.fDrive:
             base.direct.deselect(nodePath)
@@ -2186,7 +2196,7 @@ class LevelEditor(NodePath, DirectObject):
         self.selectedSuitPoint = None
         # Let others know:
         for i in self.deselectedNodePathHookHooks:
-                i()
+            i()
 
     def findDNAParent(self, nodePath):
         """ Walk up a node path's ancestry looking for its DNA Root """
@@ -2333,9 +2343,56 @@ class LevelEditor(NodePath, DirectObject):
             # Use back door to set grid spacing to avoid grid update
             base.direct.grid.gridSpacing = oldGridSpacing
 
+    def keyboardZTranslateSelected(self, arrowDirection):
+        gridToCamera = base.direct.grid.getMat(base.direct.camera)
+        camXAxis = gridToCamera.xformVec(X_AXIS)
+        xxDot = camXAxis.dot(X_AXIS)
+        xzDot = camXAxis.dot(Z_AXIS)
+
+        # what is the current grid spacing?
+        if base.direct.fShift:
+            # If shift, divide grid spacing by 10.0
+            oldGridSpacing = base.direct.grid.gridSpacing
+            # Use back door to set grid spacing to avoid grid update
+            base.direct.grid.gridSpacing = base.direct.grid.gridSpacing/10.0
+        deltaMove = base.direct.grid.gridSpacing
+
+        # Compute the specified delta
+        deltaPos = Vec3(0)
+        if (abs(xxDot) > abs(xzDot)):
+            if (xxDot < 0.0):
+                deltaMove = -deltaMove
+            # Compute delta
+            if (arrowDirection == 'down'):
+                deltaPos.setZ(deltaPos[1] + deltaMove)
+            elif (arrowDirection == 'up'):
+                deltaPos.setZ(deltaPos[1] - deltaMove)
+        else:
+            if (xzDot < 0.0):
+                deltaMove = -deltaMove
+            # Compute delta
+            if (arrowDirection == 'down'):
+                deltaPos.setZ(deltaPos[0] + deltaMove)
+            elif (arrowDirection == 'up'):
+                deltaPos.setZ(deltaPos[0] - deltaMove)
+
+        # Move selected objects
+        for selectedNode in base.direct.selected:
+            # Move it
+            selectedNode.setPos(base.direct.grid,
+                                selectedNode.getPos(base.direct.grid) + deltaPos)
+        # Snap objects to grid and update DNA if necessary
+        self.updateSelectedPose(base.direct.selected.getSelectedAsList())
+        # Restore grid spacing
+        if base.direct.fShift:
+            # Use back door to set grid spacing to avoid grid update
+            base.direct.grid.gridSpacing = oldGridSpacing
+
     def keyboardXformSelected(self, arrowDirection, mode):
         if mode == 'rotate':
             self.keyboardRotateSelected(arrowDirection)
+        elif mode == 'zlate':
+            self.keyboardZTranslateSelected(arrowDirection)
         else:
             self.keyboardTranslateSelected(arrowDirection)
 
@@ -4150,14 +4207,14 @@ class LevelEditorPanel(Pmw.MegaToplevel):
                             label = 'Save DNA',
                             command = self.levelEditor.outputDNADefaultFile)
         if fUseCVS == True:
-          menuBar.addmenuitem('Level Editor', 'command',
-                              'CVS update directory',
-                              label = 'CVS update',
-                              command = self.levelEditor.cvsUpdateAll)
-          menuBar.addmenuitem('Level Editor', 'command',
-                              'CVS commit directory',
-                              label = 'CVS commit',
-                              command = self.levelEditor.cvsCommitAll)
+            menuBar.addmenuitem('Level Editor', 'command',
+                                'CVS update directory',
+                                label = 'CVS update',
+                                command = self.levelEditor.cvsUpdateAll)
+            menuBar.addmenuitem('Level Editor', 'command',
+                                'CVS commit directory',
+                                label = 'CVS commit',
+                                command = self.levelEditor.cvsCommitAll)
         menuBar.addmenuitem('Level Editor', 'command',
                             'Edit Visibility Groups',
                             label = 'Edit Vis Groups',
@@ -4768,7 +4825,7 @@ class LevelEditorPanel(Pmw.MegaToplevel):
                                       variable = self.fMaya,
                                       command = self.toggleMaya)
         self.mayaButton.pack(side = LEFT, expand = 1, fill = X)
-        
+
         #Make maya mode on by default
         self.toggleMaya()
 
@@ -5156,13 +5213,13 @@ class LevelEditorPanel(Pmw.MegaToplevel):
         if baseline:
             flags=baseline.getFlags()
             if newValue:
-                 if not flagChar in flags:
-                     # Add the flag:
-                     baseline.setFlags(flags+flagChar)
+                if not flagChar in flags:
+                    # Add the flag:
+                    baseline.setFlags(flags+flagChar)
             elif flagChar in flags:
-                 # Remove the flag:
-                 flags=string.join(flags.split(flagChar), '')
-                 baseline.setFlags(flags)
+                # Remove the flag:
+                flags=string.join(flags.split(flagChar), '')
+                baseline.setFlags(flags)
             self.levelEditor.replaceSelected()
 
     def setLandmarkSpecialType(self, type):
@@ -5530,4 +5587,3 @@ class LEAvatar(LocalAvatar.LocalAvatar):
 
 l = LevelEditor()
 run()
-

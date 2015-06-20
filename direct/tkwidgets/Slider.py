@@ -504,4 +504,3 @@ class SliderWidget(Pmw.MegaWidget):
 
     def restoreWidget(self, event):
         self._arrowBtn.itemconfigure('arrow', fill = 'grey50')
-

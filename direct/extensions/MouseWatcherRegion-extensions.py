@@ -14,7 +14,7 @@
 
         """
         from pandac import Point3
-        
+
         # Get the relative transform to the node.
         mat = np.getMat(render2d)
 
@@ -24,4 +24,3 @@
 
         # Set the frame to the transformed coordinates.
         self.setFrame(ll[0], ur[0], ll[2], ur[2])
-        

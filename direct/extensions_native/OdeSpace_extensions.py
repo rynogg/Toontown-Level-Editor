@@ -14,7 +14,7 @@ of the OdeSpace classe
 
 def convert(self):
     """
-    Do a sort of pseudo-downcast on this space in 
+    Do a sort of pseudo-downcast on this space in
     order to expose its specialized functions.
     """
     if self.getClass() == OdeGeom.GCSimpleSpace:
@@ -51,4 +51,3 @@ def getAABounds(self):
     return min,max
 Dtool_funcToMethod(getAABounds, OdeSpace)
 del getAABounds
-

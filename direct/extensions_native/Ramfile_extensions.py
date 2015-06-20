@@ -17,4 +17,4 @@ def readlines(self):
     return lines
 
 Dtool_funcToMethod(readlines, Ramfile)
-del readlines    
+del readlines

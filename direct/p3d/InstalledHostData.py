@@ -5,7 +5,7 @@ class InstalledHostData:
     AppRunner.scanInstalledPackages().  Each of these corresponds to a
     particular host that has provided packages that have been
     installed on the local client. """
-    
+
     def __init__(self, host, dirnode):
         self.host = host
         self.pathname = dirnode.pathname

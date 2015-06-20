@@ -15,11 +15,11 @@ class PackageMerger:
     hosts are in sync, so that the file across all builds with the
     most recent timestamp (indicated in the contents.xml file) is
     always the most current version of the file. """
- 
+
     class PackageEntry:
         """ This corresponds to a <package> entry in the contents.xml
         file. """
-        
+
         def __init__(self, xpackage, sourceDir):
             self.sourceDir = sourceDir
             self.loadXml(xpackage)
@@ -72,7 +72,7 @@ class PackageMerger:
                 ximport = TiXmlElement('import')
                 self.importDescFile.storeXml(ximport)
                 xpackage.InsertEndChild(ximport)
-            
+
             return xpackage
 
     # PackageMerger constructor
@@ -114,7 +114,7 @@ class PackageMerger:
             xhost = xcontents.FirstChildElement('host')
             if xhost:
                 self.xhost = xhost.Clone()
-                
+
             xpackage = xcontents.FirstChildElement('package')
             while xpackage:
                 pe = self.PackageEntry(xpackage, sourceDir)
@@ -122,7 +122,7 @@ class PackageMerger:
                 if not other or pe.isNewer(other):
                     # Store this package in the resulting output.
                     self.contents[pe.getKey()] = pe
-                    
+
                 xpackage = xpackage.NextSiblingElement('package')
 
         self.contentsDoc = doc
@@ -186,7 +186,7 @@ class PackageMerger:
             else:
                 # Both the source file and target file are
                 # directories.
-                
+
                 # We have to clean out the target directory first.
                 # Instead of using shutil.rmtree(), remove the files in
                 # this directory one at a time, so we don't inadvertently
@@ -214,7 +214,7 @@ class PackageMerger:
         the current pool. """
         if not self.__readContentsFile(sourceDir):
             message = "Couldn't read %s" % (sourceDir)
-            raise PackageMergerError, message            
+            raise PackageMergerError, message
 
     def close(self):
         """ Finalizes the results of all of the previous calls to
@@ -231,4 +231,3 @@ class PackageMerger:
 
         self.contentsSeq += 1
         self.__writeContentsFile()
-        

@@ -33,40 +33,40 @@ def _font_initialise(root, size=None, fontScheme = None):
         root.option_add('*Text*Font',       textFont,     'userDefault')
 
 def logicalfont(name='Helvetica', sizeIncr = 0, **kw):
-  if not _fontInfo.has_key(name):
-    raise ValueError, 'font %s does not exist' % name
+    if not _fontInfo.has_key(name):
+        raise ValueError, 'font %s does not exist' % name
 
-  rtn = []
-  for field in _fontFields:
-    if kw.has_key(field):
-      logicalValue = kw[field]
-    elif _fontInfo[name].has_key(field):
-      logicalValue = _fontInfo[name][field]
-    else:
-      logicalValue = '*'
+    rtn = []
+    for field in _fontFields:
+        if kw.has_key(field):
+            logicalValue = kw[field]
+        elif _fontInfo[name].has_key(field):
+            logicalValue = _fontInfo[name][field]
+        else:
+            logicalValue = '*'
 
-    if _propertyAliases[name].has_key((field, logicalValue)):
-      realValue = _propertyAliases[name][(field, logicalValue)]
-    elif _propertyAliases[name].has_key((field, None)):
-      realValue = _propertyAliases[name][(field, None)]
-    elif _propertyAliases[None].has_key((field, logicalValue)):
-      realValue = _propertyAliases[None][(field, logicalValue)]
-    elif _propertyAliases[None].has_key((field, None)):
-      realValue = _propertyAliases[None][(field, None)]
-    else:
-      realValue = logicalValue
+        if _propertyAliases[name].has_key((field, logicalValue)):
+            realValue = _propertyAliases[name][(field, logicalValue)]
+        elif _propertyAliases[name].has_key((field, None)):
+            realValue = _propertyAliases[name][(field, None)]
+        elif _propertyAliases[None].has_key((field, logicalValue)):
+            realValue = _propertyAliases[None][(field, logicalValue)]
+        elif _propertyAliases[None].has_key((field, None)):
+            realValue = _propertyAliases[None][(field, None)]
+        else:
+            realValue = logicalValue
 
-    if field == 'size':
-      if realValue == '*':
-	  realValue = _fontSize
-      realValue = str((realValue + sizeIncr) * 10)
+        if field == 'size':
+            if realValue == '*':
+                realValue = _fontSize
+            realValue = str((realValue + sizeIncr) * 10)
 
-    rtn.append(realValue)
+        rtn.append(realValue)
 
-  return string.join(rtn, '-')
+    return string.join(rtn, '-')
 
 def logicalfontnames():
-  return _fontInfo.keys()
+    return _fontInfo.keys()
 
 if os.name == 'nt':
     _fontSize = 16

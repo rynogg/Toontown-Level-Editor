@@ -219,6 +219,3 @@ def arbitraryShadow(node):
 ##                LerpPosInterval(bs.lightPath, 10.0, Vec3(200, 0, 50)),
 ##)
 ##ival.loop()
-
-
-

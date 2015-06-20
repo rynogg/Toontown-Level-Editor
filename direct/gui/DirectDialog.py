@@ -406,4 +406,3 @@ class RetryCancelDialog(DirectDialog):
         self.defineoptions(kw, optiondefs)
         DirectDialog.__init__(self, parent)
         self.initialiseoptions(RetryCancelDialog)
-

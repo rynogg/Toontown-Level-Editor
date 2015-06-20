@@ -51,19 +51,19 @@ if (PANDAC is None):
 EXTENSIONS=None
 
 if (EXTENSIONS is None):
-  if os.path.isdir(os.path.join(DIRECT,"src","extensions_native")):
-    EXTENSIONS=os.path.join(DIRECT,"src","extensions_native")
+    if os.path.isdir(os.path.join(DIRECT,"src","extensions_native")):
+        EXTENSIONS=os.path.join(DIRECT,"src","extensions_native")
 
 if (EXTENSIONS is None):
-  if os.path.isdir(os.path.join(DIRECT,"extensions_native")):
-    EXTENSIONS=os.path.join(DIRECT,"extensions_native")
+    if os.path.isdir(os.path.join(DIRECT,"extensions_native")):
+        EXTENSIONS=os.path.join(DIRECT,"extensions_native")
 
 if (EXTENSIONS is None):
-  if os.path.isdir(os.path.join(DIRECT,"..","..","direct","src","extensions_native")):
-    EXTENSIONS=os.path.join(DIRECT,"..","..","direct","src","extensions_native")
+    if os.path.isdir(os.path.join(DIRECT,"..","..","direct","src","extensions_native")):
+        EXTENSIONS=os.path.join(DIRECT,"..","..","direct","src","extensions_native")
 
 if (EXTENSIONS is None):
-  sys.exit("Could not locate direct/src/extensions_native")
+    sys.exit("Could not locate direct/src/extensions_native")
 
 ##############################################################
 #
@@ -94,4 +94,3 @@ DoGenPyCode.native = 1
 DoGenPyCode.run()
 
 os._exit(0)
-

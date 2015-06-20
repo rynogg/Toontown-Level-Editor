@@ -11,7 +11,7 @@ __all__ = ['enumerate', 'unique', 'indent', 'nonRepeatingRandomList',
 'replace', 'reduceAngle', 'fitSrcAngle2Dest', 'fitDestAngle2Src',
 'closestDestAngle2', 'closestDestAngle', 'binaryRepr', 'profileFunc',
 'profiled', 'startProfile', 'printProfile', 'getSetterName',
-'getSetter', 'Functor', 'Stack', 'Queue', 'ParamObj', 
+'getSetter', 'Functor', 'Stack', 'Queue', 'ParamObj',
 'POD', 'bound', 'clamp', 'lerp', 'average', 'addListsByValue',
 'boolEqual', 'lineupPos', 'formatElapsedSeconds', 'solveQuadratic',
 'stackEntryInfo', 'lineInfo', 'callerInfo', 'lineTag',
@@ -117,7 +117,7 @@ class Functor:
         del self._kargs
         del self.__name__
         del self.__doc__
-    
+
     def _do__call__(self, *args, **kargs):
         _kargs = self._kargs.copy()
         _kargs.update(kargs)
@@ -270,7 +270,7 @@ class StackTrace:
                                                  limit=limit)
         else:
             self.trace = traceback.extract_stack(sys._getframe(1+start))
-            
+
     def compact(self):
         r = ''
         comma = ','
@@ -762,7 +762,7 @@ def listToIndex2item(L):
     return d
 
 assert listToIndex2item(['a','b']) == {0: 'a', 1: 'b',}
-    
+
 def listToItem2index(L):
     """converts list to dict of list item->list index
     This is lossy if there are duplicate list items"""
@@ -998,7 +998,7 @@ def profileFunc(callback, name, terse, log=True):
 def profiled(category=None, terse=False):
     """ decorator for profiling functions
     turn categories on and off via "want-profile-categoryName 1"
-    
+
     e.g.
 
     @profiled('particles')
@@ -1159,7 +1159,7 @@ def _profileWithoutGarbageLeak(cmd, filename):
     # eliminate the garbage leak
     del prof.dispatcher
     return retVal
-    
+
 def startProfile(filename=PyUtilProfileDefaultFilename,
                  lines=PyUtilProfileDefaultLines,
                  sorts=PyUtilProfileDefaultSorts,
@@ -1489,7 +1489,7 @@ class ParamObj:
 
             # set the default value on the object
             setattr(self, param, self.ParamSet.getDefaultValue(param))
-            
+
             setterName = getSetterName(param)
             getterName = getSetterName(param, 'get')
 
@@ -1578,7 +1578,7 @@ class ParamObj:
             del self.__dict__[setterName]
             """
         pass
-    
+
     def setDefaultParams(self):
         # set all the default parameters on ourself
         self.ParamSet().applyTo(self)
@@ -2475,12 +2475,12 @@ def printListEnum(l):
 # libdtoolconfig doesn't seem to have this, grab it off of PandaNode
 dtoolSuperBase = None
 
-def _getDtoolSuperBase(): 
+def _getDtoolSuperBase():
     global dtoolSuperBase
     from pandac.PandaModules import PandaNode
     dtoolSuperBase = PandaNode('').__class__.__bases__[0].__bases__[0].__bases__[0]
     assert repr(dtoolSuperBase) == "<type 'libdtoolconfig.DTOOL_SUPPER_BASE111'>"
-    
+
 safeReprNotify = None
 
 def _getSafeReprNotify():
@@ -2603,7 +2603,7 @@ def baseLineCheck():
 def diffSinceBaseLine():
     import copy
     import gc
-    obj = gc.get_objects()    
+    obj = gc.get_objects()
     since = copy.deepcopy(baseLine)
     for i in obj:
         since.setdefault(str(itype(i)), 0)
@@ -2629,29 +2629,29 @@ def diffSinceBaseLine():
 # into olist, using seen to track
 # already processed objects.
 def _getr(slist, olist, seen):
-  for e in slist:
-    if id(e) in seen:
-      continue
-    seen[id(e)] = None
-    olist.append(e)
-    tl = gc.get_referents(e)
-    if tl:
-      _getr(tl, olist, seen)
+    for e in slist:
+        if id(e) in seen:
+            continue
+        seen[id(e)] = None
+        olist.append(e)
+        tl = gc.get_referents(e)
+        if tl:
+            _getr(tl, olist, seen)
 
 # The public function.
 def get_all_objects():
-  """Return a list of all live Python
-  objects, not including the list itself."""
-  gcl = gc.get_objects()
-  olist = []
-  seen = {}
-  # Just in case:
-  seen[id(gcl)] = None
-  seen[id(olist)] = None
-  seen[id(seen)] = None
-  # _getr does the real work.
-  _getr(gcl, olist, seen)
-  return olist    
+    """Return a list of all live Python
+    objects, not including the list itself."""
+    gcl = gc.get_objects()
+    olist = []
+    seen = {}
+    # Just in case:
+    seen[id(gcl)] = None
+    seen[id(olist)] = None
+    seen[id(seen)] = None
+    # _getr does the real work.
+    _getr(gcl, olist, seen)
+    return olist
 
 def getIdList():
     baseList = get_all_objects()
@@ -2674,7 +2674,7 @@ def getTree(obj):
     objList = [objId]
     objTree = {objId:{}}
     r_add_chain(objId, objList, objTree[objId], idList, 0 )
-    
+
     return convertTree(objTree, idList)
 
 def convertTree(objTree, idList):
@@ -2687,35 +2687,35 @@ def convertTree(objTree, idList):
 
 def r_convertTree(oldTree, newTree, idList):
     for key in oldTree.keys():
-        
+
         obj = idList.get(key)
         if(not obj):
             continue
         obj = str(obj)[:100]
-        
+
         newTree[obj] = {}
-        r_convertTree(oldTree[key], newTree[obj], idList)        
+        r_convertTree(oldTree[key], newTree[obj], idList)
 
 
 def pretty_print(tree):
     for name in tree.keys():
         print name
         r_pretty_print(tree[name], 0)
-        
-            
+
+
 
 def r_pretty_print(tree, num):
     num+=1
     for name in tree.keys():
         print "  "*num,name
         r_pretty_print(tree[name],num)
-        
+
 def r_add_chain(objId, objList, objTree, idList, num):
     num+=1
     obj = idList.get(objId)
     if(not obj):
         return
-    
+
     refList = gc.get_referrers(obj)
     for ref in refList:
         refId = id(ref)
@@ -2733,14 +2733,14 @@ def r_add_chain(objId, objList, objTree, idList, num):
             continue
 
         objList.append(refId)
-        
+
         objTree[refId] = {}
     refList = None
     for refId in objTree:
         r_add_chain(refId, objList, objTree[refId], idList, num)
-                    
-        
-    
+
+
+
 def tagRepr(obj, tag):
     """adds a string onto the repr output of an instance"""
     def reprWithTag(oldRepr, tag, self):
@@ -3262,7 +3262,7 @@ class ClassTree:
 
 class PStatScope:
     collectors = {}
-    
+
     def __init__(self, level = None):
         self.levels = []
         if level:
@@ -3274,13 +3274,13 @@ class PStatScope:
         if push:
             c.push(push)
         return c
-    
+
     def __repr__(self):
         return 'PStatScope - \'%s\'' % (self,)
-    
+
     def __str__(self):
         return ':'.join(self.levels)
-    
+
     def push(self, level):
         self.levels.append(level.replace('_',''))
 
@@ -3297,7 +3297,7 @@ class PStatScope:
         self.getCollector().stop()
         if pop:
             self.pop()
-        
+
     def getCollector(self):
         label = str(self)
         if label not in self.collectors:
@@ -3306,17 +3306,17 @@ class PStatScope:
             pass
         # print '  ',self.collectors[label]
         return self.collectors[label]
-            
+
 def pstatcollect(scope, level = None):
     def decorator(f):
         return f
 
     try:
-        
+
         if not (__dev__ or config.GetBool('force-pstatcollect', 0)) or \
            not scope:
             return decorator
-        
+
         def decorator(f):
             def wrap(*args, **kw):
                 scope.start(push = (level or f.__name__))
@@ -3324,7 +3324,7 @@ def pstatcollect(scope, level = None):
                 scope.stop(pop = True)
                 return val
             return wrap
-        
+
         pass
     except:
         pass
@@ -3344,7 +3344,7 @@ def report(types = [], prefix = '', xform = None, notifyFunc = None, dConfigPara
     If __dev__ is not defined, or resolves to False, this function
     has no effect and no wrapping/transform occurs.  So in production,
     it's as if the report has been asserted out.
-    
+
     Parameters::
     types : A subset list of ['timeStamp', 'frameCount', 'avLocation']
             This allows you to specify certain useful bits of info.
@@ -3355,7 +3355,7 @@ def report(types = [], prefix = '', xform = None, notifyFunc = None, dConfigPara
                         this function.
             timeStamp:  Adds the current frame time to the output.
             deltaStamp: Adds the current AI synched frame time to
-                        the output 
+                        the output
             frameCount: Adds the current frame count to the output.
                         Usually cleaner than the timeStamp output.
             avLocation: Adds the localAvatar's network location
@@ -3363,7 +3363,7 @@ def report(types = [], prefix = '', xform = None, notifyFunc = None, dConfigPara
             interests:  Prints the current interest state after the
                         report.
             stackTrace: Prints a stack trace after the report.
-            
+
     prefix: Optional string to prepend to output, just before the function.
             Allows for easy grepping and is useful when merging AI/Client
             reports into a single file.
@@ -3371,26 +3371,26 @@ def report(types = [], prefix = '', xform = None, notifyFunc = None, dConfigPara
     xform:  Optional callback that accepts a single parameter: argument 0 to
             the decorated function. (assumed to be 'self')
             It should return a value to be inserted into the report output string.
-            
+
     notifyFunc: A notify function such as info, debug, warning, etc.
-                By default the report will be printed to stdout. This 
+                By default the report will be printed to stdout. This
                 will allow you send the report to a designated 'notify'
                 output.
-                
+
     dConfigParam: A list of Config.prc string variables.
                   By default the report will always print.  If you
                   specify this param, it will only print if one of the
                   specified config strings resolve to True.
     """
 
-    
+
     def indent(str):
         global __report_indent
         return ' '*__report_indent+str
-    
+
     def decorator(f):
         return f
-    
+
     try:
         if not (__dev__ or config.GetBool('force-reports', 0)):
             return decorator
@@ -3410,10 +3410,10 @@ def report(types = [], prefix = '', xform = None, notifyFunc = None, dConfigPara
 
             dConfigParamList = [param for param in dConfigParams \
                                 if config.GetBool('want-%s-report' % (param,), 0)]
-            
+
             doPrint = bool(dConfigParamList)
             pass
-        
+
         if not doPrint:
             return decorator
 
@@ -3423,17 +3423,17 @@ def report(types = [], prefix = '', xform = None, notifyFunc = None, dConfigPara
         else:
             prefixes = set()
             pass
-        
+
         for param in dConfigParamList:
             prefix = config.GetString('prefix-%s-report' % (param,), '')
             if prefix:
                 prefixes.add(prefix)
                 pass
             pass
-        
+
     except NameError,e:
         return decorator
-    
+
     from direct.distributed.ClockDelta import globalClockDelta
 
     def decorator(f):
@@ -3446,12 +3446,12 @@ def report(types = [], prefix = '', xform = None, notifyFunc = None, dConfigPara
             if 'args' in types:
                 rArgs += [repr(x)+', ' for x in args[1:]] + \
                          [ x + ' = ' + '%s, ' % repr(y) for x,y in kwargs.items()]
-            
+
             if not rArgs:
                 rArgs = '()'
             else:
                 rArgs = '(' + reduce(str.__add__,rArgs)[:-2] + ')'
-                
+
 
             outStr = '%s%s' % (f.func_name, rArgs)
 
@@ -3462,16 +3462,16 @@ def report(types = [], prefix = '', xform = None, notifyFunc = None, dConfigPara
 
             if 'module' in types:
                 outStr = '%s {M:%s}' % (outStr, f.__module__.split('.')[-1])
-                
+
             if 'frameCount' in types:
                 outStr = '%-8d : %s' % (globalClock.getFrameCount(), outStr)
-                
+
             if 'timeStamp' in types:
                 outStr = '%-8.3f : %s' % (globalClock.getFrameTime(), outStr)
 
             if 'deltaStamp' in types:
                 outStr = '%-8.2f : %s' % (globalClock.getRealTime() - \
-                                         globalClockDelta.delta, outStr)                
+                                         globalClockDelta.delta, outStr)
             if 'avLocation' in types:
                 outStr = '%s : %s' % (outStr, str(localAvatar.getLocation()))
 
@@ -3493,10 +3493,10 @@ def report(types = [], prefix = '', xform = None, notifyFunc = None, dConfigPara
 
             if 'interests' in types:
                 base.cr.printInterestSets()
-                    
+
             if 'stackTrace' in types:
                 print StackTrace()
-                
+
             global __report_indent
             rVal = None
             try:
@@ -3551,7 +3551,7 @@ def exceptionLogged(append=True):
         def nullDecorator(f):
             return f
         return nullDecorator
-    
+
     def _decoratorFunc(f, append=append):
         global exceptionLoggedNotify
         if exceptionLoggedNotify is None:
@@ -3671,11 +3671,11 @@ class HotkeyBreaker:
             breakKeys = (breakKeys,)
         for key in breakKeys:
             self.addBreakKey(key)
-        
+
     def addBreakKey(self,breakKey):
         if __dev__:
             self.do.accept(breakKey,self.breakFunc,extraArgs = [breakKey])
-        
+
     def removeBreakKey(self,breakKey):
         if __dev__:
             self.do.ignore(breakKey)
@@ -3762,7 +3762,7 @@ def flywheel(*args, **kArgs):
     """
     >>> for i in flywheel([1,2,3], countList=[10, 5, 1]):
     ...   print i,
-    ... 
+    ...
     1 2 3 1 2 1 2 1 2 1 2 1 1 1 1 1
     """
     for flywheel in makeFlywheelGen(*args, **kArgs):
@@ -3798,9 +3798,9 @@ if __debug__:
     assert obj2count[1] == 1 * 3
     assert obj2count[2] == 2 * 3
     assert obj2count[3] == 3 * 3
-    assert obj2count[4] == 4 * 3                  
+    assert obj2count[4] == 4 * 3
 
-def quickProfile(name="unnamed"):    
+def quickProfile(name="unnamed"):
     import pstats
     def profileDecorator(f):
         if(not config.GetBool("use-profiler",0)):
@@ -3830,7 +3830,7 @@ def quickProfile(name="unnamed"):
                 s.strip_dirs()
                 s.sort_stats("cumulative")
                 base.stats[name].append(s)
-                    
+
         _profiled.__doc__ = f.__doc__
         return _profiled
     return profileDecorator
@@ -3869,11 +3869,11 @@ class MiniLog:
     def __str__(self):
         return '%s\nMiniLog: %s\n%s\n%s\n%s' % \
                ('*'*50, self.name, '-'*50, '\n'.join(self.lines), '*'*50)
-    
+
     def enterFunction(self, funcName, *args, **kw):
         rArgs = [repr(x)+', ' for x in args] + \
                 [ x + ' = ' + '%s, ' % repr(y) for x,y in kw.items()]
-            
+
         if not rArgs:
             rArgs = '()'
         else:
@@ -3884,7 +3884,7 @@ class MiniLog:
         self.indent += 1
 
         return line
-    
+
     def exitFunction(self):
         self.indent -= 1
         return self.indent
@@ -3892,7 +3892,7 @@ class MiniLog:
     def appendFunctionCall(self, line):
         self.lines.append(' '*(self.indent*2) + line)
         return line
-    
+
     def appendLine(self, line):
         self.lines.append(' '*(self.indent*2) + '<< ' + line + ' >>')
         return line
@@ -3930,7 +3930,7 @@ class HierarchyException(Exception):
 
     def __repr__(self):
         return 'HierarchyException(%s)' % (self.owner, )
-    
+
 # __dev__ is not defined at import time, call this after it's defined
 def recordFunctorCreationStacks():
     global Functor
@@ -4080,7 +4080,7 @@ def setupPdb():
     globalPdb = pandaPdb()
     globalPdb.reset()
     sys.settrace(globalPdb.trace_dispatch)
-    
+
 def pandaTrace():
     if __dev__:
         if not globalPdb:
@@ -4095,7 +4095,7 @@ packageMap = {
     "otp":"$OTP",
     "pirates":"$PIRATES",
 }
-    
+
 
 #assuming . dereferncing for nice linking to imports
 def pandaBreak(dotpath, linenum, temporary = 0, cond = None):
@@ -4110,7 +4110,7 @@ def pandaBreak(dotpath, linenum, temporary = 0, cond = None):
             filename="%s\\%s"%(filename,d)
         print filename
         globalPdb.set_break(filename+".py", linenum, temporary, cond)
-            
+
 class Default:
     # represents 'use the default value'
     # useful for keyword arguments to virtual methods
@@ -4119,7 +4119,7 @@ class Default:
 superLogFile = None
 def startSuperLog(customFunction = None):
     global superLogFile
-    
+
     if(not superLogFile):
         superLogFile = open("c:\\temp\\superLog.txt", "w")
         def trace_dispatch(a,b,c):
@@ -4130,7 +4130,7 @@ def startSuperLog(customFunction = None):
                 if '__builtins__' in vars:
                     del vars['__builtins__']
                 for i in vars:
-                    vars[i] = safeReprTypeOnFail(vars[i]) 
+                    vars[i] = safeReprTypeOnFail(vars[i])
 
                 if customFunction:
                     superLogFile.write( "before = %s\n"%customFunction())
@@ -4140,18 +4140,18 @@ def startSuperLog(customFunction = None):
                 if customFunction:
                     superLogFile.write( "after = %s\n"%customFunction())
 
-        
+
 
                 return trace_dispatch
         sys.settrace(trace_dispatch)
-      
+
 def endSuperLog():
     global superLogFile
     if(superLogFile):
         sys.settrace(None)
         superLogFile.close()
         superLogFile = None
-    
+
 def isInteger(n):
     return type(n) in (types.IntType, types.LongType)
 
@@ -4230,7 +4230,7 @@ class HTMLStringToElements(HTMLParser):
 
     def getElements(self):
         return self._elements
-        
+
     def _handleNewElement(self, element):
         if len(self._elementStack):
             self._elementStack.top().append(element)

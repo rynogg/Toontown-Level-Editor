@@ -19,4 +19,3 @@ def getConvertedJoint(self, index):
     return self.getJoint(index).convert()
 Dtool_funcToMethod(getConvertedJoint, OdeBody)
 del getConvertedJoint
-

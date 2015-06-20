@@ -46,7 +46,7 @@ methodRenameDictionary = {
     'print':       'Cprint',
     'CInterval.setT': '_priv__cSetT',
     }
-    
+
 classRenameDictionary = {
     'Loader':                    'PandaLoader',
     'String':                    'CString',
@@ -88,7 +88,7 @@ def checkKeyword(cppName):
         cppName = '_' + cppName
     return cppName
 
-# TODO: Make faster - this thing is horribly slow    
+# TODO: Make faster - this thing is horribly slow
 def classNameFromCppName(cppName):
     # initialize to empty string
     className = ''
@@ -116,7 +116,7 @@ def classNameFromCppName(cppName):
     # FFIConstants.notify.debug('Renaming class: ' + cppName + ' to: ' + className)
     # Note we do not have to check for keywords because class name are capitalized
     return className
-    
+
 def nonClassNameFromCppName(cppName):
     className = classNameFromCppName(cppName)
     # Make the first character lowercase
@@ -144,8 +144,7 @@ def methodNameFromCppName(cppName, className = None):
     if className != None:
         methodName = methodRenameDictionary.get(className + '.' + methodName, methodName)
     methodName = methodRenameDictionary.get(methodName, methodName)
-    
+
     # Mangle names that happen to be python keywords so they are not anymore
     methodName = checkKeyword(methodName)
     return methodName
-

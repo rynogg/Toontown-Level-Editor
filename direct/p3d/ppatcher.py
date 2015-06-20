@@ -76,7 +76,7 @@ installDir = None
 for opt, arg in opts:
     if opt == '-i':
         installDir = Filename.fromOsSpecific(arg)
-        
+
     elif opt == '-h':
         usage(0)
     else:

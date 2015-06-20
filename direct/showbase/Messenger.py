@@ -30,7 +30,7 @@ class Lock:
         if self.locked:
             # We have contention.
             return self.__getLock()
-        
+
         # This relies on the fact that any individual Python statement
         # is atomic.
         self.locked += 1
@@ -59,7 +59,7 @@ class Lock:
         from pandac.PandaModules import Thread, Mutex
         self.__dict__.setdefault('lock', Mutex('Messenger'))
         self.lock.acquire()
-        
+
         self.acquire = self.lock.acquire
 
         # Wait for the cheesy lock to be released before we return.
@@ -69,7 +69,7 @@ class Lock:
         self.notify.info("Got cheesy lock.")
 
         # We return with the lock acquired.
-            
+
 
 class Messenger:
 
@@ -206,7 +206,7 @@ class Messenger:
             # on this particular object.
             if id in acceptorDict:
                 # TODO: we're replacing the existing callback. should this be an error?
-                if notifyDebug:        
+                if notifyDebug:
                     oldMethod = acceptorDict[id][0]
                     if oldMethod == method:
                         self.notify.warning(
@@ -411,7 +411,7 @@ class Messenger:
                 if not eventTuple:
                     # No event; we're done.
                     return task.done
-                
+
                 self.__dispatch(*eventTuple)
             finally:
                 self.lock.release()
@@ -441,7 +441,7 @@ class Messenger:
                         if (len(eventDict) == 0):
                             del self.__objectEvents[id]
                         self._releaseObject(self._getObject(id))
-                        
+
                     del acceptorDict[id]
                     # If the dictionary at this event is now empty, remove
                     # the event entry from the Messenger altogether
@@ -695,4 +695,3 @@ class Messenger:
                            'Function:     ' + repr(function) + '\n')
         str = str + '='*50 + '\n'
         return str
-

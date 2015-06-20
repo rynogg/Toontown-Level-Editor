@@ -19,7 +19,7 @@ class Loader(DirectObject):
     """
     notify = directNotify.newCategory("Loader")
     loaderIndex = 0
-    
+
     class Callback:
         def __init__(self, numObjects, gotList, callback, extraArgs):
             self.objects = [None] * numObjects
@@ -112,9 +112,9 @@ class Loader(DirectObject):
         support, the asynchronous interface still exists and still
         behaves exactly as described, except that loadModel() might
         not return immediately.
-        
+
         """
-        
+
         assert Loader.notify.debug("Loading model: %s" % (modelPath))
         if loaderOptions == None:
             loaderOptions = LoaderOptions()
@@ -150,12 +150,12 @@ class Loader(DirectObject):
             # Assume we were given a list of model pathnames.
             modelList = modelPath
             gotList = True
-        
+
         if callback is None:
             # We got no callback, so it's a synchronous load.
 
             result = []
-            for modelPath in modelList:                
+            for modelPath in modelList:
                 node = self.loader.loadSync(Filename(modelPath), loaderOptions)
                 if (node != None):
                     nodePath = NodePath(node)
@@ -178,7 +178,7 @@ class Loader(DirectObject):
             # load.  We'll return immediately, but when all of the
             # requested models have been loaded, we'll invoke the
             # callback (passing it the models on the parameter list).
-            
+
             cb = Loader.Callback(len(modelList), gotList, callback, extraArgs)
             i=0
             for modelPath in modelList:
@@ -196,7 +196,7 @@ class Loader(DirectObject):
         """Cancels an aysynchronous loading or flatten request issued
         earlier.  The callback associated with the request will not be
         called after cancelRequest() has been performed. """
-        
+
         if not cb.cancelled:
             cb.cancelled = True
             for request in cb.requests:
@@ -207,7 +207,7 @@ class Loader(DirectObject):
         """ Returns true if an asynchronous loading or flatten request
         issued earlier is still pending, or false if it has completed or
         been cancelled. """
-        
+
         return bool(cb.requests)
 
     def loadModelOnce(self, modelPath):
@@ -420,7 +420,7 @@ class Loader(DirectObject):
         parameters do not apply, though pixelsPerUnit still does apply
         and roughly controls the tightness of the curve approximation
         (and the number of vertices generated).
-        
+
         """
         assert Loader.notify.debug("Loading font: %s" % (modelPath))
         if phaseChecker:
@@ -538,7 +538,7 @@ class Loader(DirectObject):
             texture.setMagfilter(magfilter)
         if anisotropicDegree is not None:
             texture.setAnisotropicDegree(anisotropicDegree)
-        
+
         return texture
 
     def load3DTexture(self, texturePattern, readMipmaps = False, okMissing = False,
@@ -632,12 +632,12 @@ class Loader(DirectObject):
         load the sound file, but this distinction allows the sound
         effects and/or the music files to be adjusted as a group,
         independently of the other group."""
-        
+
         # showbase-created sfxManager should always be at front of list
         if(self.base.sfxManagerList):
             return self.loadSound(self.base.sfxManagerList[0], *args, **kw)
         return None
-    
+
     def loadMusic(self, *args, **kw):
         """Loads one or more sound files, specifically designated as a
         "music" file (that is, uses the musicManager to load the
@@ -650,7 +650,7 @@ class Loader(DirectObject):
             return self.loadSound(self.base.musicManager, *args, **kw)
         else:
             return None
-        
+
     def loadSound(self, manager, soundPath, positional = False,
                   callback = None, extraArgs = []):
 
@@ -660,7 +660,7 @@ class Loader(DirectObject):
         callback is specified, the loading happens in the background,
         just as in loadModel(); otherwise, the loading happens before
         loadSound() returns."""
-    
+
         if isinstance(soundPath, types.StringTypes) or \
            isinstance(soundPath, Filename):
             # We were given a single sound pathname.
@@ -693,7 +693,7 @@ class Loader(DirectObject):
             # load.  We'll return immediately, but when all of the
             # requested sounds have been loaded, we'll invoke the
             # callback (passing it the sounds on the parameter list).
-            
+
             cb = Loader.Callback(len(soundList), gotList, callback, extraArgs)
             for i in range(len(soundList)):
                 soundPath = soundList[i]
@@ -744,7 +744,7 @@ class Loader(DirectObject):
         If a callback is specified, then it is called after the
         operation is finished, receiving the flattened model (or a
         list of flattened models)."""
-        
+
         if isinstance(model, NodePath):
             # We were given a single model.
             modelList = [model]
@@ -770,7 +770,7 @@ class Loader(DirectObject):
             cb.requests[request] = True
         return cb
 
-    def __asyncFlattenDone(self, models, 
+    def __asyncFlattenDone(self, models,
                            gotList, callback, origModelList, extraArgs):
         """ The asynchronous flatten operation has completed; quietly
         drop in the new models. """

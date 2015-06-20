@@ -8,7 +8,7 @@ class DirectLight(NodePath):
         NodePath.__init__(self)
         # Record light and name
         self.light = light
-        
+
         # Attach node to self
         self.assign(parent.attachNewNode(self.light))
 
@@ -128,6 +128,3 @@ class DirectLights(NodePath):
         Turn off the given directLight
         """
         render.clearLight(directLight)
-
-
-

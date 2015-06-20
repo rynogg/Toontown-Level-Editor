@@ -37,7 +37,7 @@ class ConcreteStruct:
         are to be passed to the concrete instance.  By default, this
         returns all properties of the object.  You can override this
         to restrict the set of properties that are uploaded. """
-        
+
         return self.__dict__.items()
 
 class BrowserObject:
@@ -91,7 +91,7 @@ class BrowserObject:
             del kw['needsResponse']
         if kw:
             raise ArgumentError, 'Keyword arguments not supported'
-        
+
         try:
             parentObj, attribName = self.__childObject
             if parentObj:
@@ -123,7 +123,7 @@ class BrowserObject:
                 # Cache the method object on the parent so we won't
                 # have to look up the method wrapper again next time.
                 parentObj.__cacheMethod(attribName)
-                
+
             else:
                 # Call it as a plain function.
                 result = self.__runner.scriptRequest('call', self, value = args, needsResponse = needsResponse)
@@ -154,7 +154,7 @@ class BrowserObject:
             if self.__runner.scriptRequest('has_method', self, propertyName = name):
                 # Yes, so create a method wrapper for it.
                 return self.__cacheMethod(name)
-            
+
             raise AttributeError(name)
 
         if isinstance(value, BrowserObject):
@@ -250,7 +250,7 @@ class MethodWrapper:
             del kw['needsResponse']
         if kw:
             raise ArgumentError, 'Keyword arguments not supported'
-        
+
         try:
             parentObj, attribName = self.__childObject
             # Call it as a method.

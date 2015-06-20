@@ -89,4 +89,3 @@ class EggCacher:
 
 
 cacher = EggCacher(sys.argv[1:])
-

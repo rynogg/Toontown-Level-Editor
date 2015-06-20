@@ -119,4 +119,3 @@ if outputType == 'mf':
     freezer.writeMultifile(basename)
 else:
     freezer.generateCode(basename, compileToExe = compileToExe)
-

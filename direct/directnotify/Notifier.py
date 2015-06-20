@@ -40,8 +40,8 @@ class Notifier:
         self.__warning = 1
         self.__debug = 0
         self.__logging = 0
-        
-        
+
+
 
 
     def setServerDelta(self, delta, timezone):
@@ -299,4 +299,3 @@ class Notifier:
             self.__log(string)
             self.__print(string)
         return 1 # to allow assert self.notify.debugCall("blah")
-

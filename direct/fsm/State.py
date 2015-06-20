@@ -25,7 +25,7 @@ class State(DirectObject):
         def replaceMethod(self, oldFunction, newFunction):
             import new
             import types
-            count = 0        
+            count = 0
             for state in self.States:
                 # Note: you can only replace methods currently
                 enterFunc = state.getEnterFunc()
@@ -101,7 +101,7 @@ class State(DirectObject):
     def isTransitionDefined(self, otherState):
         if self.transitionsToAny():
             return 1
-        
+
         # if we're given a state object, get its name instead
         if type(otherState) != type(''):
             otherState = otherState.getName()
@@ -217,18 +217,3 @@ class State(DirectObject):
     def __str__(self):
         return "State: name = %s, enter = %s, exit = %s, trans = %s, children = %s" %\
                (self.__name, self.__enterFunc, self.__exitFunc, self.__transitions, self.__FSMList)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -32,5 +32,5 @@
                 for vi in range(self.getNumVVertices()):
                     v.append(self.getVertex(ui, vi))
             verts.append(v)
-            
+
         return verts

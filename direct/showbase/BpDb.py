@@ -6,7 +6,7 @@ import sys
 class BpMan:
     def __init__(self):
         self.bpInfos = {}
-    
+
     def partsToPath(self, parts):
         cfg = parts.get('cfg')
         grp = parts.get('grp')
@@ -29,17 +29,17 @@ class BpMan:
     def pathToParts(self, path=None):
         parts = {'cfg':None, 'grp':None, 'id':None}
 
-        #verify input        
+        #verify input
         if not isinstance(path, type('')):
             assert not "error: argument must be string of form '[cfg::][grp.]id'"
             return parts
 
-        #parse cfg                
+        #parse cfg
         tokens = path.split('::')
         if (len(tokens) > 1) and (len(tokens[0]) > 0):
             parts['cfg'] = tokens[0]
             path = tokens[1]
-            
+
         #parse grp
         tokens = path.split('.')
         if (len(tokens) == 1):
@@ -70,12 +70,12 @@ class BpMan:
         if type(bp) is type(''):
             bp = self.pathToParts(bp)
         return self.partsToPath(bp)
-        
+
     def bpToParts(self, bp):
         if type(bp) is type({}):
             bp = self.partsToPath(bp)
         return self.pathToParts(bp)
-        
+
     def makeBpInfo(self, grp, id):
         self.bpInfos.setdefault(grp, {None:{},})
         self.bpInfos[grp].setdefault(id, {})
@@ -118,7 +118,7 @@ class BpMan:
         if not isinstance(ignoreCount, int):
             print 'error: first argument should be integer ignoreCount'
             return
-            
+
         parts = self.bpToParts(bp)
         grp, id = parts['grp'], parts['id']
         self.makeBpInfo(grp, id)
@@ -131,14 +131,14 @@ class BpMan:
         self.makeBpInfo(grp, id)
         lifetime = self.bpInfos[grp][id].get('lifetime', -1)
         return lifetime
-        
+
     def setLifetime(self, bp, newLifetime):
         parts = self.bpToParts(bp)
         grp, id = parts['grp'], parts['id']
         self.makeBpInfo(grp, id)
         self.bpInfos[grp][id]['lifetime'] = newLifetime
         return lifetime
-        
+
     def decLifetime(self, bp):
         parts = self.bpToParts(bp)
         grp, id = parts['grp'], parts['id']
@@ -154,19 +154,19 @@ class BpMan:
         grp, id = parts['grp'], parts['id']
         self.makeBpInfo(grp, id)
         return self.bpInfos[grp][id].get('count', 0)
-        
+
     def setHitCount(self, bp, newHitCount):
         parts = self.bpToParts(bp)
         grp, id = parts['grp'], parts['id']
         self.makeBpInfo(grp, id)
         self.bpInfos[grp][id]['count'] = newHitCount
-        
+
     def incHitCount(self, bp):
         parts = self.bpToParts(bp)
         grp, id = parts['grp'], parts['id']
         self.makeBpInfo(grp, id)
         self.bpInfos[grp][id]['count'] = self.bpInfos[grp][id].get('count', 0) + 1
-        
+
     def resetBp(self, bp):
         parts = self.bpToParts(bp)
         grp, id = parts['grp'], parts['id']
@@ -174,7 +174,7 @@ class BpMan:
         self.bpInfos[grp][id] = {}
         if id is None:
             del self.bpInfos[grp]
-    
+
 class BpDb:
     def __init__(self):
         self.enabled = True
@@ -195,7 +195,7 @@ class BpDb:
 
     def setConfigCallback(self, callback):
         self.configCallback = callback
-                
+
     def verifySingleConfig(self, cfg):
         if cfg in self.cfgInfos:
             return self.cfgInfos[cfg]
@@ -255,7 +255,7 @@ class BpDb:
         enabled = self._getArg(args, [type(True),type(1),], kwargs, ['enabled','on',], True)
         newEnabled = self.bpMan.setEnabled(bp, enabled)
         print "'%s' is now %s."%(self.bpMan.bpToPath(bp),choice(newEnabled,'enabled','disabled'),)
-        
+
     def _i(self, *args, **kwargs):
         bp = self._getArg(args, [type(''),type({}),], kwargs, ['path','bp','name',], self.lastBp)
         count = self._getArg(args, [type(1),], kwargs, ['ignoreCount','count','n',], 0)
@@ -266,7 +266,7 @@ class BpDb:
         bp = self._getArg(args, [type(''),type({}),], kwargs, ['path','bp','name',], self.lastBp)
         newEnabled = self.bpMan.toggleEnabled(bp)
         print "'%s' is now %s."%(self.bpMan.bpToPath(bp),choice(newEnabled,'enabled','disabled'),)
-        
+
     def _tg(self, *args, **kwargs):
         bp = self._getArg(args, [type(''),type({}),], kwargs, ['grp',], self.lastBp)
         if type(bp) == type(''):
@@ -274,7 +274,7 @@ class BpDb:
         bp = {'grp':bp.get('grp')}
         newEnabled = self.bpMan.toggleEnabled(bp)
         print "'%s' is now %s."%(self.bpMan.bpToPath(bp),choice(newEnabled,'enabled','disabled'),)
-        
+
     def _tc(self, *args, **kwargs):
         bp = self._getArg(args, [type(''),type({}),], kwargs, ['cfg',], self.lastBp)
         if type(bp) == type(''):
@@ -282,7 +282,7 @@ class BpDb:
         bp = {'cfg':bp.get('cfg')}
         newEnabled = self.toggleConfig(bp['cfg'])
         print "'%s' is now %s."%(self.bpMan.bpToPath(bp),choice(newEnabled,'enabled','disabled'),)
-        
+
     def _z(self, *args, **kwargs):
         bp = self._getArg(args, [type(''),type({}),], kwargs, ['path','bp','name',], self.lastBp)
         self.bpMan.resetBp(bp)
@@ -303,7 +303,7 @@ class BpDb:
         bp = {'cfg':bp.get('cfg')}
         self.resetConfig(bp['cfg'])
         print "'%s' has been reset."%(self.bpMan.bpToPath(bp),)
- 
+
     def _getArg(self, args, goodTypes, kwargs, goodKeys, default = None):
         #look for desired arg in args and kwargs lists
         argVal = default
@@ -314,7 +314,7 @@ class BpDb:
             if key in kwargs:
                 argVal = kwargs[key]
         return argVal
-                
+
     #code for automatically determining param vals
     def getFrameCodeInfo(self, frameCount=1):
         #get main bits
@@ -324,7 +324,7 @@ class BpDb:
         except:
             return ('<stdin>', None, -1)
 
-        #todo: 
+        #todo:
         #frameInfo is inadequate as a unique marker for this code location
         #caching disabled until suitable replacement is found
         #
@@ -334,7 +334,7 @@ class BpDb:
         #codeInfo = self.codeInfoCache.get(frameInfo)
         #if codeInfo:
         #    return codeInfo
-        
+
         #look for module name
         moduleName = None
         callingModule = inspect.getmodule(primaryFrame)
@@ -383,7 +383,7 @@ class BpDb:
         codeInfo = (moduleName, className, lineNumber)
         #self.codeInfoCache[frameInfo] = codeInfo
         return codeInfo
-    
+
     #actually deliver the user a prompt
     def set_trace(self, bp, frameCount=1):
         #find useful frame
@@ -398,17 +398,17 @@ class BpDb:
         #set up and start debuggger
         import pdb
         self.pdb = pdb.Pdb()
-        #self.pdb.do_alias('aa bpdb.addPdbAliases()')        
+        #self.pdb.do_alias('aa bpdb.addPdbAliases()')
         self.addPdbAliases()
         self.pdb.set_trace(interactFrame);
-        
+
     #bp invoke methods
     def bp(self, id=None, grp=None, cfg=None, iff=True, enabled=True, test=None, frameCount=1):
         if not (self.enabled and self.verifyEnabled()):
             return
         if not (enabled and iff):
             return
-            
+
         bpi = bp(id=id, grp=grp, cfg=cfg, frameCount=frameCount+1)
         bpi.maybeBreak(test=test, frameCount=frameCount+1)
 
@@ -420,7 +420,7 @@ class BpDb:
             return decorator
         if not (enabled and iff):
             return decorator
-        
+
         bpi = bp(id=id, grp=grp, cfg=cfg, frameCount=frameCount+1)
         if bpi.disabled:
             return decorator
@@ -435,15 +435,15 @@ class BpDb:
                 if onExit:
                     dbp.maybeBreak(test=test,frameCount=frameCount+1,displayPrefix='Exited ')
                 return f_result
-                
+
             wrap.func_name = f.func_name
             wrap.func_dict = f.func_dict
             wrap.func_doc = f.func_doc
             wrap.__module__ = f.__module__
             return wrap
-            
+
         return decorator
-        
+
     def bpPreset(self, *args, **kArgs):
         def functor(*cArgs, **ckArgs):
             return
@@ -483,12 +483,12 @@ class BpDb:
 
 class bp:
     def __init__(self, id=None, grp=None, cfg=None, frameCount=1):
-        #check early out conditions 
+        #check early out conditions
         self.disabled = False
         if not bpdb.enabled:
             self.disabled = True
             return
-        
+
         #default cfg, grp, id from calling code info
         moduleName, className, lineNumber = bpdb.getFrameCodeInfo(frameCount=frameCount+1)
         if moduleName:  #use only leaf module name
@@ -510,16 +510,16 @@ class bp:
 
     def getParts(self):
         return {'id':self.id,'grp':self.grp,'cfg':self.cfg}
-        
+
     def displayContextHint(self, displayPrefix=''):
         contextString = displayPrefix + bpdb.bpMan.partsToPath({'id':self.id,'grp':self.grp,'cfg':self.cfg})
         dashes = '-'*max(0, (80 - len(contextString) - 4) / 2)
         print '<%s %s %s>'%(dashes,contextString,dashes)
-    
+
     def maybeBreak(self, test=None, frameCount=1, displayPrefix=''):
         if self.shouldBreak(test=test):
             self.doBreak(frameCount=frameCount+1,displayPrefix=displayPrefix)
-    
+
     def shouldBreak(self, test=None):
         #check easy early out
         if self.disabled:
@@ -545,13 +545,12 @@ class bp:
 
         #all conditions go
         return True
-        
+
     def doBreak(self, frameCount=1,displayPrefix=''):
         #accumulate hit count
         bpdb.bpMan.decLifetime({'grp':self.grp,'id':self.id})
         bpdb.bpMan.incHitCount({'grp':self.grp,'id':self.id})
-        
+
         #setup debugger
         self.displayContextHint(displayPrefix=displayPrefix)
         bpdb.set_trace(self, frameCount=frameCount+1)
-

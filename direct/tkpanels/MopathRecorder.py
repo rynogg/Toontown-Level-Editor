@@ -1913,4 +1913,3 @@ class MopathRecorder(AppShell, DirectObject):
         self.cCam = self.cCamera.attachNewNode(self.cCamNode)
 
         self.cDr.setCamera(self.cCam)
-

@@ -416,7 +416,7 @@ class MethodSpecification(FunctionSpecification):
         for i in range(len(argTypes)):
             file.write(argTypes[i].name)
             if (i < (len(argTypes)-1)):
-                    file.write(', ')
+                file.write(', ')
         file.write('):\n')
 
 

@@ -14,7 +14,7 @@ of the OdeGeom class
 
 def convert(self):
     """
-    Do a sort of pseudo-downcast on this geom in 
+    Do a sort of pseudo-downcast on this geom in
     order to expose its specialized functions.
     """
     if self.getClass() == OdeGeom.GCSphere:
@@ -61,4 +61,3 @@ def getAABounds(self):
     return min,max
 Dtool_funcToMethod(getAABounds, OdeGeom)
 del getAABounds
-

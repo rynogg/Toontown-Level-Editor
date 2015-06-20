@@ -19,8 +19,8 @@
         task = Task.Task(self.doTask)
         task.callback = callback
         task.callbackArgs = extraArgs
-        return taskMgr.add(task, name)    
-        
+        return taskMgr.add(task, name)
+
     def doTask(self, task):
         from direct.task import Task
         if self.run():
@@ -28,4 +28,3 @@
         if task.callback:
             task.callback(*task.callbackArgs)
         return Task.done
-    

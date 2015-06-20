@@ -96,7 +96,7 @@ class file:
                     message = 'Could not open %s for writing' % (filename)
                     raise IOError, message
                 writeMode = True
-                
+
             elif mode == 'a':
                 self.__stream = pm.OFileStream()
                 if not filename.openAppend(self.__stream):
@@ -134,7 +134,7 @@ class file:
             elif mode == 'r':
                 # For strictly read mode (not write or read-write
                 # mode), we use Panda's VirtualFileSystem.
-                
+
                 self.__stream = _vfs.openReadFile(filename, autoUnwrap)
                 if not self.__stream:
                     if not filename.exists():
@@ -153,7 +153,7 @@ class file:
 
     def __del__(self):
         self.close()
-        
+
     def close(self):
         if self.__needsVfsClose:
             _vfs.closeReadFile(self.__stream)
@@ -162,7 +162,7 @@ class file:
         self.__needsVfsClose = False
         self.__reader = None
         self.__writer = None
-        
+
     def flush(self):
         if self.__stream:
             self.__stream.flush()
@@ -185,7 +185,7 @@ class file:
             # The stream is open only in write mode.
             message = 'Attempt to read from write-only stream'
             raise IOError, message
-        
+
         self.__lastWrite = False
         if size >= 0:
             return self.__reader.extractBytes(size)
@@ -195,7 +195,7 @@ class file:
             while not self.__stream.eof():
                 result += self.__reader.extractBytes(1024)
             return result
-        
+
     def readline(self, size = -1):
         if not self.__reader:
             if not self.__writer:
@@ -208,7 +208,7 @@ class file:
 
         self.__lastWrite = False
         return self.__reader.readline()
-        
+
     def readlines(self, sizehint = -1):
         lines = []
         line = self.readline()
@@ -234,7 +234,7 @@ class file:
                 return self.__stream.tellg()
         message = 'I/O operation on closed file'
         raise ValueError, message
-    
+
     def truncate(self):
         """ Sorry, this isn't supported by Panda's low-level I/O,
         because it isn't supported by the standard C++ library. """
@@ -326,16 +326,15 @@ def exists(path):
 
 def lexists(path):
     return _vfs.exists(pm.Filename.fromOsSpecific(path))
-    
+
 def getmtime(path):
     file = _vfs.getFile(pm.Filename.fromOsSpecific(path), True)
     if not file:
         raise os.error
     return file.getTimestamp()
-    
+
 def getsize(path):
     file = _vfs.getFile(pm.Filename.fromOsSpecific(path), True)
     if not file:
         raise os.error
     return file.getFileSize()
-

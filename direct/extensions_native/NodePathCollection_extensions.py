@@ -9,14 +9,14 @@ def asList(self):
     """Converts a NodePathCollection into a list"""
     print "Warning: NodePathCollection.asList() is no longer needed and deprecated.  Iterate on the collection directly instead."
     return list(self)
-        
-Dtool_funcToMethod(asList, NodePathCollection)        
+
+Dtool_funcToMethod(asList, NodePathCollection)
 del asList
-#####################################################################3333      
+#####################################################################3333
 
 def getTightBounds(self):
     from pandac.PandaModules import Point3
-    
+
     if self.getNumPaths() == 0:
         return (Point3.Point3(0), Point3.Point3(0))
     v1, v2 = self.getPath(0).getTightBounds()
@@ -29,7 +29,7 @@ def getTightBounds(self):
                            max(v2[1], v2x[1]),
                            max(v2[2], v2x[2]))
     return v1, v2
-    
-Dtool_funcToMethod(getTightBounds, NodePathCollection)        
+
+Dtool_funcToMethod(getTightBounds, NodePathCollection)
 del getTightBounds
-#####################################################################3333      
+#####################################################################3333

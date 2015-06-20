@@ -105,4 +105,3 @@ class DistributedSmoothNodeAI(DistributedNodeAI.DistributedNodeAI,
             return 0
     def getComponentT(self):
         return 0
-

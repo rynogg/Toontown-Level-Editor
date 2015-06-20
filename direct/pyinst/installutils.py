@@ -43,7 +43,7 @@ def copyFile(srcFiles, destFile, append=0):
             os.utime(destFile, (stats[stat.ST_ATIME], stats[stat.ST_MTIME]))
         except:
             pass
-        try:        
+        try:
             os.chown(destFile, stats[stat.ST_UID], stats[stat.ST_GID])
         except:
             pass

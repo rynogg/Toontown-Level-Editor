@@ -10,12 +10,12 @@ class ScrollMenu:
     def __init__(self, nodePath, textList):
         self.action = None              #Call back fucntion
         self.textList = textList
-        
+
         self.parent = nodePath
         self.frame = None
 
         self.initialState = None        # To maintain backward compatibility
-        
+
     def createScrolledList(self):
         # First create a frame in which direct elements maybe placed
         self.frame = DirectFrame(scale = 1.1, relief = 1.0,
@@ -45,7 +45,7 @@ class ScrollMenu:
             itemFrame_frameSize = (-0.35, 0.35, -0.37, 0.11),
             itemFrame_pos = (0.4, 0, 0.4),
         )
-        
+
         for t in self.textList:
             myScrolledList.addItem(DirectButton(text = (t, t, t),
                                     text_scale = 0.05, command = self.__selected,
@@ -55,20 +55,20 @@ class ScrollMenu:
                                     text1_fg = (0.152, 0.750, 0.258, 1),
                                     text2_fg = (0.977, 0.816, 0.133, 1), ))
         myScrolledList.reparentTo(self.frame)
-        
+
         #An exit button
         b1 = DirectButton(parent = self.frame, text  = "Exit",
                   text_scale=0.05, borderWidth = (0.01, 0.01),
                   relief=1, command = self.__hide)
         b1.setPos(0.15, 0, -0.025)
-        
+
         self.frame.reparentTo(self.parent)
-        
-        
+
+
     def __selected(self, text):
         if(self.action):
             self.action(text)
-            
+
     def __hide(self):
         self.frame.reparentTo(self.parent)
 
@@ -85,10 +85,10 @@ class ScrollMenu:
         # Pop up menu
         self.frame.reparentTo(aspect2d)
         self.frame.setPos(originX, 0.0, originY)
-        
+
     def removePieMenuTask(self):
         pass
-    
+
     def setInitialState(self, state):
         self.initialState = state
 

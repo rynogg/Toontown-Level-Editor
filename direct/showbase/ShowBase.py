@@ -45,7 +45,7 @@ import AppRunnerGlobal
 
 __builtin__.FADE_SORT_INDEX = 1000
 __builtin__.NO_FADE_SORT_INDEX = 2000
-    
+
 
 # Now ShowBase is a DirectObject.  We need this so ShowBase can hang
 # hooks on messages, particularly on window-event.  This doesn't
@@ -71,7 +71,7 @@ class ShowBase(DirectObject.DirectObject):
 
         #debug running multiplier
         self.debugRunningMultiplier = 4
-        
+
         # Get the dconfig object
         self.config = config
         # Setup wantVerifyPdb as soon as reasonable:
@@ -88,7 +88,7 @@ class ShowBase(DirectObject.DirectObject):
         self.nextWindowIndex = 1
         self.__directStarted = False
         self.__deadInputs = 0
-        
+
         # Store dconfig variables
         self.sfxActive = self.config.GetBool('audio-sfx-active', 1)
         self.musicActive = self.config.GetBool('audio-music-active', 1)
@@ -124,10 +124,10 @@ class ShowBase(DirectObject.DirectObject):
         taskMgr.resumeFunc = PStatClient.resumeAfterPause
 
         if(self.config.GetBool("want-dev",0)):
-            import profile, pstats        
+            import profile, pstats
             profile.Profile.bias = float(self.config.GetString("profile-bias","0"))
-            
-               
+
+
             def f8(x):
                 return ("%"+"8.%df"%base.config.GetInt("profile-decimals",3)) % x
             pstats.f8=f8
@@ -244,7 +244,7 @@ class ShowBase(DirectObject.DirectObject):
 
         self.loader = Loader.Loader(self)
         self.graphicsEngine.setDefaultLoader(self.loader.loader)
-            
+
         self.eventMgr = eventMgr
         self.messenger = messenger
         self.bboard = bulletinBoard
@@ -341,7 +341,7 @@ class ShowBase(DirectObject.DirectObject):
 
         # set up recording of Functor creation stacks in __dev__
         PythonUtil.recordFunctorCreationStacks()
-        
+
         if __dev__ or self.config.GetBool('want-e3-hacks', False):
             if self.config.GetBool('track-gui-items', True):
                 # dict of guiId to gui item, for tracking down leaks
@@ -363,7 +363,7 @@ class ShowBase(DirectObject.DirectObject):
         sleepTime = self.config.GetFloat('client-sleep', 0.0)
         self.clientSleep = 0.0
         self.setSleep(sleepTime)
-        
+
         # Extra sleep for running 4+ clients on a single machine
         # adds a sleep right after the main render in igloop
         # tends to even out the frame rate and keeps it from going
@@ -391,7 +391,7 @@ class ShowBase(DirectObject.DirectObject):
 
         # Start IGLOOP
         self.restart()
-        
+
     # add a collision traverser via pushCTrav and remove it via popCTrav
     # that way the owner of the new cTrav doesn't need to hold onto the
     # previous one in order to put it back
@@ -412,16 +412,16 @@ class ShowBase(DirectObject.DirectObject):
         add stuff to this.
         """
         if self.config.GetBool('want-env-debug-info', 0):
-           print "\n\nEnvironment Debug Info {"
-           print "* model path:"
-           print getModelPath()
-           #print "* dna path:"
-           #print getDnaPath()
-           print "* texture path:"
-           print getTexturePath()
-           print "* sound path:"
-           print getSoundPath()
-           print "}"
+            print "\n\nEnvironment Debug Info {"
+            print "* model path:"
+            print getModelPath()
+            #print "* dna path:"
+            #print getDnaPath()
+            print "* texture path:"
+            print getTexturePath()
+            print "* sound path:"
+            print getSoundPath()
+            print "}"
 
     def destroy(self):
         """ Call this function to destroy the ShowBase and stop all
@@ -465,7 +465,7 @@ class ShowBase(DirectObject.DirectObject):
 
         vfs = VirtualFileSystem.getGlobalPtr()
         vfs.unmountAll()
-        
+
 
     def exitfunc(self):
         """
@@ -569,7 +569,7 @@ class ShowBase(DirectObject.DirectObject):
             # If the gsg is a window or buffer, it means to use the
             # GSG from that buffer.
             gsg = gsg.getGsg()
-            
+
         # If we are using DirectX, force a new GSG to be created,
         # since at the moment DirectX seems to misbehave if we do
         # not do this.  This will cause a delay while all textures
@@ -647,7 +647,7 @@ class ShowBase(DirectObject.DirectObject):
         """
         # First, remove all of the cameras associated with display
         # regions on the window.
-        numRegions = win.getNumDisplayRegions()        
+        numRegions = win.getNumDisplayRegions()
         for i in range(numRegions):
             dr = win.getDisplayRegion(i)
             # [gjeon] remove drc in base.direct.drList
@@ -656,9 +656,9 @@ class ShowBase(DirectObject.DirectObject):
                     if drc.cam == dr.getCamera():
                         base.direct.drList.displayRegionList.remove(drc)
                         break
-                    
+
             cam = NodePath(dr.getCamera())
-            
+
             dr.setCamera(NodePath())
 
             if not cam.isEmpty() and \
@@ -727,7 +727,7 @@ class ShowBase(DirectObject.DirectObject):
             self.openMainWindow(*args, **kw)
             self.graphicsEngine.openWindows()
             return
-            
+
         self.openMainWindow(*args, **kw)
 
         # Give the window a chance to truly open.
@@ -797,7 +797,7 @@ class ShowBase(DirectObject.DirectObject):
         closed window).
         """
         keepCamera = kw.get('keepCamera', 0)
-        
+
         success = 1
         oldWin = self.win
         oldLens = self.camLens
@@ -942,7 +942,7 @@ class ShowBase(DirectObject.DirectObject):
         self.aspect2d = self.render2d.attachNewNode(PGTop("aspect2d"))
         self.aspect2d.setScale(1.0 / aspectRatio, 1.0, 1.0)
 
-        self.a2dBackground = self.aspect2d.attachNewNode("a2dBackground") 
+        self.a2dBackground = self.aspect2d.attachNewNode("a2dBackground")
 
         # It's important to know the bounds of the aspect2d screen.
         self.a2dTop = 1.0
@@ -986,7 +986,7 @@ class ShowBase(DirectObject.DirectObject):
         self.a2dBottomLeftNs.setPos(self.a2dLeft, 0, self.a2dBottom)
         self.a2dBottomRight.setPos(self.a2dRight, 0, self.a2dBottom)
         self.a2dBottomRightNs.setPos(self.a2dRight, 0, self.a2dBottom)
-        
+
         # This special root, pixel2d, uses units in pixels that are relative
         # to the window. The upperleft corner of the window is (0, 0),
         # the lowerleft corner is (xsize, -ysize), in this coordinate system.
@@ -1058,7 +1058,7 @@ class ShowBase(DirectObject.DirectObject):
         self.a2dpTopRight.setPos(self.a2dpRight, 0, self.a2dpTop)
         self.a2dpBottomLeft.setPos(self.a2dpLeft, 0, self.a2dpBottom)
         self.a2dpBottomRight.setPos(self.a2dpRight, 0, self.a2dpBottom)
-        
+
         # This special root, pixel2d, uses units in pixels that are relative
         # to the window. The upperleft corner of the window is (0, 0),
         # the lowerleft corner is (xsize, -ysize), in this coordinate system.
@@ -1210,7 +1210,7 @@ class ShowBase(DirectObject.DirectObject):
             # If it's a stereo DisplayRegion, we clear the right
             # channel by default.
             dr.getRightEye().setClearDepthActive(1)
-            
+
         if clearColor:
             dr.setClearColorActive(1)
             dr.setClearColor(clearColor)
@@ -1243,7 +1243,7 @@ class ShowBase(DirectObject.DirectObject):
             cam2dNode = Camera('cam2d_' + cameraName)
         else:
             cam2dNode = Camera('cam2d')
-            
+
         if lens == None:
             lens = OrthographicLens()
             lens.setFilmSize(right - left, top - bottom)
@@ -1338,12 +1338,12 @@ class ShowBase(DirectObject.DirectObject):
 
         if fMultiWin:
             return bts[0]
-        
+
         self.buttonThrowers = bts[:]
         self.pointerWatcherNodes = pws[:]
 
         self.mouseWatcher = self.buttonThrowers[0].getParent()
-        self.mouseWatcherNode = self.mouseWatcher.node()  
+        self.mouseWatcherNode = self.mouseWatcher.node()
 
         if self.recorder:
             # If we have a recorder, the mouseWatcher belongs under a
@@ -1415,7 +1415,7 @@ class ShowBase(DirectObject.DirectObject):
                 # track the left and right halves of the screen
                 # individually.
                 mw.node().setDisplayRegion(win.getOverlayDisplayRegion())
-                
+
             mb = mw.node().getModifierButtons()
             mb.addButton(KeyboardButton.shift())
             mb.addButton(KeyboardButton.control())
@@ -1536,7 +1536,7 @@ class ShowBase(DirectObject.DirectObject):
             port = -1
         PStatClient.connect(hostname, port)
         return PStatClient.isConnected()
-                
+
 
     def addSfxManager(self, extraSfxManager):
         # keep a list of sfx manager objects to apply settings to,
@@ -1674,7 +1674,7 @@ class ShowBase(DirectObject.DirectObject):
         # run the collision traversal if we have a
         # CollisionTraverser set.
         if self.shadowTrav:
-           self.shadowTrav.traverse(self.render)
+            self.shadowTrav.traverse(self.render)
         return Task.cont
 
     def __collisionLoop(self, state):
@@ -1685,7 +1685,7 @@ class ShowBase(DirectObject.DirectObject):
         if self.appTrav:
             self.appTrav.traverse(self.render)
         if self.shadowTrav:
-           self.shadowTrav.traverse(self.render)
+            self.shadowTrav.traverse(self.render)
         messenger.send("collisionLoopFinished")
         return Task.cont
 
@@ -1778,7 +1778,7 @@ class ShowBase(DirectObject.DirectObject):
         # Lerp stuff needs this event, and it must be generated in
         # C++, not in Python.
         throwNewFrame()
-        return Task.cont    
+        return Task.cont
 
     def restart(self,clusterSync=False,cluster=None):
         self.shutdown()
@@ -1796,7 +1796,7 @@ class ShowBase(DirectObject.DirectObject):
         # but leave enough room for the app to insert tasks
         # between collisionLoop and igLoop
         self.taskMgr.add(self.__collisionLoop, 'collisionLoop', priority = 30)
-        
+
         # give the igLoop task a reasonably "late" priority,
         # so that it will get run after most tasks
         self.cluster = cluster
@@ -1852,7 +1852,7 @@ class ShowBase(DirectObject.DirectObject):
             win = self.win
 
         if win:
-           win.setClearColor(color)
+            win.setClearColor(color)
 
     def toggleBackface(self):
         if self.backfaceCullingEnabled:
@@ -2042,7 +2042,7 @@ class ShowBase(DirectObject.DirectObject):
 
         self.showVertices = self.cam.attachNewNode(cam)
         dr.setCamera(self.showVertices)
-        
+
 
     def oobe(self):
         """
@@ -2518,14 +2518,14 @@ class ShowBase(DirectObject.DirectObject):
                         self.a2dpTop = 1.0
                         self.a2dpBottom = -1.0
                         self.a2dpLeft = -aspectRatio
-                        self.a2dpRight = aspectRatio                        
+                        self.a2dpRight = aspectRatio
 
 
                     # Reposition the aspect2d marker nodes
                     self.a2dTopCenter.setPos(0, 0, self.a2dTop)
                     self.a2dBottomCenter.setPos(0, 0, self.a2dBottom)
                     self.a2dLeftCenter.setPos(self.a2dLeft, 0, 0)
-                    self.a2dRightCenter.setPos(self.a2dRight, 0, 0)                    
+                    self.a2dRightCenter.setPos(self.a2dRight, 0, 0)
                     self.a2dTopLeft.setPos(self.a2dLeft, 0, self.a2dTop)
                     self.a2dTopRight.setPos(self.a2dRight, 0, self.a2dTop)
                     self.a2dBottomLeft.setPos(self.a2dLeft, 0, self.a2dBottom)
@@ -2535,25 +2535,25 @@ class ShowBase(DirectObject.DirectObject):
                     self.a2dTopCenterNs.setPos(0, 0, self.a2dTop)
                     self.a2dBottomCenterNs.setPos(0, 0, self.a2dBottom)
                     self.a2dLeftCenterNs.setPos(self.a2dLeft, 0, 0)
-                    self.a2dRightCenterNs.setPos(self.a2dRight, 0, 0)                    
+                    self.a2dRightCenterNs.setPos(self.a2dRight, 0, 0)
                     self.a2dTopLeftNs.setPos(self.a2dLeft, 0, self.a2dTop)
                     self.a2dTopRightNs.setPos(self.a2dRight, 0, self.a2dTop)
                     self.a2dBottomLeftNs.setPos(self.a2dLeft, 0, self.a2dBottom)
-                    self.a2dBottomRightNs.setPos(self.a2dRight, 0, self.a2dBottom)                    
+                    self.a2dBottomRightNs.setPos(self.a2dRight, 0, self.a2dBottom)
 
                     # Reposition the aspect2dp marker nodes
                     self.a2dpTopCenter.setPos(0, 0, self.a2dpTop)
                     self.a2dpBottomCenter.setPos(0, 0, self.a2dpBottom)
                     self.a2dpLeftCenter.setPos(self.a2dpLeft, 0, 0)
-                    self.a2dpRightCenter.setPos(self.a2dpRight, 0, 0)                  
+                    self.a2dpRightCenter.setPos(self.a2dpRight, 0, 0)
                     self.a2dpTopLeft.setPos(self.a2dpLeft, 0, self.a2dpTop)
                     self.a2dpTopRight.setPos(self.a2dpRight, 0, self.a2dpTop)
                     self.a2dpBottomLeft.setPos(self.a2dpLeft, 0, self.a2dpBottom)
                     self.a2dpBottomRight.setPos(self.a2dpRight, 0, self.a2dpBottom)
-                    
+
                     # If anybody needs to update their GUI, put a callback on this event
                     messenger.send("aspectRatioChanged")
-            
+
             # Temporary hasattr for old Pandas
             if not hasattr(win, 'getSbsLeftXSize'):
                 self.pixel2d.setScale(2.0 / win.getXSize(), 1.0, 2.0 / win.getYSize())
@@ -2609,7 +2609,7 @@ class ShowBase(DirectObject.DirectObject):
         if self.__directStarted:
             return
         self.__directStarted = False
-        
+
         # Start Tk, Wx and DIRECT if specified by Config.prc
         fTk = self.config.GetBool('want-tk', 0)
         fWx = self.config.GetBool('want-wx', 0)

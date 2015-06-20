@@ -3,7 +3,7 @@ import finder, tocfilter, resource
 
 class lTOC(UserList.UserList):
     """ A class for managing lists of resources.
-        Should be a UserList subclass. Doh. 
+        Should be a UserList subclass. Doh.
         Like a list, but has merge(other) and filter() methods """
     def __init__(self, reslist=None, filters=None):
         UserList.UserList.__init__(self, reslist)
@@ -56,9 +56,9 @@ class lTOC(UserList.UserList):
                     raise ValueError, "can't make filter from %s", repr(filter)
             else:
                 raise ValueError, "can't make filter from %s", repr(filter)
-        print " added filter", repr(self.filters[-1])             
-            
-   
+        print " added filter", repr(self.filters[-1])
+
+
 if __name__ == '__main__':
     sys.path.insert(0, '.')
     import finder
@@ -81,5 +81,3 @@ if __name__ == '__main__':
     print "Raw bin ltoc:", pprint.pprint(binltoc.toList())
     binltoc.addFilter('c:/winnt/system32')
     pprint.pprint(binltoc.filter().toList())
-    
-    

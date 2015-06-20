@@ -83,7 +83,7 @@ class AppRunner(DirectObject):
 
     # Also from p3d_plugin.h
     P3D_CONTENTS_DEFAULT_MAX_AGE = 5
-    
+
     def __init__(self):
         DirectObject.__init__(self)
 
@@ -210,7 +210,7 @@ class AppRunner(DirectObject):
         # this instance, e.g. the WindowProperties necessary to
         # re-embed a window in the browser frame.
         self.windowProperties = None
-        
+
         # Store our pointer so DirectStart-based apps can find us.
         if AppRunnerGlobal.appRunner is None:
             AppRunnerGlobal.appRunner = self
@@ -260,7 +260,7 @@ class AppRunner(DirectObject):
             value = bool(value)
         return value
 
-        
+
 
     def installPackage(self, packageName, version = None, hostUrl = None):
 
@@ -350,7 +350,7 @@ class AppRunner(DirectObject):
 
         # No shenanigans, just return the requested host.
         return host
-        
+
     def getHost(self, hostUrl, hostDir = None):
         """ Returns a new HostInfo object corresponding to the
         indicated host URL.  If we have already seen this URL
@@ -416,7 +416,7 @@ class AppRunner(DirectObject):
                 # the host directory too.
                 del self.hosts[hostUrl]
                 self.__deleteHostFiles(host)
-                
+
         return packages
 
     def __deleteHostFiles(self, host):
@@ -428,7 +428,7 @@ class AppRunner(DirectObject):
         self.rmtree(host.hostDir)
 
         self.sendRequest('forget_package', host.hostUrl, '', '')
-        
+
 
     def freshenFile(self, host, fileSpec, localPathname):
         """ Ensures that the localPathname is the most current version
@@ -449,7 +449,7 @@ class AppRunner(DirectObject):
             url = PandaModules.URLSpec(self.superMirrorUrl + fileSpec.filename)
             self.notify.info("Freshening %s" % (url))
             doc = self.http.getDocument(url)
-            
+
         if not doc or not doc.isValid():
             # Failing the super mirror, contact the actual host.
             url = PandaModules.URLSpec(host.hostUrlPrefix + fileSpec.filename)
@@ -457,7 +457,7 @@ class AppRunner(DirectObject):
             doc = self.http.getDocument(url)
             if not doc.isValid():
                 return False
-        
+
         file = Filename.temporary('', 'p3d_')
         if not doc.downloadToFile(file):
             # Failed to download.
@@ -558,7 +558,7 @@ class AppRunner(DirectObject):
         tfile = Filename.temporary(self.rootDir.cStr(), '.xml')
         if doc.SaveFile(tfile.toOsSpecific()):
             tfile.renameTo(filename)
-        
+
 
     def checkDiskUsage(self):
         """ Checks the total disk space used by all packages, and
@@ -571,11 +571,11 @@ class AppRunner(DirectObject):
                 totalSize += packageData.totalSize
         self.notify.info("Total Panda3D disk space used: %s MB" % (
             (totalSize + 524288) / 1048576))
-        
+
         if self.verifyContents == self.P3DVCNever:
             # We're not allowed to delete anything anyway.
             return
-        
+
         self.notify.info("Configured max usage is: %s MB" % (
             (self.maxDiskUsage + 524288) / 1048576))
         if totalSize <= self.maxDiskUsage:
@@ -589,7 +589,7 @@ class AppRunner(DirectObject):
                 if packageData.package and packageData.package.installed:
                     # Don't uninstall any packages we're currently using.
                     continue
-                
+
                 usedPackages.append((packageData.lastUse, packageData))
 
         # Sort the packages into oldest-first order.
@@ -612,7 +612,7 @@ class AppRunner(DirectObject):
         packages = self.deletePackages(packages)
         if packages:
             print "Unable to delete %s packages" % (len(packages))
-        
+
         return
 
     def stop(self):
@@ -806,7 +806,7 @@ class AppRunner(DirectObject):
 
         # Now that we have rootDir, we can read the config file.
         self.readConfigXml()
-        
+
 
     def addPackageInfo(self, name, platform, version, hostUrl, hostDir = None,
                        recurse = False):
@@ -850,7 +850,7 @@ class AppRunner(DirectObject):
                 # Maybe the contents.xml file isn't current.  Re-fetch it.
                 if host.redownloadContentsFile(self.http):
                     return self.addPackageInfo(name, platform, version, hostUrl, hostDir = hostDir, recurse = True)
-            
+
             message = "Couldn't find %s %s on %s" % (name, version, hostUrl)
             raise OSError, message
 
@@ -858,11 +858,11 @@ class AppRunner(DirectObject):
         if not package.downloadDescFile(self.http):
             message = "Couldn't get desc file for %s" % (name)
             raise OSError, message
-        
+
         if not package.downloadPackage(self.http):
             message = "Couldn't download %s" % (name)
             raise OSError, message
-        
+
         if not package.installPackage(self):
             message = "Couldn't install %s" % (name)
             raise OSError, message
@@ -877,7 +877,7 @@ class AppRunner(DirectObject):
         contains the application itself, along with the web tokens
         and/or command-line arguments.  Once this method has been
         called, the application is effectively started. """
-        
+
         # One day we will have support for multiple instances within a
         # Python session.  Against that day, we save the instance ID
         # for this instance.
@@ -998,14 +998,14 @@ class AppRunner(DirectObject):
                     newUrl = xalthost.Attribute('url')
                     self.altHostMap[origUrl] = newUrl
                     break
-                
+
                 xalthost = xalthost.NextSiblingElement('alt_host')
-    
+
     def loadMultifilePrcFiles(self, mf, root):
         """ Loads any prc files in the root of the indicated
         Multifile, which is presumed to have been mounted already
         under root. """
-        
+
         # We have to load these prc files explicitly, since the
         # ConfigPageManager can't directly look inside the vfs.  Use
         # the Multifile interface to find the prc files, rather than
@@ -1017,12 +1017,12 @@ class AppRunner(DirectObject):
                 pathname = '%s/%s' % (root, f)
                 data = file.open(Filename(pathname), 'r').read()
                 loadPrcFileData(pathname, data)
-        
-    
+
+
     def __clearWindowProperties(self):
         """ Clears the windowPrc file that was created in a previous
         call to setupWindow(), if any. """
-        
+
         if self.windowPrc:
             unloadPrcFile(self.windowPrc)
             self.windowPrc = None
@@ -1098,12 +1098,12 @@ class AppRunner(DirectObject):
         function that can be used to deliver requests upstream, to the
         core API, and thereby to the browser. """
         self.requestFunc = func
-        
+
     def sendRequest(self, request, *args):
         """ Delivers a request to the browser via self.requestFunc.
         This low-level function is not intended to be called directly
         by user code. """
-        
+
         assert self.requestFunc
         return self.requestFunc(self.instanceId, request, args)
 
@@ -1147,7 +1147,7 @@ class AppRunner(DirectObject):
             # Evaluate it now.
             return self.scriptRequest('eval', self.dom, value = expression,
                                       needsResponse = needsResponse)
-        
+
     def scriptRequest(self, operation, object, propertyName = '',
                       value = None, needsResponse = True):
         """ Issues a new script request to the browser.  This queries
@@ -1155,7 +1155,7 @@ class AppRunner(DirectObject):
         low-level method that user code should not call directly;
         instead, just operate on the Python wrapper objects that
         shadow the DOM objects, beginning with appRunner.dom.
-        
+
         operation may be one of [ 'get_property', 'set_property',
         'call', 'evaluate' ].
 
@@ -1214,7 +1214,7 @@ def dummyAppRunner(tokens = [], argv = None):
     platform = PandaSystem.getPlatform()
     version = PandaSystem.getPackageVersionString()
     hostUrl = PandaSystem.getPackageHostUrl()
-    
+
     if platform.startswith('win'):
         rootDir = Filename(Filename.getUserAppdataDirectory(), 'Panda3D')
     elif platform.startswith('osx'):
@@ -1227,7 +1227,7 @@ def dummyAppRunner(tokens = [], argv = None):
 
     # Of course we will have the panda3d application loaded.
     appRunner.addPackageInfo('panda3d', platform, version, hostUrl)
-        
+
     appRunner.tokens = tokens
     appRunner.tokenDict = dict(tokens)
     if argv is None:
@@ -1245,6 +1245,5 @@ def dummyAppRunner(tokens = [], argv = None):
     vfs.mount(cwd, appRunner.multifileRoot, vfs.MFReadOnly)
 
     appRunner.initPackedAppEnvironment()
-    
-    return appRunner
 
+    return appRunner

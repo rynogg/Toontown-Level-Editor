@@ -28,7 +28,7 @@ del attach
 
 def convert(self):
     """
-    Do a sort of pseudo-downcast on this joint in 
+    Do a sort of pseudo-downcast on this joint in
     order to expose its specialized functions.
     """
     if self.getJointType() == OdeJoint.JTBall:
@@ -55,4 +55,3 @@ def convert(self):
         return self.convertToPlane2d()
 Dtool_funcToMethod(convert, OdeJoint)
 del convert
-

@@ -46,25 +46,25 @@ excludes = {'KERNEL32.DLL':1,
       'VERSION.DLL':1}
 
 def getfullnameof(mod, xtrapath = None):
-  """Return the full path name of MOD.
+    """Return the full path name of MOD.
 
-      MOD is the basename of a dll or pyd.
-      XTRAPATH is a path or list of paths to search first.
-      Return the full path name of MOD.
-      Will search the full Windows search path, as well as sys.path"""
-  epath = finder.getpath()
-  if mod[-4:] in ('.pyd', '.PYD'):
-    epath = epath + sys.path
-  if xtrapath is not None:
-    if type(xtrapath) == type(''):
-      epath.insert(0, xtrapath)
-    else:
-      epath = xtrapath + epath
-  for p in epath:
-    npth = os.path.join(p, mod)
-    if os.path.exists(npth):
-      return npth
-  return ''
+        MOD is the basename of a dll or pyd.
+        XTRAPATH is a path or list of paths to search first.
+        Return the full path name of MOD.
+        Will search the full Windows search path, as well as sys.path"""
+    epath = finder.getpath()
+    if mod[-4:] in ('.pyd', '.PYD'):
+        epath = epath + sys.path
+    if xtrapath is not None:
+        if type(xtrapath) == type(''):
+            epath.insert(0, xtrapath)
+        else:
+            epath = xtrapath + epath
+    for p in epath:
+        npth = os.path.join(p, mod)
+        if os.path.exists(npth):
+            return npth
+    return ''
 
 def getImports1(pth):
     """Find the binary dependencies of PTH.
@@ -91,68 +91,68 @@ def getImports2(pth):
     import struct
     rslt = []
     try:
-      f = open(pth, 'rb').read()
-      pehdrd = struct.unpack('l', f[60:64])[0]
-      magic = struct.unpack('l', f[pehdrd:pehdrd+4])[0]
-      numsecs = struct.unpack('h', f[pehdrd+6:pehdrd+8])[0]
-      numdirs = struct.unpack('l', f[pehdrd+116:pehdrd+120])[0]
-      idata = ''
-      if magic == 17744:
-          importsec, sz = struct.unpack('2l', f[pehdrd+128:pehdrd+136])
-          secttbl = pehdrd + 120 + 8*numdirs
-          secttblfmt = '8s7l2h'
-          seclist = []
-          for i in range(numsecs):
-              seclist.append(struct.unpack(secttblfmt, f[secttbl+i*40:secttbl+(i+1)*40]))
-              #nm, vsz, va, rsz, praw, preloc, plnnums, qrelocs, qlnnums, flags \
-              # = seclist[-1]
-          for i in range(len(seclist)-1):
-              if seclist[i][2] <= importsec < seclist[i+1][2]:
-                  break
-          vbase = seclist[i][2]
-          raw = seclist[i][4]
-          idatastart = raw + importsec - vbase
-          idata = f[idatastart:idatastart+seclist[i][1]]
-          i = 0
-          while 1:
-              vsa =  struct.unpack('5l', idata[i*20:i*20+20])[3]
-              if vsa == 0:
-                  break
-              sa = raw + vsa - vbase
-              end = string.find(f, '\000', sa)
-              rslt.append(f[sa:end])
-              i = i + 1
+        f = open(pth, 'rb').read()
+        pehdrd = struct.unpack('l', f[60:64])[0]
+        magic = struct.unpack('l', f[pehdrd:pehdrd+4])[0]
+        numsecs = struct.unpack('h', f[pehdrd+6:pehdrd+8])[0]
+        numdirs = struct.unpack('l', f[pehdrd+116:pehdrd+120])[0]
+        idata = ''
+        if magic == 17744:
+            importsec, sz = struct.unpack('2l', f[pehdrd+128:pehdrd+136])
+            secttbl = pehdrd + 120 + 8*numdirs
+            secttblfmt = '8s7l2h'
+            seclist = []
+            for i in range(numsecs):
+                seclist.append(struct.unpack(secttblfmt, f[secttbl+i*40:secttbl+(i+1)*40]))
+                #nm, vsz, va, rsz, praw, preloc, plnnums, qrelocs, qlnnums, flags \
+                # = seclist[-1]
+            for i in range(len(seclist)-1):
+                if seclist[i][2] <= importsec < seclist[i+1][2]:
+                    break
+            vbase = seclist[i][2]
+            raw = seclist[i][4]
+            idatastart = raw + importsec - vbase
+            idata = f[idatastart:idatastart+seclist[i][1]]
+            i = 0
+            while 1:
+                vsa =  struct.unpack('5l', idata[i*20:i*20+20])[3]
+                if vsa == 0:
+                    break
+                sa = raw + vsa - vbase
+                end = string.find(f, '\000', sa)
+                rslt.append(f[sa:end])
+                i = i + 1
     except IOError:
-      print "bindepend cannot analyze %s - file not found!"
+        print "bindepend cannot analyze %s - file not found!"
     except struct.error:
-      print "bindepend cannot analyze %s - error walking thru pehdr"
+        print "bindepend cannot analyze %s - error walking thru pehdr"
     return rslt
 
 def Dependencies(lTOC):
-  """Expand LTOC to include all the closure of binary dependencies.
+    """Expand LTOC to include all the closure of binary dependencies.
 
-     LTOC is a logical table of contents, ie, a seq of tuples (name, path).
-     Return LTOC expanded by all the binary dependencies of the entries
-     in LTOC, except those listed in the module global EXCLUDES"""
-  for (nm, pth) in lTOC:
-    fullnm = string.upper(os.path.basename(pth))
-    if seen.get(string.upper(nm), 0):
-      continue
-    print "analyzing", nm
-    seen[string.upper(nm)] = 1
-    dlls = getImports(pth)
-    for lib in dlls:
-        print " found", lib
-        if excludes.get(string.upper(lib), 0):
-          continue
-        if seen.get(string.upper(lib), 0):
-          continue
-        npth = getfullnameof(lib)
-        if npth:
-          lTOC.append((lib, npth))
-        else:
-          print " lib not found:", lib, "dependency of",
-  return lTOC
+       LTOC is a logical table of contents, ie, a seq of tuples (name, path).
+       Return LTOC expanded by all the binary dependencies of the entries
+       in LTOC, except those listed in the module global EXCLUDES"""
+    for (nm, pth) in lTOC:
+        fullnm = string.upper(os.path.basename(pth))
+        if seen.get(string.upper(nm), 0):
+            continue
+        print "analyzing", nm
+        seen[string.upper(nm)] = 1
+        dlls = getImports(pth)
+        for lib in dlls:
+            print " found", lib
+            if excludes.get(string.upper(lib), 0):
+                continue
+            if seen.get(string.upper(lib), 0):
+                continue
+            npth = getfullnameof(lib)
+            if npth:
+                lTOC.append((lib, npth))
+            else:
+                print " lib not found:", lib, "dependency of",
+    return lTOC
 
 
 ##if getfullnameof('dumpbin.exe') == '':
@@ -166,4 +166,3 @@ def getImports(pth):
     """Forwards to either getImports1 or getImports2
     """
     return getImports2(pth)
-

@@ -27,7 +27,7 @@ def itersorted(iterable, cmp = cmp, key = lambda x: x, reverse = False):
     # the input data, values are added to each layer in such a way that
     # they maintain their relative position (to others in the same layer)
     # from the original data.  This ensures a 'stable sort'.
-    
+
     # Create our working structures
     stack = []      # holds a stack of 'layers'.
                     # 'left' value layers are above 'right' ones.
@@ -43,7 +43,7 @@ def itersorted(iterable, cmp = cmp, key = lambda x: x, reverse = False):
     # Create the base iterator that will track our
     # main progress through the data.
     a = ((key(x),x) for x in iterable)
-        
+
     # Begin the main loop
     while 1:
         # If the stack is empty, we must now seed it.
@@ -114,7 +114,7 @@ if __debug__:
 
         control = sorted(data, key = lambda x: x[0])
         variable = itersorted(data, key = lambda x: x[0])
-        
+
         print control[:10] == [x for x in islice(variable,10)]
         print data
         print control
@@ -125,13 +125,13 @@ if __debug__:
     from unittest import TestCase, main
     from random import shuffle
     from itertools import islice
-    
+
     class LazySortTest(TestCase):
         """
         Run these tests with:
         > python LazySort.py
         """
-        
+
         TESTLEN = 10
         RANGELEN = max(TESTLEN, 10)
 
@@ -143,12 +143,12 @@ if __debug__:
         shuffle(DATA)
         del a
         del b
-        
+
         def testRange(self):
             control = sorted(self.DATA)
             variable = itersorted(self.DATA)
             self.assertEqual(control[:10], [x for x in islice(variable, self.TESTLEN)])
-            
+
         def testRangeCompare(self):
             control = sorted(self.DATA, cmp = lambda a,b: -cmp(a,b))
             variable = itersorted(self.DATA, cmp = lambda a,b: -cmp(a,b))
@@ -158,7 +158,7 @@ if __debug__:
             control = sorted(self.DATA, key = lambda x: x[0])
             variable = itersorted(self.DATA, key = lambda x: x[0])
             self.assertEqual(control[:10], [x for x in islice(variable, self.TESTLEN)])
-        
+
         def testRangeReverse(self):
             control = sorted(self.DATA, reverse = True)
             variable = itersorted(self.DATA, reverse = True)
@@ -170,19 +170,19 @@ if __debug__:
             variable = itersorted(self.DATA, cmp = lambda a,b: -cmp(a,b),
                                   key = lambda x: x[0])
             self.assertEqual(control[:10], [x for x in islice(variable, self.TESTLEN)])
-        
+
         def testRangeCompareReverse(self):
             control = sorted(self.DATA, cmp = lambda a,b: -cmp(a,b),
                              reverse = True)
             variable = itersorted(self.DATA, cmp = lambda a,b: -cmp(a,b),
                                   reverse = True)
             self.assertEqual(control[:10], [x for x in islice(variable, self.TESTLEN)])
-            
+
         def testRangeKeyReverse(self):
             control = sorted(self.DATA, key = lambda x: x[0], reverse = True)
             variable = itersorted(self.DATA, key = lambda x: x[0], reverse = True)
             self.assertEqual(control[:10], [x for x in islice(variable, self.TESTLEN)])
-            
+
             control = sorted(self.DATA, key = lambda x: x[1], reverse = True)
             variable = itersorted(self.DATA, key = lambda x: x[1], reverse = True)
             self.assertEqual(control[:10], [x for x in islice(variable, self.TESTLEN)])
@@ -195,8 +195,7 @@ if __debug__:
                                   key = lambda x: x[0],
                                   reverse = True)
             self.assertEqual(control[:10], [x for x in islice(variable, self.TESTLEN)])
-        
+
 
     if __name__ == '__main__':
         main() # unittest.main
-    

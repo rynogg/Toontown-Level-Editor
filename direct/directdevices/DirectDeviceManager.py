@@ -294,18 +294,3 @@ class DirectTimecodeReader(AnalogNode, DirectObject):
     def __repr__(self):
         str = ('%s: %d:%d:%d:%d' % ((self.name,) + self.getTime()[:-1]))
         return str
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

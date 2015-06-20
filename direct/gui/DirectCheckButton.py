@@ -176,10 +176,3 @@ class DirectCheckButton(DirectButton):
         self.component('indicator').guiItem.setState(self['indicatorValue'])
         if self.colors != None:
             self.component('indicator')['image_color'] = self.colors[self['indicatorValue']]
-
-
-
-
-
-
-

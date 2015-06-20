@@ -211,15 +211,15 @@ class CollectTarget(Target):
         self.toc.filter()
         #don't dupe stuff in a zlib that's part of this target
         if self.zlib:
-           ztoc = ltoc.lTOC()
-           for zlibnm in self.zlib:
-               target = built.get(zlibnm, None)
-               if target:
-                   ztoc.merge(target.toc)
-           for i in range(len(self.toc)-1, -1, -1):
-               rsrc = self.toc[i]
-               if isinstance(rsrc, resource.moduleresource) and rsrc in ztoc:
-                   del self.toc[i]
+            ztoc = ltoc.lTOC()
+            for zlibnm in self.zlib:
+                target = built.get(zlibnm, None)
+                if target:
+                    ztoc.merge(target.toc)
+            for i in range(len(self.toc)-1, -1, -1):
+                rsrc = self.toc[i]
+                if isinstance(rsrc, resource.moduleresource) and rsrc in ztoc:
+                    del self.toc[i]
 
     def assemble(self):
         if os.path.exists(self.name):
@@ -397,11 +397,11 @@ class InstallTarget(FullExeTarget):
                         #did it come with an install script?
                         target = built.get(rsrc.name, None)
                         if target:
-                           if hasattr(target, "installscript"):
-                               for script in target.installscript:
-                                   s = resource.makeresource(script, self.pathprefix)
-                                   txt = open(s.path, 'r').read()
-                                   f.write(txt)
+                            if hasattr(target, "installscript"):
+                                for script in target.installscript:
+                                    s = resource.makeresource(script, self.pathprefix)
+                                    txt = open(s.path, 'r').read()
+                                    f.write(txt)
             f.close()
 
 dispatch = {

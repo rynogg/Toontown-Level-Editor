@@ -3,7 +3,7 @@ Dtool_PreloadDLL("libpanda")
 from libpanda import *
 
 ####################################################################
-#Dtool_funcToMethod(func, class)        
+#Dtool_funcToMethod(func, class)
 #del func
 #####################################################################
 
@@ -14,11 +14,11 @@ of the LMatrix3f class.
 
 
 def pPrintValues(self):
-        """
-        Pretty print
-        """
-        return "\n%s\n%s\n%s" % (
-            self.getRow(0).pPrintValues(), self.getRow(1).pPrintValues(), self.getRow(2).pPrintValues())
-Dtool_funcToMethod(pPrintValues, Mat3)        
+    """
+    Pretty print
+    """
+    return "\n%s\n%s\n%s" % (
+        self.getRow(0).pPrintValues(), self.getRow(1).pPrintValues(), self.getRow(2).pPrintValues())
+Dtool_funcToMethod(pPrintValues, Mat3)
 del pPrintValues
 #####################################################################

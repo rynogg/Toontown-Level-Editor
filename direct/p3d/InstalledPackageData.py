@@ -25,4 +25,3 @@ class InstalledPackageData:
 
         else:
             self.displayName = dirnode.pathname.getBasename()
-            

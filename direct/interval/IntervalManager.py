@@ -57,7 +57,7 @@ class IntervalManager(CIntervalManager):
 
     def getIntervalsMatching(self, pattern):
         ivals = []
-        
+
         count = 0
         maxIndex = self.getMaxIndex()
         for index in range(maxIndex):
@@ -140,4 +140,3 @@ class IntervalManager(CIntervalManager):
 
 # The global IntervalManager object.
 ivalMgr = IntervalManager(1)
-

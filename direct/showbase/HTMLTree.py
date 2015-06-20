@@ -16,4 +16,3 @@ class HTMLTree(ET.ElementTree):
 
     def getHead(self):
         return self.find('HEAD')
-    
