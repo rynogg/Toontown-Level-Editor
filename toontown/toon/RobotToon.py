@@ -214,30 +214,30 @@ def loadModels():
 
         for key in LegDict.keys():
             fileRoot = LegDict[key]
-            model = loader.loadModelNode('phase_3' + fileRoot + '1000')
+            model = loader.loadModelNode('phase_3' + fileRoot + '1000.bam')
             Preloaded.append(model)
-            model = loader.loadModelNode('phase_3' + fileRoot + '500')
+            model = loader.loadModelNode('phase_3' + fileRoot + '500.bam')
             Preloaded.append(model)
-            model = loader.loadModelNode('phase_3' + fileRoot + '250')
+            model = loader.loadModelNode('phase_3' + fileRoot + '250.bam')
             Preloaded.append(model)
 
         for key in TorsoDict.keys():
             fileRoot = TorsoDict[key]
-            model = loader.loadModelNode('phase_3' + fileRoot + '1000')
+            model = loader.loadModelNode('phase_3' + fileRoot + '1000.bam')
             Preloaded.append(model)
             if len(key) > 1:
-                model = loader.loadModelNode('phase_3' + fileRoot + '500')
+                model = loader.loadModelNode('phase_3' + fileRoot + '500.bam')
                 Preloaded.append(model)
-                model = loader.loadModelNode('phase_3' + fileRoot + '250')
+                model = loader.loadModelNode('phase_3' + fileRoot + '250.bam')
                 Preloaded.append(model)
 
         for key in HeadDict.keys():
             fileRoot = HeadDict[key]
-            model = loader.loadModelNode('phase_3' + fileRoot + '1000')
+            model = loader.loadModelNode('phase_3' + fileRoot + '1000.bam')
             Preloaded.append(model)
-            model = loader.loadModelNode('phase_3' + fileRoot + '500')
+            model = loader.loadModelNode('phase_3' + fileRoot + '500.bam')
             Preloaded.append(model)
-            model = loader.loadModelNode('phase_3' + fileRoot + '250')
+            model = loader.loadModelNode('phase_3' + fileRoot + '250.bam')
             Preloaded.append(model)
 
 
@@ -370,20 +370,20 @@ def compileGlobalAnimList():
         for key in LegDict.keys():
             LegsAnimDict.setdefault(key, {})
             for anim in animList:
-                file = phaseStr + LegDict[key] + anim[1]
+                file = phaseStr + LegDict[key] + anim[1] + '.bam'
                 LegsAnimDict[key][anim[0]] = file
 
         for key in TorsoDict.keys():
             TorsoAnimDict.setdefault(key, {})
             for anim in animList:
-                file = phaseStr + TorsoDict[key] + anim[1]
+                file = phaseStr + TorsoDict[key] + anim[1] + '.bam'
                 TorsoAnimDict[key][anim[0]] = file
 
         for key in HeadDict.keys():
             if string.find(key, 'd') >= 0:
                 HeadAnimDict.setdefault(key, {})
                 for anim in animList:
-                    file = phaseStr + HeadDict[key] + anim[1]
+                    file = phaseStr + HeadDict[key] + anim[1] + '.bam'
                     HeadAnimDict[key][anim[0]] = file
 
 
@@ -749,7 +749,7 @@ class RobotToon(Avatar.Avatar, ToonHead):
     def getHoleActors(self):
         if self.__holeActors:
             return self.__holeActors
-        holeActor = Actor.Actor('phase_3.5/models/props/portal-mod', {'hole': 'phase_3.5/models/props/portal-chan'})
+        holeActor = Actor.Actor('phase_3.5/models/props/portal-mod.bam', {'hole': 'phase_3.5/models/props/portal-chan.bam'})
         holeActor2 = Actor.Actor(other=holeActor)
         holeActor3 = Actor.Actor(other=holeActor)
         self.__holeActors = [holeActor, holeActor2, holeActor3]
@@ -794,9 +794,9 @@ class RobotToon(Avatar.Avatar, ToonHead):
         filePrefix = LegDict.get(legStyle)
         if filePrefix is None:
             self.notify.error('unknown leg style: %s' % legStyle)
-        self.loadModel('phase_3' + filePrefix + '1000', 'legs', '1000', copy)
-        self.loadModel('phase_3' + filePrefix + '500', 'legs', '500', copy)
-        self.loadModel('phase_3' + filePrefix + '250', 'legs', '250', copy)
+        self.loadModel('phase_3' + filePrefix + '1000.bam', 'legs', '1000', copy)
+        self.loadModel('phase_3' + filePrefix + '500.bam', 'legs', '500', copy)
+        self.loadModel('phase_3' + filePrefix + '250.bam', 'legs', '250', copy)
         if not copy:
             self.showPart('legs', '1000')
             self.showPart('legs', '500')
@@ -829,13 +829,13 @@ class RobotToon(Avatar.Avatar, ToonHead):
         filePrefix = TorsoDict.get(torsoStyle)
         if filePrefix is None:
             self.notify.error('unknown torso style: %s' % torsoStyle)
-        self.loadModel('phase_3' + filePrefix + '1000', 'torso', '1000', copy)
+        self.loadModel('phase_3' + filePrefix + '1000.bam', 'torso', '1000', copy)
         if len(torsoStyle) == 1:
-            self.loadModel('phase_3' + filePrefix + '1000', 'torso', '500', copy)
-            self.loadModel('phase_3' + filePrefix + '1000', 'torso', '250', copy)
+            self.loadModel('phase_3' + filePrefix + '1000.bam', 'torso', '500', copy)
+            self.loadModel('phase_3' + filePrefix + '1000.bam', 'torso', '250', copy)
         else:
-            self.loadModel('phase_3' + filePrefix + '500', 'torso', '500', copy)
-            self.loadModel('phase_3' + filePrefix + '250', 'torso', '250', copy)
+            self.loadModel('phase_3' + filePrefix + '500.bam', 'torso', '500', copy)
+            self.loadModel('phase_3' + filePrefix + '250.bam', 'torso', '250', copy)
         if not copy:
             self.showPart('torso', '1000')
             self.showPart('torso', '500')
@@ -1959,6 +1959,7 @@ class RobotToon(Avatar.Avatar, ToonHead):
         Emote.globalEmote.disableAll(self, 'enterTeleportIn')
         self.pose('teleport', self.getNumFrames('teleport') - 1)
         self.getGeomNode().hide()
+        self.initializeNametag3d()
         self.nametag3d.hide()
         self.track = self.getTeleportInTrack()
         if callback:

@@ -26,6 +26,7 @@ import types
 from direct.task import Task
 import Pmw
 import __builtin__
+from direct.interval.IntervalGlobal import *
 
 # [gjeon] to control avatar movement in drive mode
 from direct.controls import ControlManager
@@ -673,11 +674,11 @@ class LevelEditor(NodePath, DirectObject):
         base.direct.enable()
 
         # [gjeon]  disable avatar and controlManager
-        if (self.avatar):
-            self.avatar.reparentTo(hidden)
-            self.avatar.stopUpdateSmartCamera()
         if (self.controlManager):
             self.controlManager.disable()
+        if (self.avatar):
+            self.avatar.stopUpdateSmartCamera()
+            Sequence(Func(self.avatar.robot.animFSM.request, 'TeleportOut'), Wait(3.5), Func(self.avatar.reparentTo, hidden)).start()
 
         self.fDrive = False
 
@@ -742,11 +743,13 @@ class LevelEditor(NodePath, DirectObject):
             self.avatar.robot = RobotToon.RobotToon()
             self.avatar.robot.reparentTo(self.avatar)
             self.avatar.setHeight(self.avatar.robot.getHeight())
+            self.avatar.robot.setDNAString('t\x01\x01\x01\x01\x03\x03\x03\x03\x07\x02\x11\x00\x11\x11')
             self.avatar.setName("The Inspector")
-            self.avatar.robot.loop('neutral')
-
+            #self.avatar.robot.loop('neutral')
+            
         self.avatar.setPos(base.camera.getPos())
         self.avatar.reparentTo(render)
+        Sequence(Func(self.avatar.robot.animFSM.request, 'TeleportIn'), Wait(1.5), Func(self.avatar.robot.animFSM.request, 'neutral')).start()
 
 ##         pos = base.direct.camera.getPos()
 ##         pos.setZ(4.0)
@@ -759,7 +762,10 @@ class LevelEditor(NodePath, DirectObject):
         self.switchToDriveMode(None)
         self.fDrive = True
         #[gjeon] deselect
-        base.direct.selected.deselect(base.direct.selected.last)
+        try:
+            base.direct.selected.deselect(base.direct.selected.last)
+        except:
+            pass
 
     def switchToDriveMode(self, state):
         """ Disable direct camera manipulation and enable player drive mode """
