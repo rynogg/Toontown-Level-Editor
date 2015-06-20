@@ -1581,7 +1581,7 @@ class LevelEditor(NodePath, DirectObject):
         if type == 'dna':
             newDNANode = DNANode('group_' + `self.getGroupNum()`)
         else:
-            newDNANode = DNAVisGroup('VisGroup_' + `self.getGroupNum()`)
+            newDNANode = DNAVisGroup('VisGroup' + `self.getGroupNum()`)
             # Increment group counter
         self.setGroupNum(self.getGroupNum() + 1)
         # Add new DNA Node group to the current parent DNA Object
