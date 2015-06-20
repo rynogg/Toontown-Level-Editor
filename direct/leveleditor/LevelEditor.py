@@ -744,7 +744,7 @@ class LevelEditor(NodePath, DirectObject):
             self.avatar.robot.reparentTo(self.avatar)
             self.avatar.setHeight(self.avatar.robot.getHeight())
             self.avatar.robot.setDNAString('t\x01\x01\x01\x01\x03\x03\x03\x03\x07\x02\x11\x00\x11\x11')
-            self.avatar.setName("The Inspector")
+            self.avatar.setName("Flippy")
             #self.avatar.robot.loop('neutral')
             
         self.avatar.setPos(base.camera.getPos())
