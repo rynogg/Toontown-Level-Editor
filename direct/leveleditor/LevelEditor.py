@@ -220,6 +220,7 @@ hoodIds = {'TT': 'toontown_central',
            'OZ': 'outdoor_zone',
            'GZ': 'golf_zone',
            'PA': 'party_zone',
+           'TUT': 'tutorial',
            }
 
 # Init neighborhood arrays
@@ -292,6 +293,9 @@ except NameError:
         loadDNAFile(DNASTORE, 'phase_12/dna/storage_CC_sz.dna', CSDefault, 1)
     if 'PA' in hoods:
         loadDNAFile(DNASTORE, 'phase_13/dna/storage_party_sz.dna', CSDefault, 1)
+    if 'TUT' in hoods:
+        loadDNAFile(DNASTORE, 'phase_3.5/dna/storage_tutorial.dna', CSDefault, 1)
+        loadDNAFile(DNASTORE, 'phase_3.5/dna/storage_interior.dna', CSDefault, 1)
     __builtin__.dnaLoaded = 1
 
 
