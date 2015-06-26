@@ -202,7 +202,7 @@ if sys.argv[1:]:
 # or you can hack this up for your own purposes.
 else:
     hoodString = base.config.GetString('level-editor-hoods',
-                                       'TT DD BR DG DL MM CC CL CM CS GS GZ OZ PA')
+                                       'TT DD BR DG DL MM CC CL CM CS GS GZ OZ PA TUT')
     hoods = string.split(hoodString)
 
 # The list of neighborhoods to edit
@@ -2366,6 +2366,10 @@ class LevelEditor(NodePath, DirectObject):
         if (abs(xxDot) > abs(xzDot)):
             if (xxDot < 0.0):
                 deltaMove = -deltaMove
+
+            # Define a deltaMove so that it moves in proper Panda units.
+            deltaMove = 10
+
             # Compute delta
             if (arrowDirection == 'down'):
                 deltaPos.setZ(deltaPos[1] + deltaMove)
