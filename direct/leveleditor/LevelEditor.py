@@ -202,7 +202,7 @@ if sys.argv[1:]:
 # or you can hack this up for your own purposes.
 else:
     hoodString = base.config.GetString('level-editor-hoods',
-                                       'TT DD BR DG DL MM CC CL CM CS GS GZ OZ PA')
+                                       'TT DD BR DG DL MM CC CL CM CS GS GZ OZ PA TUT')
     hoods = string.split(hoodString)
 
 # The list of neighborhoods to edit
@@ -220,6 +220,7 @@ hoodIds = {'TT': 'toontown_central',
            'OZ': 'outdoor_zone',
            'GZ': 'golf_zone',
            'PA': 'party_zone',
+           'TUT': 'tutorial',
            }
 
 # Init neighborhood arrays
@@ -292,6 +293,9 @@ except NameError:
         loadDNAFile(DNASTORE, 'phase_12/dna/storage_CC_sz.dna', CSDefault, 1)
     if 'PA' in hoods:
         loadDNAFile(DNASTORE, 'phase_13/dna/storage_party_sz.dna', CSDefault, 1)
+    if 'TUT' in hoods:
+        loadDNAFile(DNASTORE, 'phase_3.5/dna/storage_tutorial.dna', CSDefault, 1)
+        loadDNAFile(DNASTORE, 'phase_3.5/dna/storage_interior.dna', CSDefault, 1)
     __builtin__.dnaLoaded = 1
 
 
@@ -2362,6 +2366,10 @@ class LevelEditor(NodePath, DirectObject):
         if (abs(xxDot) > abs(xzDot)):
             if (xxDot < 0.0):
                 deltaMove = -deltaMove
+
+            # Define a deltaMove so that it moves in proper Panda units.
+            deltaMove = 10
+
             # Compute delta
             if (arrowDirection == 'down'):
                 deltaPos.setZ(deltaPos[1] + deltaMove)

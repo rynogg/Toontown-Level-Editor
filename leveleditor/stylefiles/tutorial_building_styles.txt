@@ -8,4 +8,3 @@ cornice_texture: cornice_stone_ur
 cornice_color: Vec4(1.0, 1.0, 0.592, 1.0)
 endWallStyle
 endBuildingStyle
- 

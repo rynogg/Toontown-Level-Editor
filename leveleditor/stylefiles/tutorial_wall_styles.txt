@@ -105,4 +105,3 @@ window_color: Vec4(1.0, 0.270588, 0.270588, 1.0)
 cornice_texture: None
 cornice_color: Vec4(1.0, 1.0, 1.0, 1.0)
 endWallStyle
- 
