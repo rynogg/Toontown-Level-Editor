@@ -2371,9 +2371,9 @@ class LevelEditor(NodePath, DirectObject):
             deltaMove = 10
 
             # Compute delta
-            if (arrowDirection == 'down'):
+            if (arrowDirection == 'up'):
                 deltaPos.setZ(deltaPos[1] + deltaMove)
-            elif (arrowDirection == 'up'):
+            elif (arrowDirection == 'down'):
                 deltaPos.setZ(deltaPos[1] - deltaMove)
         else:
             if (xzDot < 0.0):
