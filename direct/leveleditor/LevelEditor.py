@@ -669,7 +669,10 @@ class LevelEditor(NodePath, DirectObject):
         self.collisionsOff()
         # Turn on visiblity
         self.visibilityOff()
-        base.camera.wrtReparentTo(render)
+        cameraPosHpr = [base.camera.getPos(render), base.camera.getHpr(render)]
+        base.camera.reparentTo(render)
+        base.camera.setPos(cameraPosHpr[0])
+        base.camera.setHpr(cameraPosHpr[1])
         # Reset cam
         base.camera.iPos(base.cam)
         base.cam.iPosHpr()
@@ -794,7 +797,9 @@ class LevelEditor(NodePath, DirectObject):
 ##         base.mouseInterface.node().setForwardSpeed(0)
 ##         base.mouseInterface.node().setReverseSpeed(0)
 
-        base.camera.wrtReparentTo(self.avatar)
+        cameraPos = base.camera.getPos(self.avatar)
+        base.camera.reparentTo(self.avatar)
+        base.camera.setPos(cameraPos)
         base.camera.setHpr(0, 0, 0)
         #base.camera.setPos(0, 0, 0)
         base.camera.setPos(0, -11.8125, 3.9375)
@@ -2371,9 +2376,9 @@ class LevelEditor(NodePath, DirectObject):
             deltaMove = 10
 
             # Compute delta
-            if (arrowDirection == 'down'):
+            if (arrowDirection == 'up'):
                 deltaPos.setZ(deltaPos[1] + deltaMove)
-            elif (arrowDirection == 'up'):
+            elif (arrowDirection == 'down'):
                 deltaPos.setZ(deltaPos[1] - deltaMove)
         else:
             if (xzDot < 0.0):
