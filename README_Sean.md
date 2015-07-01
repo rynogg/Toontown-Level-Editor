@@ -32,3 +32,32 @@ Other tweaks done:
     It will create this subdirectory if it doesn't already exist.
     The bamfiel will be given the name of the DNA that was loaded.
 5)  Numerous code cleanup.
+6)  Forgot to describe a major added feature. I enhanced Sparkpins tweak with the arrow keys substantially.
+    Now, the following Key combinations perform the listed functions when an object is selected:
+    #Translate X,Y Axis Functions Per current Grid Spacing Setting
+    ('arrow_left', self.keyboardXformSelected, ['left', 'xlate']),
+    ('arrow_right', self.keyboardXformSelected, ['right', 'xlate']),
+    ('arrow_up', self.keyboardXformSelected, ['up','xlate']),
+    ('arrow_down', self.keyboardXformSelected, ['down','xlate']),
+    #Translate X,Y Axis Functions Per One(1) Panda Unit
+    ('shift-arrow_left', self.keyboardXformSelected, ['left','xlate']),
+    ('shift-arrow_right', self.keyboardXformSelected, ['right','xlate']),
+    ('shift-arrow_up', self.keyboardXformSelected, ['up','xlate']),
+    ('shift-arrow_down', self.keyboardXformSelected, ['down','xlate']),
+    #Translate Z Axis Functions per current Grid Spacing Setting.
+    ('control-arrow_up', self.keyboardXformSelected, ['up','zlate']),
+    ('control-arrow_down', self.keyboardXformSelected, ['down','zlate']),
+    #Translate Z Axis Functions per One(1) PandaUnit
+    ('control-arrow_left', self.keyboardXformSelected, ['left', 'zlate']),
+    ('control-arrow_right', self.keyboardXformSelected, ['right', 'zlate']),
+    #Rotation Z Axis Functions per current Grid Snap Angle
+    ('shift-control-arrow_left', self.keyboardXformSelected, ['left', 'rotate']),
+    ('shift-control-arrow_right', self.keyboardXformSelected, ['right', 'rotate']),
+    #Rotation Z Axis Functions per One(1) PandaUnit
+    ('shift-control-arrow_up', self.keyboardXformSelected, ['up', 'rotate']),
+    ('shift-control-arrow_down', self.keyboardXformSelected, ['down', 'rotate']),
+    
+    
+    
+    
+    
