@@ -56,7 +56,8 @@ Other tweaks done:
     #Rotation Z Axis Functions per One(1) PandaUnit
     ('shift-control-arrow_up', self.keyboardXformSelected, ['up', 'rotate']),
     ('shift-control-arrow_down', self.keyboardXformSelected, ['down', 'rotate']),
-    
+7)  Added an extremely large number of building styles to all the files.
+    Literally exported every buildign style from every street into the area building style files.
     
     
     
