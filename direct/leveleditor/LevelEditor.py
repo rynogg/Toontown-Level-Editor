@@ -2736,7 +2736,7 @@ class LevelEditor(NodePath, DirectObject):
         for marker in markers:
             marker.removeNode()
         fileNameParts = string.split(os.path.basename(filename), ".")
-        path = dnaDirectory.toOsSpecific() + "\\" + neighborhood + "\\"
+        path = dnaDirectory.toOsSpecific() + "\\Exported_BamFiles\\"
         if not os.path.exists(path):
             cmdLine = ('"md ' + path + '"')
             os.system(cmdLine)
