@@ -1,4 +1,3 @@
-
 from pandac.PandaModules import *
 from direct.directbase.DirectStart import *
 from direct.showbase.DirectObject import DirectObject
@@ -35,7 +34,6 @@ from direct.controls import NonPhysicsWalker
 from direct.interval.LerpInterval import LerpFunctionInterval
 
 from otp.avatar import LocalAvatar
-
 from toontown.toon import RobotToon
 from otp.otpbase import OTPGlobals
 
@@ -56,14 +54,13 @@ DEFAULT_COLORS = [
     Vec4(0.5, 0.5, 0.5, 1.0),
     Vec4(0.25, 0.25, 0.25, 1.0)
     ]
+
 # The list of items with color attributes
-COLOR_TYPES = ['wall_color', 'window_color',
-               'window_awning_color', 'sign_color', 'door_color',
-               'door_awning_color', 'cornice_color',
-               'prop_color']
+COLOR_TYPES = ['wall_color', 'window_color', 'window_awning_color', 'sign_color', 
+                'door_color', 'door_awning_color', 'cornice_color', 'prop_color']
+
 # The list of dna components maintained in the style attribute dictionary
-DNA_TYPES = ['wall', 'window', 'sign', 'door_double', 'door_single', 'cornice', 'toon_landmark',
-             'prop', 'street']
+DNA_TYPES = ['wall', 'window', 'sign', 'door_double', 'door_single', 'cornice', 'toon_landmark', 'prop', 'street']
 BUILDING_TYPES = ['10_10', '20', '10_20', '20_10', '10_10_10',
                   '4_21', '3_22', '4_13_8', '3_13_9', '10',
                   '12_8', '13_9_8', '4_10_10',  '4_10', '4_20',
@@ -73,118 +70,62 @@ NUM_WALLS = [1, 2, 3]
 LANDMARK_SPECIAL_TYPES = ['', 'hq', 'gagshop', 'clotheshop', 'petshop', 'kartshop']
 
 OBJECT_SNAP_POINTS = {
-    'street_5x20': [(Vec3(5.0, 0, 0), Vec3(0)),
-                    (Vec3(0), Vec3(0))],
-    'street_10x20': [(Vec3(10.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_20x20': [(Vec3(20.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_30x20': [(Vec3(30.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_40x20': [(Vec3(40.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_80x20': [(Vec3(80.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_5x40': [(Vec3(5.0, 0, 0), Vec3(0)),
-                    (Vec3(0), Vec3(0))],
-    'street_10x40': [(Vec3(10.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_20x40': [(Vec3(20.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_20x40_15': [(Vec3(20.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_30x40': [(Vec3(30.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_40x40': [(Vec3(40.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_20x60': [(Vec3(20.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_40x60': [(Vec3(40.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_40x40_15': [(Vec3(40.0, 0, 0), Vec3(0)),
-                        (Vec3(0), Vec3(0))],
-    'street_80x40': [(Vec3(80.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_angle_30': [(Vec3(0), Vec3(-30, 0, 0)),
-                        (Vec3(0), Vec3(0))],
-    'street_angle_45': [(Vec3(0), Vec3(-45, 0, 0)),
-                        (Vec3(0), Vec3(0))],
-    'street_angle_60': [(Vec3(0), Vec3(-60, 0, 0)),
-                        (Vec3(0), Vec3(0))],
-    'street_inner_corner': [(Vec3(20.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_outer_corner': [(Vec3(20.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_full_corner': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_tight_corner': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_tight_corner_mirror': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_double_corner': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_curved_corner': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_curved_corner_15': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_t_intersection': [(Vec3(40.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_y_intersection': [(Vec3(30.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_street_20x20': [(Vec3(20.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_street_40x40': [(Vec3(40.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_sidewalk_20x20': [(Vec3(20.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_sidewalk_40x40': [(Vec3(40.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_divided_transition': [(Vec3(40.0, 0, 0), Vec3(0)),
-                                  (Vec3(0), Vec3(0))],
-    'street_divided_40x70': [(Vec3(40.0, 0, 0), Vec3(0)),
-                             (Vec3(0), Vec3(0))],
-    'street_divided_transition_15': [(Vec3(40.0, 0, 0), Vec3(0)),
-                                  (Vec3(0), Vec3(0))],
-    'street_divided_40x70_15': [(Vec3(40.0, 0, 0), Vec3(0)),
-                             (Vec3(0), Vec3(0))],
-    'street_stairs_40x10x5': [(Vec3(40.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_4way_intersection': [(Vec3(40.0, 0, 0), Vec3(0)),
-                                 (Vec3(0), Vec3(0))],
-    'street_incline_40x40x5': [(Vec3(40.0, 0, 0), Vec3(0)),
-                               (Vec3(0), Vec3(0))],
-    'street_square_courtyard': [(Vec3(0.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_courtyard_70': [(Vec3(0.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_courtyard_70_exit': [(Vec3(0.0, 0, 0), Vec3(0)),
-                                 (Vec3(0), Vec3(0))],
-    'street_courtyard_90': [(Vec3(0.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_courtyard_90_exit': [(Vec3(0.0, 0, 0), Vec3(0)),
-                                 (Vec3(0), Vec3(0))],
-    'street_courtyard_70_15': [(Vec3(0.0, 0, 0), Vec3(0)),
-                               (Vec3(0), Vec3(0))],
-    'street_courtyard_70_15_exit': [(Vec3(0.0, 0, 0), Vec3(0)),
-                                    (Vec3(0), Vec3(0))],
-    'street_courtyard_90_15': [(Vec3(0.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_courtyard_90_15_exit': [(Vec3(0.0, 0, 0), Vec3(0)),
-                                 (Vec3(0), Vec3(0))],
-    'street_50_transition': [(Vec3(10.0, 0, 0), Vec3(0)),
-                             (Vec3(0), Vec3(0))],
-    'street_20x50': [(Vec3(20.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_40x50': [(Vec3(40.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_keyboard_10x40': [(Vec3(10.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_keyboard_20x40': [(Vec3(20.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_keyboard_40x40': [(Vec3(40.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_sunken_40x40': [(Vec3(40.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
+    'street_5x20': [(Vec3(5.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_10x20': [(Vec3(10.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_20x20': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_30x20': [(Vec3(30.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_40x20': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_80x20': [(Vec3(80.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_5x40': [(Vec3(5.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_10x40': [(Vec3(10.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_20x40': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_20x40_15': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_30x40': [(Vec3(30.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_40x40': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_20x60': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_40x60': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_40x40_15': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_80x40': [(Vec3(80.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_angle_30': [(Vec3(0), Vec3(-30, 0, 0)), (Vec3(0), Vec3(0))],
+    'street_angle_45': [(Vec3(0), Vec3(-45, 0, 0)), (Vec3(0), Vec3(0))],
+    'street_angle_60': [(Vec3(0), Vec3(-60, 0, 0)), (Vec3(0), Vec3(0))],
+    'street_inner_corner': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_outer_corner': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_full_corner': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_tight_corner': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_tight_corner_mirror': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_double_corner': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_curved_corner': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_curved_corner_15': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_t_intersection': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_y_intersection': [(Vec3(30.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_street_20x20': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_street_40x40': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_sidewalk_20x20': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_sidewalk_40x40': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_divided_transition': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_divided_40x70': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_divided_transition_15': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_divided_40x70_15': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_stairs_40x10x5': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_4way_intersection': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_incline_40x40x5': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_square_courtyard': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_70': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_70_exit': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_90': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_90_exit': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_70_15': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_70_15_exit': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_90_15': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_90_15_exit': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_50_transition': [(Vec3(10.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_20x50': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_40x50': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_keyboard_10x40': [(Vec3(10.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_keyboard_20x40': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_keyboard_40x40': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_sunken_40x40': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
     }
 
 # NEIGHBORHOOD DATA
@@ -201,9 +142,8 @@ if sys.argv[1:]:
 # If you do not run from the command line, we just load all of them
 # or you can hack this up for your own purposes.
 else:
-    hoodString = base.config.GetString('level-editor-hoods',
-                                       'TT DD BR DG DL MM CC CL CM CS GS GZ OZ PA TUT')
-    hoods = string.split(hoodString)
+    hoodString = base.config.GetString('level-editor-hoods', 'TT DD BR DG DL MM CC CL CM CS GS GZ OZ PA TUT ES')
+    hoods = string.split(hoodString, " ")
 
 # The list of neighborhoods to edit
 hoodIds = {'TT': 'toontown_central',
@@ -221,6 +161,7 @@ hoodIds = {'TT': 'toontown_central',
            'GZ': 'golf_zone',
            'PA': 'party_zone',
            'TUT': 'tutorial',
+           'ES': 'estate',
            }
 
 # Init neighborhood arrays
@@ -241,19 +182,21 @@ try:
 except NameError:
     print "Loading LevelEditor for hoods: ", hoods
     # DNAStorage instance for storing level DNA info
-
     # We need to use the __builtin__.foo syntax, not the
     # __builtins__["foo"] syntax, since this file runs at the top
     # level.
     __builtin__.DNASTORE = DNASTORE = DNAStorage()
-
+    
     # Load the generic storage files
-    loadDNAFile(DNASTORE, 'dna/storage.dna', CSDefault, 1)
     loadDNAFile(DNASTORE, 'phase_4/dna/storage.dna', CSDefault, 1)
     loadDNAFile(DNASTORE, 'phase_5/dna/storage_town.dna', CSDefault, 1)
-    # loadDNAFile(DNASTORE, 'phase_5.5/dna/storage_estate.dna', CSDefault, 1)
-    # loadDNAFile(DNASTORE, 'phase_5.5/dna/storage_house_interior.dna', CSDefault, 1)
+    
     # Load all the neighborhood specific storage files
+    if 'ES' in hoods:
+        loadDNAFile(DNASTORE, 'phase_5.5/dna/storage_estate.dna', CSDefault, 1)
+        loadDNAFile(DNASTORE, 'phase_5.5/dna/storage_house_interior.dna', CSDefault, 1)
+        loadDNAFile(DNASTORE, 'phase_5.5/dna/halloween_props_storage_estate.dna', CSDefault, 1)
+        loadDNAFile(DNASTORE, 'phase_5.5/dna/winter_storage_estate.dna', CSDefault, 1)
     if 'TT' in hoods:
         loadDNAFile(DNASTORE, 'phase_4/dna/storage_TT.dna', CSDefault, 1)
         loadDNAFile(DNASTORE, 'phase_4/dna/storage_TT_sz.dna', CSDefault, 1)
@@ -280,6 +223,12 @@ except NameError:
         loadDNAFile(DNASTORE, 'phase_8/dna/storage_DL_town.dna', CSDefault, 1)
     if 'CS' in hoods:
         loadDNAFile(DNASTORE, 'phase_9/dna/storage_CS.dna', CSDefault, 1)
+    if 'CM' in hoods:
+        loadDNAFile(DNASTORE, 'phase_10/dna/storage_CM_sz.dna', CSDefault, 1)
+    if 'CL' in hoods:
+        loadDNAFile(DNASTORE, 'phase_11/dna/storage_CL.dna', CSDefault, 1)
+    if 'CC' in hoods:
+        loadDNAFile(DNASTORE, 'phase_12/dna/storage_CC_sz.dna', CSDefault, 1)
     if 'GS' in hoods:
         loadDNAFile(DNASTORE, 'phase_6/dna/storage_GS.dna', CSDefault, 1)
         loadDNAFile(DNASTORE, 'phase_6/dna/storage_GS_sz.dna', CSDefault, 1)
@@ -289,8 +238,6 @@ except NameError:
     if 'GZ' in hoods:
         loadDNAFile(DNASTORE, 'phase_6/dna/storage_GZ.dna', CSDefault, 1)
         loadDNAFile(DNASTORE, 'phase_6/dna/storage_GZ_sz.dna', CSDefault, 1)
-    if 'CC' in hoods:
-        loadDNAFile(DNASTORE, 'phase_12/dna/storage_CC_sz.dna', CSDefault, 1)
     if 'PA' in hoods:
         loadDNAFile(DNASTORE, 'phase_13/dna/storage_party_sz.dna', CSDefault, 1)
     if 'TUT' in hoods:
@@ -302,11 +249,11 @@ except NameError:
 class LevelEditor(NodePath, DirectObject):
     """Class used to create a Toontown LevelEditor object"""
     notify = DirectNotifyGlobal.directNotify.newCategory('LevelEditor')
-
+    
     # Init the list of callbacks:
     selectedNodePathHookHooks=[]
     deselectedNodePathHookHooks=[]
-
+    
     # Primary variables:
     # DNAData: DNA object holding DNA info about level
     # DNAToplevel: Top level DNA Node, all DNA objects descend from this node
@@ -343,7 +290,7 @@ class LevelEditor(NodePath, DirectObject):
         self.createInsertionMarker()
         # Create level Editor Panel
         self.panel = LevelEditorPanel(self)
-
+        
         # Used to store whatever edges and points are loaded in the level
         self.edgeDict = {}
         self.np2EdgeDict = {}
@@ -356,8 +303,6 @@ class LevelEditor(NodePath, DirectObject):
 
         self.zoneLabels = []
 
-
-
         # Initialize LevelEditor variables DNAData, DNAToplevel, NPToplevel
         # DNAParent, NPParent, groupNum, lastAngle
         # Pass in the new toplevel group and don't clear out the old
@@ -365,7 +310,7 @@ class LevelEditor(NodePath, DirectObject):
         self.reset(fDeleteToplevel = 0, fCreateToplevel = 1)
 
         base.accept('o', base.oobe)
-
+        
         # The list of events the level editor responds to
         self.actionEvents = [
             # Node path events
@@ -396,49 +341,54 @@ class LevelEditor(NodePath, DirectObject):
             ('select_door_orientation', self.setDNATargetOrientation),
             ('select_door_single_texture', self.setDNATargetCode, ['door']),
             ('select_door_double_texture', self.setDNATargetCode, ['door']),
-            ('select_door_awning_texture', self.setDNATargetCode,
-             ['door_awning']),
+            ('select_door_awning_texture', self.setDNATargetCode, ['door_awning']),
             ('select_door_awning_color', self.setDNATargetColor),
             ('select_window_color', self.setDNATargetColor),
             ('select_window_count', self.setWindowCount),
             ('select_window_orientation', self.setDNATargetOrientation),
             ('select_window_texture', self.setDNATargetCode, ['windows']),
-            ('select_window_awning_texture', self.setDNATargetCode,
-             ['window_awning']),
+            ('select_window_awning_texture', self.setDNATargetCode, ['window_awning']),
             ('select_window_awning_color', self.setDNATargetColor),
             ('select_wall_style', self.setWallStyle),
             ('select_wall_color', self.setDNATargetColor),
             ('select_wall_orientation', self.setDNATargetOrientation),
             ('select_wall_texture', self.setDNATargetCode, ['wall']),
-            ('select_toon_landmark_texture', self.setDNATargetCode,
-             ['landmark']),
+            ('select_toon_landmark_texture', self.setDNATargetCode, ['landmark']),
             ('select_toon_landmark_door_color', self.setDNATargetColor),
-            ('select_toon_landmark_door_orientation',
-             self.setDNATargetOrientation),
-            ('select_landmark_door_texture', self.setDNATargetCode,
-             ['landmark_door']),
+            ('select_toon_landmark_door_orientation', self.setDNATargetOrientation),
+            ('select_landmark_door_texture', self.setDNATargetCode, ['landmark_door']),
             ('select_street_texture', self.setDNATargetCode, ['street']),
             ('select_prop_texture', self.setDNATargetCode, ['prop']),
             ('select_prop_color', self.setDNATargetColor),
-            # Hot key actions
-            ('a', self.autoPositionGrid),
-            ('j', self.jumpToInsertionPoint),
+            # All Hot key actions
+            #Translate X,Y Axis Functions Per Grid Spacing
             ('arrow_left', self.keyboardXformSelected, ['left', 'xlate']),
             ('arrow_right', self.keyboardXformSelected, ['right', 'xlate']),
             ('arrow_up', self.keyboardXformSelected, ['up','xlate']),
             ('arrow_down', self.keyboardXformSelected, ['down','xlate']),
-            ('control-arrow_left', self.keyboardXformSelected, ['left', 'rotate']),
-            ('control-arrow_right', self.keyboardXformSelected, ['right', 'rotate']),
-            ('control-arrow_up', self.keyboardXformSelected, ['up', 'rotate']),
-            ('control-arrow_down', self.keyboardXformSelected, ['down', 'rotate']),
-            ('shift-arrow_up', self.keyboardXformSelected, ['up','zlate']),
-            ('shift-arrow_down', self.keyboardXformSelected, ['down','zlate']),
+            #Translate X,Y Axis Functions Per One(1) Panda Unit
+            ('shift-arrow_left', self.keyboardXformSelected, ['left','xlate']),
+            ('shift-arrow_right', self.keyboardXformSelected, ['right','xlate']),
+            ('shift-arrow_up', self.keyboardXformSelected, ['up','xlate']),
+            ('shift-arrow_down', self.keyboardXformSelected, ['down','xlate']),
+            #Translate Z Axis Functions
+            ('control-arrow_up', self.keyboardXformSelected, ['up','zlate']),
+            ('control-arrow_down', self.keyboardXformSelected, ['down','zlate']),
+            ('control-arrow_left', self.keyboardXformSelected, ['left', 'zlate']),
+            ('control-arrow_right', self.keyboardXformSelected, ['right', 'zlate']),
+            #Rotation Z Axis Functions
+            ('shift-control-arrow_left', self.keyboardXformSelected, ['left', 'rotate']),
+            ('shift-control-arrow_right', self.keyboardXformSelected, ['right', 'rotate']),
+            ('shift-control-arrow_up', self.keyboardXformSelected, ['up', 'rotate']),
+            ('shift-control-arrow_down', self.keyboardXformSelected, ['down', 'rotate']),
+            #Misc Hotkey Functions
+            ('a', self.autoPositionGrid),
+            ('j', self.jumpToInsertionPoint),
             ('shift-s', self.placeSuitPoint),
             ('shift-c', self.placeBattleCell),
             ('k', self.addToLandmarkBlock),
             ('shift-k', self.toggleShowLandmarkBlock),
             ('%', self.pdbBreak),
-
             ('page_up', self.pageUp),
             ('page_down', self.pageDown),
             ]
@@ -452,9 +402,7 @@ class LevelEditor(NodePath, DirectObject):
         # Make sure direct is running
         base.direct.enable()
         # And only the appropriate handles are showing
-        base.direct.widget.disableHandles(['x-ring', 'x-disc',
-                                           'y-ring', 'y-disc',
-                                           'z-post'])
+        base.direct.widget.disableHandles(['x-ring', 'x-disc', 'y-ring', 'y-disc', 'z-post'])
         # Initialize camera
         base.camLens.setNear(1.0)
         base.camLens.setFar(3000)
@@ -520,11 +468,20 @@ class LevelEditor(NodePath, DirectObject):
         # [gjeon] to control drive mode
         self.controlManager = None
         self.avatar = None
-
         self.fov = 60
         self.isPageUp=0
         self.isPageDown=0
-
+        
+        #Make maya mode on by default
+        self.panel.fMaya.set(1)
+        self.panel.toggleMaya()
+        #Make XYZ snapping OFF by default
+        self.panel.fXyzSnap.set(0)
+        self.panel.toggleXyzSnap()
+        #Make HPR snapping OFF by default
+        self.panel.fHprSnap.set(0)
+        self.panel.toggleHprSnap()
+    
     # ENABLE/DISABLE
     def enable(self):
         """ Enable level editing and show level """
@@ -679,7 +636,7 @@ class LevelEditor(NodePath, DirectObject):
         # Renable mouse
         self.enableMouse()
         base.direct.enable()
-
+        
         # [gjeon]  disable avatar and controlManager
         if (self.controlManager):
             self.controlManager.disable()
@@ -753,7 +710,7 @@ class LevelEditor(NodePath, DirectObject):
             self.avatar.robot.setDNAString('t\x01\x01\x01\x01\x03\x03\x03\x03\x07\x02\x11\x00\x11\x11')
             self.avatar.setName("Flippy")
             #self.avatar.robot.loop('neutral')
-            
+
         self.avatar.setPos(base.camera.getPos())
         self.avatar.reparentTo(render)
         Sequence(Func(self.avatar.robot.animFSM.request, 'TeleportIn'), Wait(1.5), Func(self.avatar.robot.animFSM.request, 'neutral')).start()
@@ -1308,12 +1265,11 @@ class LevelEditor(NodePath, DirectObject):
                     # First snap selected node path to grid
                     pos = selectedNode.getPos(base.direct.grid)
                     snapPos = base.direct.grid.computeSnapPoint(pos)
-                    #if self.panel.fPlaneSnap.get():
-                    #    zheight = 0
-                    #else:
-                    zheight = snapPos[2]
-                    selectedNode.setPos(base.direct.grid,
-                                        snapPos[0], snapPos[1], zheight)
+                    if self.panel.fPlaneSnap.get():
+                        zheight = 0
+                    else:
+                        zheight = snapPos[2]
+                    selectedNode.setPos(base.direct.grid, snapPos[0], snapPos[1], zheight)
                     # Angle snap
                     h = base.direct.grid.computeSnapAngle(selectedNode.getH())
                     if base.direct.grid.getHprSnap():
@@ -2276,16 +2232,27 @@ class LevelEditor(NodePath, DirectObject):
     # MANIPULATION FUNCTIONS
     def keyboardRotateSelected(self, arrowDirection):
         """ Rotate selected objects using arrow keys """
-        # Get snap angle
-        if base.direct.fShift:
+        # Get current snap angle
+        # if base.direct.fControl:
+            # oldSnapAngle = base.direct.grid.snapAngle
+            # base.direct.grid.setSnapAngle(1.0)
+        # snapAngle = base.direct.grid.snapAngle
+        # Get current snap angle
+        if ((arrowDirection == 'up') or (arrowDirection == 'down')):
             oldSnapAngle = base.direct.grid.snapAngle
             base.direct.grid.setSnapAngle(1.0)
         snapAngle = base.direct.grid.snapAngle
-        # Compute new angle
-        if ((arrowDirection == 'left') or (arrowDirection == 'up')):
+        # Compute new Snap Angle
+        if (arrowDirection == 'left'):
             self.setLastAngle(self.getLastAngle() + snapAngle)
-        else:
+        if (arrowDirection == 'right'):
             self.setLastAngle(self.getLastAngle() - snapAngle)
+        if (arrowDirection == 'up'):
+            self.setLastAngle(self.getLastAngle() + snapAngle)
+        if (arrowDirection == 'down'):
+            self.setLastAngle(self.getLastAngle() - snapAngle)
+        # else:
+            # self.setLastAngle(self.getLastAngle() - snapAngle)
 
         if (self.getLastAngle() < -180.0):
             self.setLastAngle(self.getLastAngle() + 360.0)
@@ -2296,61 +2263,10 @@ class LevelEditor(NodePath, DirectObject):
             selectedNode.setHpr(self.getLastAngle(), 0, 0)
         # Snap objects to grid and update DNA if necessary
         self.updateSelectedPose(base.direct.selected.getSelectedAsList())
-        if base.direct.fShift:
+        # if base.direct.fShift:
+            # base.direct.grid.setSnapAngle(oldSnapAngle)
+        if ((arrowDirection == 'up') or (arrowDirection == 'down')):
             base.direct.grid.setSnapAngle(oldSnapAngle)
-
-    def keyboardTranslateSelected(self, arrowDirection):
-        gridToCamera = base.direct.grid.getMat(base.direct.camera)
-        camXAxis = gridToCamera.xformVec(X_AXIS)
-        xxDot = camXAxis.dot(X_AXIS)
-        xzDot = camXAxis.dot(Z_AXIS)
-
-        # what is the current grid spacing?
-        if base.direct.fShift:
-            # If shift, divide grid spacing by 10.0
-            oldGridSpacing = base.direct.grid.gridSpacing
-            # Use back door to set grid spacing to avoid grid update
-            base.direct.grid.gridSpacing = base.direct.grid.gridSpacing/10.0
-        deltaMove = base.direct.grid.gridSpacing
-
-        # Compute the specified delta
-        deltaPos = Vec3(0)
-        if (abs(xxDot) > abs(xzDot)):
-            if (xxDot < 0.0):
-                deltaMove = -deltaMove
-            # Compute delta
-            if (arrowDirection == 'right'):
-                deltaPos.setX(deltaPos[0] + deltaMove)
-            elif (arrowDirection == 'left'):
-                deltaPos.setX(deltaPos[0] - deltaMove)
-            elif (arrowDirection == 'up'):
-                deltaPos.setY(deltaPos[1] + deltaMove)
-            elif (arrowDirection == 'down'):
-                deltaPos.setY(deltaPos[1] - deltaMove)
-        else:
-            if (xzDot < 0.0):
-                deltaMove = -deltaMove
-            # Compute delta
-            if (arrowDirection == 'right'):
-                deltaPos.setY(deltaPos[1] - deltaMove)
-            elif (arrowDirection == 'left'):
-                deltaPos.setY(deltaPos[1] + deltaMove)
-            elif (arrowDirection == 'up'):
-                deltaPos.setX(deltaPos[0] + deltaMove)
-            elif (arrowDirection == 'down'):
-                deltaPos.setX(deltaPos[0] - deltaMove)
-
-        # Move selected objects
-        for selectedNode in base.direct.selected:
-            # Move it
-            selectedNode.setPos(base.direct.grid,
-                                selectedNode.getPos(base.direct.grid) + deltaPos)
-        # Snap objects to grid and update DNA if necessary
-        self.updateSelectedPose(base.direct.selected.getSelectedAsList())
-        # Restore grid spacing
-        if base.direct.fShift:
-            # Use back door to set grid spacing to avoid grid update
-            base.direct.grid.gridSpacing = oldGridSpacing
 
     def keyboardZTranslateSelected(self, arrowDirection):
         gridToCamera = base.direct.grid.getMat(base.direct.camera)
@@ -2359,11 +2275,11 @@ class LevelEditor(NodePath, DirectObject):
         xzDot = camXAxis.dot(Z_AXIS)
 
         # what is the current grid spacing?
-        if base.direct.fShift:
+        if ((arrowDirection == 'left') or (arrowDirection == 'right')):
             # If shift, divide grid spacing by 10.0
             oldGridSpacing = base.direct.grid.gridSpacing
             # Use back door to set grid spacing to avoid grid update
-            base.direct.grid.gridSpacing = base.direct.grid.gridSpacing/10.0
+            base.direct.grid.gridSpacing = 1.0
         deltaMove = base.direct.grid.gridSpacing
 
         # Compute the specified delta
@@ -2373,33 +2289,84 @@ class LevelEditor(NodePath, DirectObject):
                 deltaMove = -deltaMove
 
             # Define a deltaMove so that it moves in proper Panda units.
-            deltaMove = 10
+            # deltaMove = 10
 
             # Compute delta
-            if (arrowDirection == 'up'):
-                deltaPos.setZ(deltaPos[1] + deltaMove)
-            elif (arrowDirection == 'down'):
-                deltaPos.setZ(deltaPos[1] - deltaMove)
+            if ((arrowDirection == 'up') or (arrowDirection == 'left')):
+                deltaPos.setZ(deltaPos[2] + deltaMove)
+            elif ((arrowDirection == 'down') or (arrowDirection == 'right')):
+                deltaPos.setZ(deltaPos[2] - deltaMove)
         else:
             if (xzDot < 0.0):
                 deltaMove = -deltaMove
             # Compute delta
-            if (arrowDirection == 'down'):
-                deltaPos.setZ(deltaPos[0] + deltaMove)
-            elif (arrowDirection == 'up'):
-                deltaPos.setZ(deltaPos[0] - deltaMove)
+            if ((arrowDirection == 'down') or (arrowDirection == 'right')):
+                deltaPos.setZ(deltaPos[2] + deltaMove)
+            elif ((arrowDirection == 'up') or (arrowDirection == 'left')):
+                deltaPos.setZ(deltaPos[2] - deltaMove)
 
         # Move selected objects
         for selectedNode in base.direct.selected:
             # Move it
-            selectedNode.setPos(base.direct.grid,
-                                selectedNode.getPos(base.direct.grid) + deltaPos)
+            selectedNode.setPos(base.direct.grid, selectedNode.getPos(base.direct.grid) + deltaPos)
+        # Snap objects to grid and update DNA if necessary
+        self.updateSelectedPose(base.direct.selected.getSelectedAsList())
+        # Restore grid spacing
+        if ((arrowDirection == 'left') or (arrowDirection == 'right')):
+            # Use back door to set grid spacing to avoid grid update
+            base.direct.grid.gridSpacing = oldGridSpacing
+
+    def keyboardTranslateSelected(self, arrowDirection):
+        gridToCamera = base.direct.grid.getMat(base.direct.camera)
+        camXAxis = gridToCamera.xformVec(X_AXIS)
+        xxDot = camXAxis.dot(X_AXIS)
+        xzDot = camXAxis.dot(Z_AXIS)
+
+        #Get the current Grid Spacing?
+        if base.direct.fShift:
+                # If shift, divide grid spacing by 10.0
+                oldGridSpacing = base.direct.grid.gridSpacing
+                # Use back door to set grid spacing to avoid grid update
+                base.direct.grid.gridSpacing = 1.0
+        deltaMove = base.direct.grid.gridSpacing
+
+        # Compute the specified delta
+        deltaPos = Vec3(0)
+        if (abs(xxDot) > abs(xzDot)):
+            if (xxDot < 0.0):
+                deltaMove = -deltaMove
+            # Compute delta
+            if (arrowDirection == 'right'):
+                deltaPos.setX(deltaPos[0] + deltaMove)
+            elif (arrowDirection == 'left'):
+                deltaPos.setX(deltaPos[0] - deltaMove)
+            elif (arrowDirection == 'up'):
+                deltaPos.setY(deltaPos[1] + deltaMove)
+            elif (arrowDirection == 'down'):
+                deltaPos.setY(deltaPos[1] - deltaMove)
+        else:
+            if (xzDot < 0.0):
+                deltaMove = -deltaMove
+            # Compute delta
+            if (arrowDirection == 'right'):
+                deltaPos.setY(deltaPos[1] - deltaMove)
+            elif (arrowDirection == 'left'):
+                deltaPos.setY(deltaPos[1] + deltaMove)
+            elif (arrowDirection == 'up'):
+                deltaPos.setX(deltaPos[0] - deltaMove)
+            elif (arrowDirection == 'down'):
+                deltaPos.setX(deltaPos[0] + deltaMove)
+
+        # Move selected objects
+        for selectedNode in base.direct.selected:
+            # Move it
+            selectedNode.setPos(base.direct.grid, selectedNode.getPos(base.direct.grid) + deltaPos)
         # Snap objects to grid and update DNA if necessary
         self.updateSelectedPose(base.direct.selected.getSelectedAsList())
         # Restore grid spacing
         if base.direct.fShift:
-            # Use back door to set grid spacing to avoid grid update
-            base.direct.grid.gridSpacing = oldGridSpacing
+              # Use back door to set grid spacing to avoid grid update
+              base.direct.grid.gridSpacing = oldGridSpacing
 
     def keyboardXformSelected(self, arrowDirection, mode):
         if mode == 'rotate':
@@ -2456,20 +2423,19 @@ class LevelEditor(NodePath, DirectObject):
         self.levelMap = hidden.attachNewNode('level-map')
         self.activeMap = None
         self.mapDictionary = {}
-        """
         for neighborhood in NEIGHBORHOODS:
             self.createMap(neighborhood)
-        """
 
     def createMap(self, neighborhood):
-        map = loader.loadModel('models/level_editor/' + neighborhood +
-                               '_layout')
-        if map:
-            map.setTransparency(1)
-            map.setColor(Vec4(1, 1, 1, .4))
-            self.mapDictionary[neighborhood] = map
-            # Make sure this item isn't pickable
-            base.direct.addUnpickable(neighborhood + '_layout')
+        mapFile = 'models/level_editor/' + neighborhood + '_layout.bam'
+        if os.path.exists(mapFile):
+            map = loader.loadModel(mapFile)
+            if map:
+                map.setTransparency(1)
+                map.setColor(Vec4(1, 1, 1, .4))
+                self.mapDictionary[neighborhood] = map
+                # Make sure this item isn't pickable
+                base.direct.addUnpickable(neighborhood + '_layout')
 
     def selectMap(self, neighborhood):
         if self.activeMap:
@@ -2764,11 +2730,23 @@ class LevelEditor(NodePath, DirectObject):
             self.outputDNA(dnaFilename)
             self.outputFile = dnaFilename
 
+    global writeDNAToBamFile
+    def writeDNAToBamFile( filename, neighborhood ):
+        markers = render.findAllMatches('**/*insertionMarker')
+        for marker in markers:
+            marker.removeNode()
+        fileNameParts = string.split(os.path.basename(filename), ".")
+        path = dnaDirectory.toOsSpecific() + "\\" + neighborhood + "\\"
+        if not os.path.exists(path):
+            cmdLine = ('"md ' + path + '"')
+            os.system(cmdLine)
+        render.writeBamFile( path + fileNameParts[0] + ".bam")
+        print "Saved Loaded DNA File as Bam file " + path
+
     def loadDNAFromFile(self, filename):
         print filename
         # Reset level, destroying existing scene/DNA hierarcy
-        self.reset(fDeleteToplevel = 1, fCreateToplevel = 0,
-                   fUpdateExplorer = 0)
+        self.reset(fDeleteToplevel = 1, fCreateToplevel = 0, fUpdateExplorer = 0)
         # Now load in new file
         if fUseCVS:
             self.cvsUpdate(filename)
@@ -2789,8 +2767,7 @@ class LevelEditor(NodePath, DirectObject):
         newDNAToplevel = self.findDNANode(newNPToplevel)
 
         # reset the landmark block number:
-        (self.landmarkBlock, needTraverse)=self.findHighestLandmarkBlock(
-            newDNAToplevel, newNPToplevel)
+        (self.landmarkBlock, needTraverse) = self.findHighestLandmarkBlock( newDNAToplevel, newNPToplevel)
 
         # Update toplevel variables
         if needTraverse:
@@ -2807,6 +2784,8 @@ class LevelEditor(NodePath, DirectObject):
         # to remember what file you are working on
         self.panel["title"] = 'Level Editor: ' + os.path.basename(filename)
         self.panel.sceneGraphExplorer.update()
+        neighborhood = self.neighborhood
+        base.accept('f10', writeDNAToBamFile,[ filename, neighborhood ])
 
     def outputDNADefaultFile(self):
         outputFile = self.outputFile
@@ -3199,8 +3178,7 @@ class LevelEditor(NodePath, DirectObject):
                     if fReversePath:
                         startPoint = edge.getStartPoint()
                         if startPoint not in self.visitedPoints:
-                            self.highlightConnectedRec(startPoint,
-                                                       fReversePath)
+                            self.highlightConnectedRec(startPoint, fReversePath)
                     endPoint = edge.getEndPoint()
                     type = endPoint.getPointType()
                     if ((endPoint not in self.visitedPoints) and
@@ -3230,9 +3208,7 @@ class LevelEditor(NodePath, DirectObject):
         marker.setTransparency(1)
         marker.setPos(cell.getPos())
         # scale to radius which is width/2
-        marker.setScale(cell.getWidth()/2.0,
-                        cell.getHeight()/2.0,
-                        1)
+        marker.setScale(cell.getWidth()/2.0, cell.getHeight()/2.0, 1)
         return marker
 
     def placeBattleCell(self):
@@ -3266,9 +3242,7 @@ class LevelEditor(NodePath, DirectObject):
         numPoints = DNASTORE.getNumSuitPoints()
         for i in range(numPoints):
             point = DNASTORE.getSuitPointAtIndex(i)
-            marker = self.drawSuitPoint(point,
-                point.getPos(), point.getPointType(),
-                self.suitPointToplevel)
+            marker = self.drawSuitPoint(point, point.getPos(), point.getPointType(), self.suitPointToplevel)
             self.pointDict[point] = marker
 
         # Edges
@@ -3375,8 +3349,8 @@ class LevelEditor(NodePath, DirectObject):
         visGroups = self.getDNAVisGroups(self.NPToplevel)
         for visGroup in visGroups:
             np = visGroup[0]
-            np.setColor(0.5 + random.random()/2.0,
-                        0.5 + random.random()/2.0,
+            np.setColor(0.5 + random.random()/2.0, 
+                        0.5 + random.random()/2.0, 
                         0.5 + random.random()/2.0)
 
     def clearZoneColors(self):
@@ -3394,9 +3368,7 @@ class LevelEditor(NodePath, DirectObject):
         from direct.gui import DirectGui
         for np, dna in visGroups:
             name = dna.getName()
-            label = DirectGui.DirectLabel(text = name,
-                                          parent = np.getParent(),
-                                          relief = None, scale = 3)
+            label = DirectGui.DirectLabel(text = name, parent = np.getParent(), relief = None, scale = 3)
             label.setBillboardPointEye(0)
             center = np.getBounds().getCenter()
             label.setPos(center[0], center[1], .1)
@@ -3408,28 +3380,28 @@ class LevelEditor(NodePath, DirectObject):
         self.zoneLabels = []
 
     def getBlockFromName(self, name):
-        block=name[2:name.find(':')]
+        block = name[2:name.find(':')]
         return block
 
     def addToLandmarkBlock(self):
-        dnaRoot=self.selectedDNARoot
+        dnaRoot = self.selectedDNARoot
         if dnaRoot and self.lastLandmarkBuildingDNA:
             if DNAClassEqual(dnaRoot, DNA_FLAT_BUILDING):
-                n=dnaRoot.getName()
-                n=n[n.find(':'):]
-                block=self.lastLandmarkBuildingDNA.getName()
-                block=block[2:block.find(':')]
+                n = dnaRoot.getName()
+                n = n[n.find(':'):]
+                block = self.lastLandmarkBuildingDNA.getName()
+                block = block[2:block.find(':')]
                 dnaRoot.setName('tb'+block+n)
                 self.replaceSelected()
                 # If we're highlighting the landmark blocks:
                 if self.showLandmarkBlockToggleGroup:
                     # then highlight this one:
-                    np=self.selectedNPRoot
+                    np = self.selectedNPRoot
                     self.showLandmarkBlockToggleGroup.append(np)
                     np.setColor(1, 0, 0, 1)
         elif self.selectedSuitPoint and self.lastLandmarkBuildingDNA:
-            block=self.lastLandmarkBuildingDNA.getName()
-            block=block[2:block.find(':')]
+            block = self.lastLandmarkBuildingDNA.getName()
+            block = block[2:block.find(':')]
             print ("associate point with building: " + str(block))
             self.selectedSuitPoint.setLandmarkBuildingIndex(int(block))
             marker = self.pointDict[self.selectedSuitPoint]
@@ -3437,24 +3409,24 @@ class LevelEditor(NodePath, DirectObject):
             marker.setScale(1.0)
 
     def findHighestLandmarkBlock(self, dnaRoot, npRoot):
-        npc=npRoot.findAllMatches("**/*:toon_landmark_*")
-        highest=0
+        npc = npRoot.findAllMatches("**/*:toon_landmark_*")
+        highest = 0
         for i in range(npc.getNumPaths()):
-            path=npc.getPath(i)
-            block=path.getName()
-            block=int(block[2:block.find(':')])
+            path = npc.getPath(i)
+            block = path.getName()
+            block = int(block[2:block.find(':')])
             if (block > highest):
                 highest=block
         # Make a list of flat building names, outside of the
         # recursive function:
-        self.flatNames=['random'] + BUILDING_TYPES
-        self.flatNames=map(lambda n: n+'_DNARoot', self.flatNames)
+        self.flatNames = ['random'] + BUILDING_TYPES
+        self.flatNames = map(lambda n: n+'_DNARoot', self.flatNames)
         # Search/recurse the dna:
-        newHighest=self.convertToLandmarkBlocks(highest, dnaRoot)
+        newHighest = self.convertToLandmarkBlocks(highest, dnaRoot)
         # Get rid of the list of flat building names:
         del self.flatNames
 
-        needToTraverse = (highest!=newHighest)
+        needToTraverse = (highest != newHighest)
         return (newHighest, needToTraverse)
 
     def convertToLandmarkBlocks(self, block, dnaRoot):
@@ -3466,13 +3438,13 @@ class LevelEditor(NodePath, DirectObject):
             child = dnaRoot.at(i)
             if DNAClassEqual(child, DNA_LANDMARK_BUILDING):
                 # Landmark buildings:
-                name=child.getName()
-                if name.find('toon_landmark_')==0:
-                    block=block+1
+                name = child.getName()
+                if name.find('toon_landmark_') == 0:
+                    block = block + 1
                     child.setName('tb'+str(block)+':'+name)
             elif DNAClassEqual(child, DNA_FLAT_BUILDING):
                 # Flat buildings:
-                name=child.getName()
+                name = child.getName()
                 if (name in self.flatNames):
                     child.setName('tb0:'+name)
             else:
@@ -3483,15 +3455,15 @@ class LevelEditor(NodePath, DirectObject):
         """
         un-block flat buildings (set them to block zero).
         """
-        npc=self.NPToplevel.findAllMatches("**/tb"+block+":*_DNARoot")
+        npc = self.NPToplevel.findAllMatches("**/tb"+block+":*_DNARoot")
         for i in range(npc.getNumPaths()):
-            nodePath=npc.getPath(i)
-            name=nodePath.getName()
+            nodePath = npc.getPath(i)
+            name = nodePath.getName()
             if name[name.find(':'):][:15] != ':toon_landmark_':
-                name='tb0'+name[name.find(':'):]
-                dna=self.findDNANode(nodePath)
+                name = 'tb0' + name[name.find(':'):]
+                dna = self.findDNANode(nodePath)
                 dna.setName(name)
-                nodePath=self.replace(nodePath, dna)
+                nodePath = self.replace(nodePath, dna)
                 # If we're highlighting the landmark blocks:
                 if self.showLandmarkBlockToggleGroup:
                     # then highlight this one:
@@ -3500,33 +3472,33 @@ class LevelEditor(NodePath, DirectObject):
 
     def landmarkBlockRemove(self, dna, nodePath):
         if dna:
-            name=dna.getName()
+            name = dna.getName()
             # Get the underscore index within the name:
-            usIndex=name.find(':')
+            usIndex = name.find(':')
             if name[usIndex:][:15] == ':toon_landmark_':
-                block=name[2:usIndex]
-                self.lastLandmarkBuildingDNA=None
+                block = name[2:usIndex]
+                self.lastLandmarkBuildingDNA = None
                 self.revertLandmarkBlock(block)
 
     def toggleShowLandmarkBlock(self):
-        dna=self.lastLandmarkBuildingDNA
+        dna = self.lastLandmarkBuildingDNA
         if dna:
             if not self.showLandmarkBlockToggleGroup:
-                group=[]
-                block=dna.getName()
-                block=block[2:block.find(':')]
+                group = []
+                block = dna.getName()
+                block = block[2:block.find(':')]
 
                 # Get current landmark buildings:
-                npc=self.NPToplevel.findAllMatches("**/tb"+block+":*_DNARoot")
+                npc = self.NPToplevel.findAllMatches("**/tb" + block + ":*_DNARoot")
                 for i in range(npc.getNumPaths()):
-                    nodePath=npc.getPath(i)
+                    nodePath = npc.getPath(i)
                     group.append(nodePath)
                     nodePath.setColor(1, 0, 0, 1)
 
                 # Get block zero buildings (i.e. non-blocked):
-                npc=self.NPToplevel.findAllMatches("**/tb0:*_DNARoot")
+                npc = self.NPToplevel.findAllMatches("**/tb0:*_DNARoot")
                 for i in range(npc.getNumPaths()):
-                    nodePath=npc.getPath(i)
+                    nodePath = npc.getPath(i)
                     group.append(nodePath)
                     nodePath.setColor(0, 1, 0, 1)
 
@@ -3542,7 +3514,6 @@ class LevelEditor(NodePath, DirectObject):
                         elif (lbIndex == -1):
                             # This point belongs to no block
                             marker.setColor(0, 1, 0, 1)
-
                 self.showLandmarkBlockToggleGroup=group
             else:
                 for i in self.showLandmarkBlockToggleGroup:
@@ -3986,7 +3957,6 @@ class LevelEditor(NodePath, DirectObject):
                         curGroupWidth = 0
                     print currT, curGroupWidth
 
-
     def makeSideStreets(self, curves):
         """ Each side in a sidestreet MUST be in 1 building group, otherwise the 2nd half
         of a building group could be very far away. This would cause the stashing and
@@ -4173,12 +4143,8 @@ class LevelEditor(NodePath, DirectObject):
                 # Must have reached end of the curve
                 return endT, endPoint
             else:
-                return self.findBldgEndPoint(bldgWidth, curve, currT, currPoint, startT = midT, endT = endT,
-                                             rd = rd + 1)
-
-class OldLevelEditor(NodePath, DirectObject):
-    pass
-
+                return self.findBldgEndPoint(bldgWidth, curve, currT, currPoint, startT = midT, endT = endT, rd = rd + 1)
+    
 class LevelEditorPanel(Pmw.MegaToplevel):
     def __init__(self, levelEditor, parent = None, **kw):
 
@@ -4195,7 +4161,7 @@ class LevelEditorPanel(Pmw.MegaToplevel):
         self.fUpdateSelected = 1
         # Handle to the toplevels hull
         hull = self.component('hull')
-        hull.geometry('400x625')
+        hull.geometry('425x625')
 
         balloon = self.balloon = Pmw.Balloon(hull)
         # Start with balloon help disabled
@@ -4780,15 +4746,15 @@ class LevelEditorPanel(Pmw.MegaToplevel):
         buttonFrame = Frame(hull)
         self.fMapVis = IntVar()
         self.fMapVis.set(0)
-        self.mapSnapButton = Checkbutton(buttonFrame,
+        self.mapVisButton = Checkbutton(buttonFrame,
                                       text = 'Map Vis',
                                       width = 6,
                                       variable = self.fMapVis,
                                       command = self.toggleMapVis)
-        #self.mapSnapButton.pack(side = LEFT, expand = 1, fill = X)
+        self.mapVisButton.pack(side = LEFT, expand = 1, fill = X)
 
         self.fXyzSnap = IntVar()
-        self.fXyzSnap.set(1)
+        self.fXyzSnap.set(0)
         self.xyzSnapButton = Checkbutton(buttonFrame,
                                       text = 'XyzSnap',
                                       width = 6,
@@ -4797,7 +4763,7 @@ class LevelEditorPanel(Pmw.MegaToplevel):
         self.xyzSnapButton.pack(side = LEFT, expand = 1, fill = X)
 
         self.fHprSnap = IntVar()
-        self.fHprSnap.set(1)
+        self.fHprSnap.set(0)
         self.hprSnapButton = Checkbutton(buttonFrame,
                                       text = 'HprSnap',
                                       width = 6,
@@ -4807,19 +4773,20 @@ class LevelEditorPanel(Pmw.MegaToplevel):
 
         def toggleWidgetHandles(s = self):
             if s.fPlaneSnap.get():
-                base.direct.widget.disableHandles(['x-ring', 'x-disc',
-                                              'y-ring', 'y-disc',
-                                              'z-post'])
+                base.direct.widget.disableHandles(['x-ring', 'x-disc', 'y-ring', 'y-disc', 'z-post'])
             else:
                 base.direct.widget.enableHandles('all')
+        
         self.fPlaneSnap = IntVar()
-        self.fPlaneSnap.set(1)
+        self.fPlaneSnap.set(0)
         self.planeSnapButton = Checkbutton(buttonFrame,
                                            text = 'PlaneSnap',
                                            width = 6,
                                            variable = self.fPlaneSnap,
                                            command = toggleWidgetHandles)
         self.planeSnapButton.pack(side = LEFT, expand = 1, fill = X)
+        
+        toggleWidgetHandles()
 
         self.fGrid = IntVar()
         self.fGrid.set(0)
@@ -4831,16 +4798,13 @@ class LevelEditorPanel(Pmw.MegaToplevel):
         base.direct.gridButton.pack(side = LEFT, expand = 1, fill = X)
 
         self.fMaya = IntVar()
-        self.fMaya.set(1)
+        self.fMaya.set(0)
         self.mayaButton = Checkbutton(buttonFrame,
                                       text = 'Maya Cam',
                                       width = 6,
                                       variable = self.fMaya,
                                       command = self.toggleMaya)
         self.mayaButton.pack(side = LEFT, expand = 1, fill = X)
-
-        #Make maya mode on by default
-        self.toggleMaya()
 
         buttonFrame.pack(fill = X)
 
@@ -4919,7 +4883,7 @@ class LevelEditorPanel(Pmw.MegaToplevel):
     def toggleMaya(self):
         base.direct.cameraControl.lockRoll = self.fMaya.get()
         direct.cameraControl.useMayaCamControls = self.fMaya.get()
-
+        
     def toggleGrid(self):
         if self.fGrid.get():
             base.direct.grid.enable()
@@ -5210,7 +5174,6 @@ class LevelEditorPanel(Pmw.MegaToplevel):
 
             self.levelEditor.replaceSelectedEnabled=1
             self.levelEditor.replaceSelected()
-
 
     def setBaselineString(self, val):
         baseline=self.currentBaselineDNA
