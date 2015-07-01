@@ -16,14 +16,13 @@ DEFAULT_COLORS = [
     Vec4(0.5, 0.5, 0.5, 1.0),
     Vec4(0.25, 0.25, 0.25, 1.0)
     ]
+
 # The list of items with color attributes
-COLOR_TYPES = ['wall_color', 'window_color',
-               'window_awning_color', 'sign_color', 'door_color',
-               'door_awning_color', 'cornice_color',
-               'prop_color']
+COLOR_TYPES = ['wall_color', 'window_color', 'window_awning_color', 'sign_color', 
+                'door_color', 'door_awning_color', 'cornice_color', 'prop_color']
+
 # The list of dna components maintained in the style attribute dictionary
-DNA_TYPES = ['wall', 'window', 'sign', 'door_double', 'door_single', 'cornice', 'toon_landmark',
-             'prop', 'street']
+DNA_TYPES = ['wall', 'window', 'sign', 'door_double', 'door_single', 'cornice', 'toon_landmark', 'prop', 'street']
 BUILDING_TYPES = ['10_10', '20', '10_20', '20_10', '10_10_10',
                   '4_21', '3_22', '4_13_8', '3_13_9', '10',
                   '12_8', '13_9_8', '4_10_10',  '4_10', '4_20',
@@ -33,120 +32,63 @@ NUM_WALLS = [1, 2, 3]
 LANDMARK_SPECIAL_TYPES = ['', 'hq', 'gagshop', 'clotheshop', 'petshop', 'kartshop']
 
 OBJECT_SNAP_POINTS = {
-    'street_5x20': [(Vec3(5.0, 0, 0), Vec3(0)),
-                    (Vec3(0), Vec3(0))],
-    'street_10x20': [(Vec3(10.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_20x20': [(Vec3(20.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_30x20': [(Vec3(30.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_40x20': [(Vec3(40.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_80x20': [(Vec3(80.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_5x40': [(Vec3(5.0, 0, 0), Vec3(0)),
-                    (Vec3(0), Vec3(0))],
-    'street_10x40': [(Vec3(10.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_20x40': [(Vec3(20.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_20x40_15': [(Vec3(20.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_30x40': [(Vec3(30.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_40x40': [(Vec3(40.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_20x60': [(Vec3(20.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_40x60': [(Vec3(40.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_40x40_15': [(Vec3(40.0, 0, 0), Vec3(0)),
-                        (Vec3(0), Vec3(0))],
-    'street_80x40': [(Vec3(80.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_angle_30': [(Vec3(0), Vec3(-30, 0, 0)),
-                        (Vec3(0), Vec3(0))],
-    'street_angle_45': [(Vec3(0), Vec3(-45, 0, 0)),
-                        (Vec3(0), Vec3(0))],
-    'street_angle_60': [(Vec3(0), Vec3(-60, 0, 0)),
-                        (Vec3(0), Vec3(0))],
-    'street_inner_corner': [(Vec3(20.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_outer_corner': [(Vec3(20.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_full_corner': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_tight_corner': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_tight_corner_mirror': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_double_corner': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_curved_corner': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_curved_corner_15': [(Vec3(40.0, 0, 0), Vec3(0)),
-                           (Vec3(0), Vec3(0))],
-    'street_t_intersection': [(Vec3(40.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_y_intersection': [(Vec3(30.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_street_20x20': [(Vec3(20.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_street_40x40': [(Vec3(40.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_sidewalk_20x20': [(Vec3(20.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_sidewalk_40x40': [(Vec3(40.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_divided_transition': [(Vec3(40.0, 0, 0), Vec3(0)),
-                                  (Vec3(0), Vec3(0))],
-    'street_divided_40x70': [(Vec3(40.0, 0, 0), Vec3(0)),
-                             (Vec3(0), Vec3(0))],
-    'street_divided_transition_15': [(Vec3(40.0, 0, 0), Vec3(0)),
-                                  (Vec3(0), Vec3(0))],
-    'street_divided_40x70_15': [(Vec3(40.0, 0, 0), Vec3(0)),
-                             (Vec3(0), Vec3(0))],
-    'street_stairs_40x10x5': [(Vec3(40.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_4way_intersection': [(Vec3(40.0, 0, 0), Vec3(0)),
-                                 (Vec3(0), Vec3(0))],
-    'street_incline_40x40x5': [(Vec3(40.0, 0, 0), Vec3(0)),
-                               (Vec3(0), Vec3(0))],
-    'street_square_courtyard': [(Vec3(0.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_courtyard_70': [(Vec3(0.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_courtyard_70_exit': [(Vec3(0.0, 0, 0), Vec3(0)),
-                                 (Vec3(0), Vec3(0))],
-    'street_courtyard_90': [(Vec3(0.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_courtyard_90_exit': [(Vec3(0.0, 0, 0), Vec3(0)),
-                                 (Vec3(0), Vec3(0))],
-    'street_courtyard_70_15': [(Vec3(0.0, 0, 0), Vec3(0)),
-                               (Vec3(0), Vec3(0))],
-    'street_courtyard_70_15_exit': [(Vec3(0.0, 0, 0), Vec3(0)),
-                                    (Vec3(0), Vec3(0))],
-    'street_courtyard_90_15': [(Vec3(0.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
-    'street_courtyard_90_15_exit': [(Vec3(0.0, 0, 0), Vec3(0)),
-                                 (Vec3(0), Vec3(0))],
-    'street_50_transition': [(Vec3(10.0, 0, 0), Vec3(0)),
-                             (Vec3(0), Vec3(0))],
-    'street_20x50': [(Vec3(20.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_40x50': [(Vec3(40.0, 0, 0), Vec3(0)),
-                     (Vec3(0), Vec3(0))],
-    'street_keyboard_10x40': [(Vec3(10.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_keyboard_20x40': [(Vec3(20.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_keyboard_40x40': [(Vec3(40.0, 0, 0), Vec3(0)),
-                              (Vec3(0), Vec3(0))],
-    'street_sunken_40x40': [(Vec3(40.0, 0, 0), Vec3(0)),
-                            (Vec3(0), Vec3(0))],
+    'street_5x20': [(Vec3(5.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_10x20': [(Vec3(10.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_20x20': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_30x20': [(Vec3(30.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_40x20': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_80x20': [(Vec3(80.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_5x40': [(Vec3(5.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_10x40': [(Vec3(10.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_20x40': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_20x40_15': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_30x40': [(Vec3(30.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_40x40': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_20x60': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_40x60': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_40x40_15': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_80x40': [(Vec3(80.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_angle_30': [(Vec3(0), Vec3(-30, 0, 0)), (Vec3(0), Vec3(0))],
+    'street_angle_45': [(Vec3(0), Vec3(-45, 0, 0)), (Vec3(0), Vec3(0))],
+    'street_angle_60': [(Vec3(0), Vec3(-60, 0, 0)), (Vec3(0), Vec3(0))],
+    'street_inner_corner': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_outer_corner': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_full_corner': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_tight_corner': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_tight_corner_mirror': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_double_corner': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_curved_corner': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_curved_corner_15': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_t_intersection': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_y_intersection': [(Vec3(30.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_street_20x20': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_street_40x40': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_sidewalk_20x20': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_sidewalk_40x40': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_divided_transition': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_divided_40x70': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_divided_transition_15': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_divided_40x70_15': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_stairs_40x10x5': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_4way_intersection': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_incline_40x40x5': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_square_courtyard': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_70': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_70_exit': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_90': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_90_exit': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_70_15': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_70_15_exit': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_90_15': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_courtyard_90_15_exit': [(Vec3(0.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_50_transition': [(Vec3(10.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_20x50': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_40x50': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_keyboard_10x40': [(Vec3(10.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_keyboard_20x40': [(Vec3(20.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_keyboard_40x40': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
+    'street_sunken_40x40': [(Vec3(40.0, 0, 0), Vec3(0)), (Vec3(0), Vec3(0))],
     }
-
 
 # Precompute class types for type comparisons
 DNA_CORNICE = DNACornice.getClassType()
@@ -331,8 +273,7 @@ class LevelStyleManager:
                 # Create a baseline style dictionary for each neighborhood
                 self.createBaselineStyleDictionary(neighborhood))
             # Using this dictionary, create style pie menus
-            attribute.setMenu(
-                self.createBaselineStyleMenu(neighborhood, attribute.getDict()))
+            attribute.setMenu( self.createBaselineStyleMenu(neighborhood, attribute.getDict()))
             dict[neighborhood] = attribute
 
     def createBaselineStyleDictionary(self, neighborhood):
@@ -1161,8 +1102,7 @@ class LevelStyleManager:
         attribute = LevelAttribute(miscType)
         attribute.setDict(dict)
         # Now create a pie menu
-        attribute.setMenu(self.createTextPieMenu(miscType, miscList,
-                                                  sf = sf))
+        attribute.setMenu(self.createTextPieMenu(miscType, miscList, sf = sf))
         # Add it to the attributeDictionary
         self.attributeDictionary[miscType] = attribute
 
@@ -1172,9 +1112,7 @@ class LevelStyleManager:
         Open the specified file and strip out unwanted whitespace and
         empty lines.  Return file as list, one file line per element.
         """
-        fname = Filename(dnaDirectory.getFullpath() +
-                         '/stylefiles/' + filename)
-
+        fname = Filename(dnaDirectory.getFullpath() + '/stylefiles/' + filename)
         # We use binary mode to avoid Windows' end-of-line convention
         f = open(fname.toOsSpecific(), 'rb')
         rawData = f.readlines()
