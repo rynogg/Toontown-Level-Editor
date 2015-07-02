@@ -3074,56 +3074,34 @@ class LevelEditor(NodePath, DirectObject):
         return marker
 
     def placeSuitPoint(self):
-        v = self.getGridSnapIntersectionPoint()
-        # get the absolute pos relative to the top level.
-        # That is what gets stored in the point
-        mat = base.direct.grid.getMat(self.NPToplevel)
-        absPos = Point3(mat.xformPoint(v))
-        print 'Suit point: ' + `absPos`
-        # Store the point in the DNA. If this point is already in there,
-        # it returns the existing point
-        suitPoint = DNASTORE.storeSuitPoint(self.currentSuitPointType, absPos)
-        print "placeSuitPoint: ", suitPoint
-        # In case the point returned is a different type, update our type
-        self.currentSuitPointType = suitPoint.getPointType()
-        if not self.pointDict.has_key(suitPoint):
-            marker = self.drawSuitPoint(suitPoint,
-                absPos, self.currentSuitPointType,
-                self.suitPointToplevel)
-            self.pointDict[suitPoint] = marker
-        self.currentSuitPointIndex = suitPoint.getIndex()
+        if DNAClassEqual(self.DNAParent, DNA_VIS_GROUP):
+            v = self.getGridSnapIntersectionPoint()
+            # get the absolute pos relative to the top level.
+            # That is what gets stored in the point
+            mat = base.direct.grid.getMat(self.NPToplevel)
+            absPos = Point3(mat.xformPoint(v))
+            print 'Suit point: ' + `absPos`
+            # Store the point in the DNA. If this point is already in there,
+            # it returns the existing point
+            suitPoint = DNASTORE.storeSuitPoint(self.currentSuitPointType, absPos)
+            print "placeSuitPoint: ", suitPoint
+            # In case the point returned is a different type, update our type
+            self.currentSuitPointType = suitPoint.getPointType()
+            if not self.pointDict.has_key(suitPoint):
+                marker = self.drawSuitPoint(suitPoint,
+                    absPos, self.currentSuitPointType,
+                    self.suitPointToplevel)
+                self.pointDict[suitPoint] = marker
+            self.currentSuitPointIndex = suitPoint.getIndex()
 
-        if self.startSuitPoint:
-            self.endSuitPoint = suitPoint
-            # Make a new dna edge
-            if DNAClassEqual(self.DNAParent, DNA_VIS_GROUP):
-                zoneId = self.DNAParent.getName()
-
-                suitEdge = DNASuitEdge(
-                    self.startSuitPoint, self.endSuitPoint, zoneId)
-                DNASTORE.storeSuitEdge(suitEdge)
-                # Add edge to the current vis group so it can be written out
-                self.DNAParent.addSuitEdge(suitEdge)
-                # Draw a line to represent the edge
-                edgeLine = self.drawSuitEdge(suitEdge, self.NPParent)
-                # Store the line in a dict so we can hide/show them
-                self.edgeDict[suitEdge] = edgeLine
-                self.np2EdgeDict[edgeLine.id()] = [suitEdge, self.DNAParent]
-                # Store the edge on each point in case we move the point
-                # we can update the edge
-                for point in [self.startSuitPoint, self.endSuitPoint]:
-                    if self.point2edgeDict.has_key(point):
-                        self.point2edgeDict[point].append(suitEdge)
-                    else:
-                        self.point2edgeDict[point] = [suitEdge]
-
-                # If this is a building point, you need edges in both directions
-                # so just make the other edge automatically
-                if ((self.startSuitPoint.getPointType() == DNASuitPoint.FRONTDOORPOINT)
-                    or (self.startSuitPoint.getPointType() == DNASuitPoint.SIDEDOORPOINT)):
+            if self.startSuitPoint:
+                self.endSuitPoint = suitPoint
+                # Make a new dna edge
+                if DNAClassEqual(self.DNAParent, DNA_VIS_GROUP):
+                    zoneId = self.DNAParent.getName()
 
                     suitEdge = DNASuitEdge(
-                        self.endSuitPoint, self.startSuitPoint, zoneId)
+                        self.startSuitPoint, self.endSuitPoint, zoneId)
                     DNASTORE.storeSuitEdge(suitEdge)
                     # Add edge to the current vis group so it can be written out
                     self.DNAParent.addSuitEdge(suitEdge)
@@ -3132,22 +3110,47 @@ class LevelEditor(NodePath, DirectObject):
                     # Store the line in a dict so we can hide/show them
                     self.edgeDict[suitEdge] = edgeLine
                     self.np2EdgeDict[edgeLine.id()] = [suitEdge, self.DNAParent]
+                    # Store the edge on each point in case we move the point
+                    # we can update the edge
                     for point in [self.startSuitPoint, self.endSuitPoint]:
                         if self.point2edgeDict.has_key(point):
                             self.point2edgeDict[point].append(suitEdge)
                         else:
                             self.point2edgeDict[point] = [suitEdge]
 
-                print 'Added dnaSuitEdge to zone: ' + zoneId
-            else:
-                print 'Error: DNAParent is not a dnaVisGroup. Did not add edge'
-            # Reset
-            self.startSuitPoint = None
-            self.endSuitPoint = None
+                    # If this is a building point, you need edges in both directions
+                    # so just make the other edge automatically
+                    if ((self.startSuitPoint.getPointType() == DNASuitPoint.FRONTDOORPOINT)
+                        or (self.startSuitPoint.getPointType() == DNASuitPoint.SIDEDOORPOINT)):
 
+                        suitEdge = DNASuitEdge(
+                            self.endSuitPoint, self.startSuitPoint, zoneId)
+                        DNASTORE.storeSuitEdge(suitEdge)
+                        # Add edge to the current vis group so it can be written out
+                        self.DNAParent.addSuitEdge(suitEdge)
+                        # Draw a line to represent the edge
+                        edgeLine = self.drawSuitEdge(suitEdge, self.NPParent)
+                        # Store the line in a dict so we can hide/show them
+                        self.edgeDict[suitEdge] = edgeLine
+                        self.np2EdgeDict[edgeLine.id()] = [suitEdge, self.DNAParent]
+                        for point in [self.startSuitPoint, self.endSuitPoint]:
+                            if self.point2edgeDict.has_key(point):
+                                self.point2edgeDict[point].append(suitEdge)
+                            else:
+                                self.point2edgeDict[point] = [suitEdge]
+
+                    print 'Added dnaSuitEdge to zone: ' + zoneId
+                else:
+                    print 'Error: DNAParent is not a dnaVisGroup. Did not add edge'
+                # Reset
+                self.startSuitPoint = None
+                self.endSuitPoint = None
+
+            else:
+                # First point, store it
+                self.startSuitPoint = suitPoint
         else:
-            # First point, store it
-            self.startSuitPoint = suitPoint
+            print 'Error: DNAParent is not a VisGroup.'
 
     def highlightConnected(self, nodePath = None, fReversePath = 0):
         if nodePath == None:
