@@ -551,7 +551,7 @@ class LevelEditor(NodePath, DirectObject):
 
         # Create new toplevel node path and DNA
         if fCreateToplevel:
-            self.createToplevel(DNANode('level'))
+            self.createToplevel(DNAGroup('level'))
 
         # Initialize variables
         # Reset grid
@@ -1547,7 +1547,7 @@ class LevelEditor(NodePath, DirectObject):
         """ Create a new DNA Node group under the active parent """
         # Create a new DNA Node group
         if type == 'dna':
-            newDNANode = DNANode('group_' + `self.getGroupNum()`)
+            newDNANode = DNAGroup('group_' + `self.getGroupNum()`)
         else:
             newDNANode = DNAVisGroup('VisGroup' + `self.getGroupNum()`)
             # Increment group counter
@@ -2802,6 +2802,7 @@ class LevelEditor(NodePath, DirectObject):
         binaryFilename = Filename(filename)
         binaryFilename.setBinary()
         self.DNAData.writeDna(binaryFilename, Notify.out(), DNASTORE)
+        self.panel["title"] = 'Level Editor: ' + os.path.basename(filename)
 
     def saveColor(self):
         self.appendColorToColorPaletteFile(self.panel.colorEntry.get())
