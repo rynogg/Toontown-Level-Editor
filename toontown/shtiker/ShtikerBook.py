@@ -117,8 +117,8 @@ class ShtikerBook(DirectFrame, StateData.StateData):
             self.notify.info('QA-REGRESSION: SHTICKERBOOK: Close')
 
     def load(self):
-        self.checkGardenStarted = localAvatar.getGardenStarted()
-        bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
+        #self.checkGardenStarted = localAvatar.getGardenStarted()
+        bookModel = loader.loadModel('phase_3.5/models/gui/stickerbook_gui.bam')
         self['image'] = bookModel.find('**/big_book')
         self['image_scale'] = (2, 1, 1.5)
         self.resetFrameSize()
@@ -135,7 +135,7 @@ class ShtikerBook(DirectFrame, StateData.StateData):
         return
 
     def unload(self):
-        loader.unloadModel('phase_3.5/models/gui/stickerbook_gui')
+        loader.unloadModel('phase_3.5/models/gui/stickerbook_gui.bam')
         self.destroy()
         self.bookOpenButton.destroy()
         del self.bookOpenButton
@@ -192,10 +192,10 @@ class ShtikerBook(DirectFrame, StateData.StateData):
             messenger.send('wakeup')
             base.playSfx(self.pageSound)
             self.setPage(page)
-            if base.config.GetBool('want-qa-regression', 0):
-                self.notify.info('QA-REGRESSION: SHTICKERBOOK: Browse tabs %s' % page.pageName)
-            localAvatar.newsButtonMgr.setGoingToNewsPageFromStickerBook(False)
-            localAvatar.newsButtonMgr.showAppropriateButton()
+            #if base.config.GetBool('want-qa-regression', 0):
+            #    self.notify.info('QA-REGRESSION: SHTICKERBOOK: Browse tabs %s' % page.pageName)
+            #localAvatar.newsButtonMgr.setGoingToNewsPageFromStickerBook(False)
+            #localAvatar.newsButtonMgr.showAppropriateButton()
 
         yOffset = 0.07 * pageIndex
         iconGeom = None
@@ -205,69 +205,69 @@ class ShtikerBook(DirectFrame, StateData.StateData):
         buttonPressedCommand = goToPage
         extraArgs = []
         if pageName == TTLocalizer.OptionsPageTitle:
-            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
+            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures.bam')
             iconGeom = iconModels.find('**/switch')
             iconModels.detachNode()
         elif pageName == TTLocalizer.ShardPageTitle:
-            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
+            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures.bam')
             iconGeom = iconModels.find('**/district')
             iconModels.detachNode()
         elif pageName == TTLocalizer.MapPageTitle:
-            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
+            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures.bam')
             iconGeom = iconModels.find('**/teleportIcon')
             iconModels.detachNode()
         elif pageName == TTLocalizer.InventoryPageTitle:
-            iconModels = loader.loadModel('phase_3.5/models/gui/inventory_icons')
+            iconModels = loader.loadModel('phase_3.5/models/gui/inventory_icons.bam')
             iconGeom = iconModels.find('**/inventory_tart')
             iconScale = 7
             iconModels.detachNode()
         elif pageName == TTLocalizer.QuestPageToonTasks:
-            iconModels = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
+            iconModels = loader.loadModel('phase_3.5/models/gui/stickerbook_gui.bam')
             iconGeom = iconModels.find('**/questCard')
             iconScale = 0.9
             iconModels.detachNode()
         elif pageName == TTLocalizer.TrackPageShortTitle:
-            iconGeom = iconModels = loader.loadModel('phase_3.5/models/gui/filmstrip')
+            iconGeom = iconModels = loader.loadModel('phase_3.5/models/gui/filmstrip.bam')
             iconScale = 1.1
             iconColor = Vec4(0.7, 0.7, 0.7, 1)
             iconModels.detachNode()
         elif pageName == TTLocalizer.SuitPageTitle:
-            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
+            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures.bam')
             iconGeom = iconModels.find('**/gui_gear')
             iconModels.detachNode()
         elif pageName == TTLocalizer.FishPageTitle:
-            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
+            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures.bam')
             iconGeom = iconModels.find('**/fish')
             iconModels.detachNode()
         elif pageName == TTLocalizer.GardenPageTitle:
-            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
+            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures.bam')
             iconGeom = iconModels.find('**/gardenIcon')
             iconModels.detachNode()
         elif pageName == TTLocalizer.DisguisePageTitle:
-            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
+            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures.bam')
             iconGeom = iconModels.find('**/disguise2')
             iconColor = Vec4(0.7, 0.7, 0.7, 1)
             iconModels.detachNode()
         elif pageName == TTLocalizer.NPCFriendPageTitle:
-            iconModels = loader.loadModel('phase_3.5/models/gui/playingCard')
+            iconModels = loader.loadModel('phase_3.5/models/gui/playingCard.bam')
             iconImage = iconModels.find('**/card_back')
             iconGeom = iconModels.find('**/logo')
             iconScale = 0.22
             iconModels.detachNode()
         elif pageName == TTLocalizer.KartPageTitle:
-            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
+            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures.bam')
             iconGeom = iconModels.find('**/kartIcon')
             iconModels.detachNode()
         elif pageName == TTLocalizer.GolfPageTitle:
-            iconModels = loader.loadModel('phase_6/models/golf/golf_gui')
+            iconModels = loader.loadModel('phase_6/models/golf/golf_gui.bam')
             iconGeom = iconModels.find('**/score_card_icon')
             iconModels.detachNode()
         elif pageName == TTLocalizer.EventsPageName:
-            iconModels = loader.loadModel('phase_4/models/parties/partyStickerbook')
+            iconModels = loader.loadModel('phase_4/models/parties/partyStickerbook.bam')
             iconGeom = iconModels.find('**/Stickerbook_PartyIcon')
             iconModels.detachNode()
         elif pageName == TTLocalizer.NewsPageName:
-            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
+            iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures.bam')
             iconGeom = iconModels.find('**/tt_t_gui_sbk_newsPageTab')
             iconModels.detachNode()
             buttonPressedCommand = self.goToNewsPage
@@ -327,12 +327,12 @@ class ShtikerBook(DirectFrame, StateData.StateData):
     def showButton(self):
         self.__shown = 1
         self.__setButtonVisibility()
-        localAvatar.newsButtonMgr.showAppropriateButton()
+        #localAvatar.newsButtonMgr.showAppropriateButton()
 
     def hideButton(self):
         self.__shown = 0
         self.__setButtonVisibility()
-        localAvatar.newsButtonMgr.request('Hidden')
+        #localAvatar.newsButtonMgr.request('Hidden')
 
     def __setButtonVisibility(self):
         if self.__isOpen:
@@ -357,10 +357,10 @@ class ShtikerBook(DirectFrame, StateData.StateData):
 
     def __open(self):
         messenger.send('enterStickerBook')
-        if not localAvatar.getGardenStarted():
-            for tab in self.pageTabs:
-                if tab['text'][2] == TTLocalizer.GardenPageTitle:
-                    tab.hide()
+        #if not localAvatar.getGardenStarted():
+        #    for tab in self.pageTabs:
+        #        if tab['text'][2] == TTLocalizer.GardenPageTitle:
+        #            tab.hide()
 
     def __close(self):
         base.playSfx(self.closeSound)
@@ -425,14 +425,14 @@ class ShtikerBook(DirectFrame, StateData.StateData):
     def goToNewsPage(self, page):
         messenger.send('wakeup')
         base.playSfx(self.pageSound)
-        localAvatar.newsButtonMgr.setGoingToNewsPageFromStickerBook(True)
-        localAvatar.newsButtonMgr.showAppropriateButton()
+        #localAvatar.newsButtonMgr.setGoingToNewsPageFromStickerBook(True)
+        #localAvatar.newsButtonMgr.showAppropriateButton()
         self.setPage(page)
-        if base.config.GetBool('want-qa-regression', 0):
-            self.notify.info('QA-REGRESSION: SHTICKERBOOK: Browse tabs %s' % page.pageName)
+        #if base.config.GetBool('want-qa-regression', 0):
+        #    self.notify.info('QA-REGRESSION: SHTICKERBOOK: Browse tabs %s' % page.pageName)
         self.ignore(ToontownGlobals.StickerBookHotkey)
         self.ignore(ToontownGlobals.OptionsPageHotkey)
-        localAvatar.newsButtonMgr.acceptEscapeKeyPress()
+        #localAvatar.newsButtonMgr.acceptEscapeKeyPress()
 
     def disableBookCloseButton(self):
         if self.bookCloseButton:

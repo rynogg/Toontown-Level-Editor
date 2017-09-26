@@ -337,7 +337,7 @@ class TTChatInputSpeedChat(DirectObject.DirectObject):
         self.chatMgr = chatMgr
         self.whisperAvatarId = None
         self.toPlayer = 0
-        buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui')
+        buttons = loader.loadModel('phase_3/models/gui/dialog_box_buttons_gui.bam')
         okButtonImage = (buttons.find('**/ChtBx_OKBtn_UP'), buttons.find('**/ChtBx_OKBtn_DN'), buttons.find('**/ChtBx_OKBtn_Rllvr'))
         self.emoteNoAccessPanel = DirectFrame(parent=hidden, relief=None, state='normal', text=OTPLocalizer.SCEmoteNoAccessMsg, frameSize=(-1, 1, -1, 1), geom=DGG.getDefaultDialogGeom(), geom_color=OTPGlobals.GlobalDialogColor, geom_scale=(0.92, 1, 0.6), geom_pos=(0, 0, -.08), text_scale=0.08)
         self.okButton = DirectButton(parent=self.emoteNoAccessPanel, image=okButtonImage, relief=None, text=OTPLocalizer.SCEmoteNoAccessOK, text_scale=0.05, text_pos=(0.0, -0.1), textMayChange=0, pos=(0.0, 0.0, -0.2), command=self.handleEmoteNoAccessDone)

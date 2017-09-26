@@ -8,7 +8,7 @@ class TTChatInputNormal(ChatInputNormal.ChatInputNormal):
 
     def __init__(self, chatMgr):
         ChatInputNormal.ChatInputNormal.__init__(self, chatMgr)
-        gui = loader.loadModel('phase_3.5/models/gui/chat_input_gui')
+        gui = loader.loadModel('phase_3.5/models/gui/chat_input_gui.bam')
         self.chatFrame = DirectFrame(parent=aspect2dp, image=gui.find('**/Chat_Bx_FNL'), relief=None, pos=(-1.083, 0, 0.804), state=DGG.NORMAL, sortOrder=DGG.FOREGROUND_SORT_INDEX)
         self.chatFrame.hide()
         self.chatButton = DirectButton(parent=self.chatFrame, image=(gui.find('**/ChtBx_ChtBtn_UP'), gui.find('**/ChtBx_ChtBtn_DN'), gui.find('**/ChtBx_ChtBtn_RLVR')), pos=(0.182, 0, -0.088), relief=None, text=('', OTPLocalizer.ChatInputNormalSayIt, OTPLocalizer.ChatInputNormalSayIt), text_scale=0.06, text_fg=Vec4(1, 1, 1, 1), text_shadow=Vec4(0, 0, 0, 1), text_pos=(0, -0.09), textMayChange=0, command=self.chatButtonPressed)
@@ -28,7 +28,7 @@ class TTChatInputNormal(ChatInputNormal.ChatInputNormal):
         self.chatButton.destroy()
         self.cancelButton.destroy()
         ChatInputNormal.ChatInputNormal.delete(self)
-        loader.unloadModel('phase_3.5/models/gui/chat_input_gui')
+        loader.unloadModel('phase_3.5/models/gui/chat_input_gui.bam')
 
     def importExecNamespace(self):
         ChatInputNormal.ChatInputNormal.importExecNamespace(self)

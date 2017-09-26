@@ -42,7 +42,7 @@ class NonPhysicsWalker(DirectObject.DirectObject):
     def setWalkSpeed(self, forward, jump, reverse, rotate):
         assert self.debugPrint("setWalkSpeed()")
         self.avatarControlForwardSpeed=forward
-        #self.avatarControlJumpForce=jump
+        self.avatarControlJumpForce=jump
         self.avatarControlReverseSpeed=reverse
         self.avatarControlRotateSpeed=rotate
 
@@ -200,7 +200,7 @@ class NonPhysicsWalker(DirectObject.DirectObject):
         turnLeft = inputState.isSet("turnLeft")
         turnRight = inputState.isSet("turnRight")
         slide = inputState.isSet(self.slideName) or 0
-        #jump = inputState.isSet("jump")
+        jump = inputState.isSet("jump")
 
         # Check for Auto-Run
         if base.localAvatar.getAutoRun():

@@ -125,6 +125,12 @@ class PhysicsWalker(DirectObject.DirectObject):
         if avatar is not None:
             self.setupPhysics(avatar)
 
+    def setWallBitMask(self, bitMask):
+        self.cSphereBitMask = bitMask
+
+    def setFloorBitMask(self, bitMask):
+        self.cRayBitMask = bitMask
+
     def setupRay(self, floorBitmask, floorOffset):
         # This is a ray cast from your head down to detect floor polygons
         # A toon is about 4.0 feet high, so start it there
@@ -265,25 +271,82 @@ class PhysicsWalker(DirectObject.DirectObject):
         #fnp.remove()
         return avatarNodePath
 
+    #def initializeCollisions(self, collisionTraverser, avatarNodePath,
+    #        wallBitmask, floorBitmask,
+    #        avatarRadius = 1.4, floorOffset = 1.0, reach = 1.0):
+    #    """
+    #    Set up the avatar collisions
+    #    """
+    #    assert self.debugPrint("initializeCollisions()")
+#
+    #    assert not avatarNodePath.isEmpty()
+#
+    #    self.cTrav = collisionTraverser
+    #    self.floorOffset = floorOffset = 7.0
+#
+    #    self.avatarNodePath = self.setupPhysics(avatarNodePath)
+    #    if 0 or self.useHeightRay:
+    #        #self.setupRay(floorBitmask, avatarRadius)
+    #        self.setupRay(floorBitmask, 0.0)
+    #    self.setupSphere(wallBitmask|floorBitmask, avatarRadius)
+#
+    #    self.setCollisionsActive(1)
+
     def initializeCollisions(self, collisionTraverser, avatarNodePath,
-            wallBitmask, floorBitmask,
             avatarRadius = 1.4, floorOffset = 1.0, reach = 1.0):
         """
-        Set up the avatar collisions
+        Set up the avatar for collisions
         """
-        assert self.debugPrint("initializeCollisions()")
-
         assert not avatarNodePath.isEmpty()
 
         self.cTrav = collisionTraverser
-        self.floorOffset = floorOffset = 7.0
+        self.avatarNodePath = avatarNodePath
 
-        self.avatarNodePath = self.setupPhysics(avatarNodePath)
-        if 0 or self.useHeightRay:
-            #self.setupRay(floorBitmask, avatarRadius)
-            self.setupRay(floorBitmask, 0.0)
-        self.setupSphere(wallBitmask|floorBitmask, avatarRadius)
+        # Set up the collision sphere
+        # This is a sphere on the ground to detect barrier collisions
+        self.cSphere = CollisionSphere(0.0, 0.0, 0.0, avatarRadius)
+        cSphereNode = CollisionNode('NPW.cSphereNode')
+        cSphereNode.addSolid(self.cSphere)
+        self.cSphereNodePath = avatarNodePath.attachNewNode(cSphereNode)
 
+        cSphereNode.setFromCollideMask(self.cSphereBitMask)
+        cSphereNode.setIntoCollideMask(BitMask32.allOff())
+
+        # Set up the collison ray
+        # This is a ray cast from your head down to detect floor polygons.
+        # This ray start is arbitrarily high in the air.  Feel free to use
+        # a higher or lower value depending on whether you want an avatar
+        # that is outside of the world to step up to the floor when they
+        # get under valid floor:
+        self.cRay = CollisionRay(0.0, 0.0, CollisionHandlerRayStart, 0.0, 0.0, -1.0)
+        cRayNode = CollisionNode('NPW.cRayNode')
+        cRayNode.addSolid(self.cRay)
+        self.cRayNodePath = avatarNodePath.attachNewNode(cRayNode)
+        cRayNode.setFromCollideMask(self.cRayBitMask)
+        cRayNode.setIntoCollideMask(BitMask32.allOff())
+
+        # set up wall collision mechanism
+        self.pusher = CollisionHandlerPusher()
+        self.pusher.setInPattern("enter%in")
+        self.pusher.setOutPattern("exit%in")
+
+        # set up floor collision mechanism
+        self.lifter = CollisionHandlerFloor()
+        self.lifter.setInPattern("on-floor")
+        self.lifter.setOutPattern("off-floor")
+        self.lifter.setOffset(floorOffset)
+        self.lifter.setReach(reach)
+
+        # Limit our rate-of-fall with the lifter.
+        # If this is too low, we actually "fall" off steep stairs
+        # and float above them as we go down. I increased this
+        # from 8.0 to 16.0 to prevent this
+        self.lifter.setMaxVelocity(16.0)
+
+        self.pusher.addCollider(self.cSphereNodePath, avatarNodePath)
+        self.lifter.addCollider(self.cRayNodePath, avatarNodePath)
+
+        # activate the collider with the traverser and pusher
         self.setCollisionsActive(1)
 
     def setAirborneHeightFunc(self, getAirborneHeight):

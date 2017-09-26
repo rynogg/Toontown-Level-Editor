@@ -18,7 +18,7 @@ class OTPDialog(DirectDialog):
         self.style = style
         buttons = None
         if self.style != NoButtons:
-            buttons = loader.loadModel(self.path)
+            buttons = loader.loadModel(self.path + '.bam')
         if self.style == TwoChoiceCustom:
             okImageList = (buttons.find('**/ChtBx_OKBtn_UP'), buttons.find('**/ChtBx_OKBtn_DN'), buttons.find('**/ChtBx_OKBtn_Rllvr'))
             cancelImageList = (buttons.find('**/CloseBtn_UP'), buttons.find('**/CloseBtn_DN'), buttons.find('**/CloseBtn_Rllvr'))

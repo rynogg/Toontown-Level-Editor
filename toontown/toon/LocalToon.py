@@ -84,7 +84,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             self.soundPhoneRing = base.loadSfx('phase_3.5/audio/sfx/telephone_ring.mp3')
             self.soundSystemMessage = base.loadSfx('phase_3/audio/sfx/clock03.mp3')
             self.positionExaminer = PositionExaminer.PositionExaminer()
-            friendsGui = loader.loadModel('phase_3.5/models/gui/friendslist_gui')
+            friendsGui = loader.loadModel('phase_3.5/models/gui/friendslist_gui.bam')
             friendsButtonNormal = friendsGui.find('**/FriendsBox_Closed')
             friendsButtonPressed = friendsGui.find('**/FriendsBox_Rollover')
             friendsButtonRollover = friendsGui.find('**/FriendsBox_Rollover')
@@ -159,11 +159,11 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             self.accept(self.systemMsgAckGuiDoneEvent, self.hideSystemMsgAckGui)
             self.systemMsgAckGui = None
             self.createSystemMsgAckGui()
-            if not hasattr(base.cr, 'lastLoggedIn'):
-                base.cr.lastLoggedIn = self.cr.toontownTimeManager.convertStrToToontownTime('')
-            self.setLastTimeReadNews(base.cr.lastLoggedIn)
-            self.acceptingNewFriends = Settings.getAcceptingNewFriends() and base.config.GetBool('accepting-new-friends-default', True)
-            self.acceptingNonFriendWhispers = Settings.getAcceptingNonFriendWhispers() and base.config.GetBool('accepting-non-friend-whispers-default', True)
+            #if not hasattr(base.cr, 'lastLoggedIn'):
+            #    base.cr.lastLoggedIn = self.cr.toontownTimeManager.convertStrToToontownTime('')
+            #self.setLastTimeReadNews(base.cr.lastLoggedIn)
+            #self.acceptingNewFriends = Settings.getAcceptingNewFriends() and base.config.GetBool('accepting-new-friends-default', True)
+            #self.acceptingNonFriendWhispers = Settings.getAcceptingNonFriendWhispers() and base.config.GetBool('accepting-non-friend-whispers-default', True)
             self.physControls.event.addAgainPattern('again%in')
             self.oldPos = None
             self.questMap = None
@@ -561,9 +561,6 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         del self.gardenPage
         del self.trackPage
         del self.book
-        if base.wantKarts:
-            if hasattr(self, 'kartPage'):
-                del self.kartPage
         if base.wantNametags:
             self.nametag.unmanage(base.marginManager)
         taskMgr.removeTasksMatching('*ioorrd234*')
@@ -615,53 +612,51 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         return
 
     def initInterface(self):
-        self.newsButtonMgr = NewsPageButtonManager.NewsPageButtonManager()
-        self.newsButtonMgr.request('Hidden')
+        #self.newsButtonMgr = NewsPageButtonManager.NewsPageButtonManager()
+        #self.newsButtonMgr.request('Hidden')
         self.book = ShtikerBook.ShtikerBook('bookDone')
         self.book.load()
-        self.book.hideButton()
+        #self.book.hideButton()
         self.optionsPage = OptionsPage.OptionsPage()
         self.optionsPage.load()
         self.book.addPage(self.optionsPage, pageName=TTLocalizer.OptionsPageTitle)
-        self.shardPage = ShardPage.ShardPage()
-        self.shardPage.load()
-        self.book.addPage(self.shardPage, pageName=TTLocalizer.ShardPageTitle)
-        self.mapPage = MapPage.MapPage()
-        self.mapPage.load()
-        self.book.addPage(self.mapPage, pageName=TTLocalizer.MapPageTitle)
-        self.invPage = InventoryPage.InventoryPage()
-        self.invPage.load()
-        self.book.addPage(self.invPage, pageName=TTLocalizer.InventoryPageTitle)
-        self.questPage = QuestPage.QuestPage()
-        self.questPage.load()
-        self.book.addPage(self.questPage, pageName=TTLocalizer.QuestPageToonTasks)
-        self.trackPage = TrackPage.TrackPage()
-        self.trackPage.load()
-        self.book.addPage(self.trackPage, pageName=TTLocalizer.TrackPageShortTitle)
-        self.suitPage = SuitPage.SuitPage()
-        self.suitPage.load()
-        self.book.addPage(self.suitPage, pageName=TTLocalizer.SuitPageTitle)
-        if base.config.GetBool('want-photo-album', 0):
-            self.photoAlbumPage = PhotoAlbumPage.PhotoAlbumPage()
-            self.photoAlbumPage.load()
-            self.book.addPage(self.photoAlbumPage, pageName=TTLocalizer.PhotoPageTitle)
-        self.fishPage = FishPage.FishPage()
-        self.fishPage.setAvatar(self)
-        self.fishPage.load()
-        self.book.addPage(self.fishPage, pageName=TTLocalizer.FishPageTitle)
-        if base.wantKarts:
-            self.addKartPage()
-        if self.disguisePageFlag:
-            self.loadDisguisePages()
-        if self.sosPageFlag:
-            self.loadSosPages()
-        if self.gardenStarted:
-            self.loadGardenPages()
-        self.addGolfPage()
-        self.addEventsPage()
-        if WantNewsPage:
-            self.addNewsPage()
-        self.book.setPage(self.mapPage, enterPage=False)
+        #self.shardPage = ShardPage.ShardPage()
+        #self.shardPage.load()
+        #self.book.addPage(self.shardPage, pageName=TTLocalizer.ShardPageTitle)
+        #self.mapPage = MapPage.MapPage()
+        #self.mapPage.load()
+        #self.book.addPage(self.mapPage, pageName=TTLocalizer.MapPageTitle)
+        #self.invPage = InventoryPage.InventoryPage()
+        #self.invPage.load()
+        #self.book.addPage(self.invPage, pageName=TTLocalizer.InventoryPageTitle)
+        #self.questPage = QuestPage.QuestPage()
+        #self.questPage.load()
+        #self.book.addPage(self.questPage, pageName=TTLocalizer.QuestPageToonTasks)
+        #self.trackPage = TrackPage.TrackPage()
+        #self.trackPage.load()
+        #self.book.addPage(self.trackPage, pageName=TTLocalizer.TrackPageShortTitle)
+        #self.suitPage = SuitPage.SuitPage()
+        #self.suitPage.load()
+        #self.book.addPage(self.suitPage, pageName=TTLocalizer.SuitPageTitle)
+        #if base.config.GetBool('want-photo-album', 0):
+        #    self.photoAlbumPage = PhotoAlbumPage.PhotoAlbumPage()
+        #    self.photoAlbumPage.load()
+        #    self.book.addPage(self.photoAlbumPage, pageName=TTLocalizer.PhotoPageTitle)
+        #self.fishPage = FishPage.FishPage()
+        #self.fishPage.setAvatar(self)
+        #self.fishPage.load()
+        #self.book.addPage(self.fishPage, pageName=TTLocalizer.FishPageTitle)
+        #if self.disguisePageFlag:
+        #    self.loadDisguisePages()
+        #if self.sosPageFlag:
+        #    self.loadSosPages()
+        #if self.gardenStarted:
+        #    self.loadGardenPages()
+        #self.addGolfPage()
+        #self.addEventsPage()
+        #if WantNewsPage:
+        #    self.addNewsPage()
+        self.book.setPage(self.optionsPage, enterPage=False)
         self.laffMeter = LaffMeter.LaffMeter(self.style, self.hp, self.maxHp)
         self.laffMeter.setAvatar(self)
         self.laffMeter.setScale(0.075)
@@ -669,13 +664,13 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             self.laffMeter.setPos(-1.18, 0.0, -0.87)
         else:
             self.laffMeter.setPos(-1.2, 0.0, -0.87)
-        self.laffMeter.stop()
-        self.questMap = QuestMap.QuestMap(self)
-        self.questMap.stop()
-        if not base.cr.isPaid():
-            guiButton = loader.loadModel('phase_3/models/gui/quit_button')
-            self.purchaseButton = DirectButton(parent=aspect2d, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=0.9, text=TTLocalizer.OptionsPagePurchase, text_scale=0.05, text_pos=(0, -0.01), textMayChange=0, pos=(0.885, 0, -0.94), sortOrder=100, command=self.__handlePurchase)
-            base.setCellsAvailable([base.bottomCells[4]], 0)
+        #self.laffMeter.stop()
+        #self.questMap = QuestMap.QuestMap(self)
+        #self.questMap.stop()
+        #if not base.cr.isPaid():
+        #    guiButton = loader.loadModel('phase_3/models/gui/quit_button.bam')
+        #    self.purchaseButton = DirectButton(parent=aspect2d, relief=None, image=(guiButton.find('**/QuitBtn_UP'), guiButton.find('**/QuitBtn_DN'), guiButton.find('**/QuitBtn_RLVR')), image_scale=0.9, text=TTLocalizer.OptionsPagePurchase, text_scale=0.05, text_pos=(0, -0.01), textMayChange=0, pos=(0.885, 0, -0.94), sortOrder=100, command=self.__handlePurchase)
+        #    base.setCellsAvailable([base.bottomCells[4]], 0)
         self.accept('time-insert', self.__beginTossPie)
         self.accept('time-insert-up', self.__endTossPie)
         self.accept('time-delete', self.__beginTossPie)
@@ -688,7 +683,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         self.accept('InputState-turnLeft', self.__toonMoved)
         self.accept('InputState-turnRight', self.__toonMoved)
         self.accept('InputState-slide', self.__toonMoved)
-        QuestParser.init()
+        #QuestParser.init()
         return
 
     def __handlePurchase(self):
@@ -705,21 +700,6 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
             self.leaveToPayDialog.show()
         else:
             self.notify.error('You should not get here without a PlayToken')
-
-    if base.wantKarts:
-
-        def addKartPage(self):
-            if self.hasKart():
-                if hasattr(self, 'kartPage') and self.kartPage != None:
-                    return
-                if not launcher.getPhaseComplete(6):
-                    self.acceptOnce('phaseComplete-6', self.addKartPage)
-                    return
-                self.kartPage = KartPage.KartPage()
-                self.kartPage.setAvatar(self)
-                self.kartPage.load()
-                self.book.addPage(self.kartPage, pageName=TTLocalizer.KartPageTitle)
-            return
 
     def setWantBattles(self, wantBattles):
         self.wantBattles = wantBattles
@@ -818,17 +798,17 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         return 1
 
     def canChat(self):
-        if not self.cr.allowAnyTypedChat():
-            return 0
-        if self.commonChatFlags & (ToontownGlobals.CommonChat | ToontownGlobals.SuperChat):
-            return 1
-        if base.cr.whiteListChatEnabled:
-            return 1
-        for friendId, flags in self.friendsList:
-            if flags & ToontownGlobals.FriendChat:
-                return 1
+        #if not self.cr.allowAnyTypedChat():
+        #    return 0
+        #if self.commonChatFlags & (ToontownGlobals.CommonChat | ToontownGlobals.SuperChat):
+        #    return 1
+        #if base.cr.whiteListChatEnabled:
+        #    return 1
+        #for friendId, flags in self.friendsList:
+        #    if flags & ToontownGlobals.FriendChat:
+        #        return 1
 
-        return 0
+        return 1
 
     def startChat(self):
         if self.tutorialAck:
@@ -1164,7 +1144,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         if self.__pieButton == None:
             inv = self.inventory
             if self.pieType >= len(inv.invModels[ToontownBattleGlobals.THROW_TRACK]):
-                gui = loader.loadModel('phase_3.5/models/gui/stickerbook_gui')
+                gui = loader.loadModel('phase_3.5/models/gui/stickerbook_gui.bam')
                 pieGui = gui.find('**/summons')
                 pieScale = 0.1
             else:
@@ -1255,7 +1235,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
     def loadFurnitureGui(self):
         if self.__furnitureGui:
             return
-        guiModels = loader.loadModel('phase_5.5/models/gui/house_design_gui')
+        guiModels = loader.loadModel('phase_5.5/models/gui/house_design_gui.bam')
         self.__furnitureGui = DirectFrame(relief=None, pos=(-1.19, 0.0, 0.33), scale=0.04, image=guiModels.find('**/attic'))
         DirectLabel(parent=self.__furnitureGui, relief=None, image=guiModels.find('**/rooftile'))
         bMoveStartUp = guiModels.find('**/bu_attic/bu_attic_up')
@@ -1297,7 +1277,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
     def loadClarabelleGui(self):
         if self.__clarabelleButton:
             return
-        guiItems = loader.loadModel('phase_5.5/models/gui/catalog_gui')
+        guiItems = loader.loadModel('phase_5.5/models/gui/catalog_gui.bam')
         circle = guiItems.find('**/cover/blue_circle')
         icon = guiItems.find('**/cover/clarabelle')
         icon.reparentTo(circle)
@@ -1421,7 +1401,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
     def __placeMarker(self):
         pos = self.getPos()
         hpr = self.getHpr()
-        chest = loader.loadModel('phase_4/models/props/coffin')
+        chest = loader.loadModel('phase_4/models/props/coffin.bam')
         chest.reparentTo(render)
         chest.setColor(1, 0, 0, 1)
         chest.setPosHpr(pos, hpr)
@@ -1569,7 +1549,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
     def loadGardeningGui(self):
         if self.__gardeningGui:
             return
-        gardenGuiCard = loader.loadModel('phase_5.5/models/gui/planting_gui')
+        gardenGuiCard = loader.loadModel('phase_5.5/models/gui/planting_gui.bam')
         self.__gardeningGui = DirectFrame(relief=None, geom=gardenGuiCard, geom_color=GlobalDialogColor, geom_scale=(0.17, 1.0, 0.3), pos=(-1.2, 0, 0.5), scale=1.0)
         self.__gardeningGui.setName('gardeningFrame')
         self.__gardeningGuiFake = DirectFrame(relief=None, geom=None, geom_color=GlobalDialogColor, geom_scale=(0.17, 1.0, 0.3), pos=(-1.2, 0, 0.5), scale=1.0)
@@ -1579,13 +1559,13 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
         iconColorGrey = Vec4(0.7, 0.7, 0.7, 1.0)
         iconColorBrown = Vec4(0.7, 0.4, 0.3, 1.0)
         iconColorBlue = Vec4(0.2, 0.3, 1.0, 1.0)
-        shovelCardP = loader.loadModel('phase_5.5/models/gui/planting_but_shovel_P')
-        shovelCardY = loader.loadModel('phase_5.5/models/gui/planting_but_shovel_Y')
-        wateringCanCardP = loader.loadModel('phase_5.5/models/gui/planting_but_can_P')
-        wateringCanCardY = loader.loadModel('phase_5.5/models/gui/planting_but_can_Y')
-        backCard = loader.loadModel('phase_5.5/models/gui/planting_gui')
+        shovelCardP = loader.loadModel('phase_5.5/models/gui/planting_but_shovel_P.bam')
+        shovelCardY = loader.loadModel('phase_5.5/models/gui/planting_but_shovel_Y.bam')
+        wateringCanCardP = loader.loadModel('phase_5.5/models/gui/planting_but_can_P.bam')
+        wateringCanCardY = loader.loadModel('phase_5.5/models/gui/planting_but_can_Y.bam')
+        backCard = loader.loadModel('phase_5.5/models/gui/planting_gui.bam')
         iconImage = None
-        iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures')
+        iconModels = loader.loadModel('phase_3.5/models/gui/sos_textures.bam')
         iconGeom = iconModels.find('**/fish')
         buttonText = TTLocalizer.GardeningPlant
         self.shovelText = ('',
@@ -1967,7 +1947,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
                  'newbeans': shovelBeans}
         messagePos = Vec2(0, 0.2)
         messageScale = 0.07
-        image = loader.loadModel('phase_5.5/models/gui/planting_but_shovel_P')
+        image = loader.loadModel('phase_5.5/models/gui/planting_but_shovel_P.bam')
         imagePos = Vec3(0, 0, -0.13)
         imageScale = Vec3(0.28, 0, 0.56)
         if doPartyBall:
@@ -1987,7 +1967,7 @@ class LocalToon(DistributedToon.DistributedToon, LocalAvatar.LocalAvatar):
          'newbeans': shovelBeans}
         messagePos = Vec2(0, 0.2)
         messageScale = 0.07
-        image = loader.loadModel('phase_5.5/models/gui/planting_but_shovel_P')
+        image = loader.loadModel('phase_5.5/models/gui/planting_but_shovel_P.bam')
         imagePos = Vec3(0, 0, -0.13)
         imageScale = Vec3(0.28, 0, 0.56)
         go = Fanfare.makePanel(base.localAvatar, 1)

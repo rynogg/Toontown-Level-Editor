@@ -30,11 +30,13 @@ from direct.interval.IntervalGlobal import *
 # [gjeon] to control avatar movement in drive mode
 from direct.controls import ControlManager
 from direct.controls import GravityWalker
-from direct.controls import NonPhysicsWalker
+from direct.controls import PhysicsWalker
 from direct.interval.LerpInterval import LerpFunctionInterval
 
 from otp.avatar import LocalAvatar
+from toontown.toon import LocalToon
 from toontown.toon import RobotToon
+from toontown.toon import ToonDNA
 from otp.otpbase import OTPGlobals
 
 from LevelStyleManager import *
@@ -645,7 +647,7 @@ class LevelEditor(NodePath, DirectObject):
             self.controlManager.disable()
         if (self.avatar):
             self.avatar.stopUpdateSmartCamera()
-            Sequence(Func(self.avatar.robot.animFSM.request, 'TeleportOut'), Wait(3.5), Func(self.avatar.reparentTo, hidden)).start()
+            Sequence(Func(self.avatar.animFSM.request, 'TeleportOut'), Wait(3.5), Func(self.avatar.reparentTo, hidden)).start()
 
         self.fDrive = False
 
@@ -707,18 +709,22 @@ class LevelEditor(NodePath, DirectObject):
             self.avatar = LEAvatar(None, None, None)
             base.localAvatar = self.avatar
             self.avatar.doId = 0
-            self.avatar.robot = RobotToon.RobotToon()
-            self.avatar.robot.reparentTo(self.avatar)
-            self.avatar.setHeight(self.avatar.robot.getHeight())
+            #self.avatar.robot = RobotToon.RobotToon()
+            #self.avatar.robot.reparentTo(self.avatar)
+            #self.avatar.setHeight(self.avatar.robot.getHeight())
             #self.avatar.robot.setDNAString('t\x01\x01\x01\x01\x03\x03\x03\x03\x07\x02\x11\x00\x11\x11')
-            self.avatar.robot.setDNAString('t\x0E\x02\x01\x01\x11\x00\x00\x00\x05\x04\x0C\x00\x0C\x0C')
+            dna = ToonDNA.ToonDNA()
+            dnaList = ('dls', 'ls', 'm', 'm', 12, 0, 12, 12, 3, 11, 3, 11, 3, 22)
+            dna.newToonFromProperties(*dnaList)
+            self.avatar.setDNAString(dna.makeNetString())
             self.avatar.setName("Ryno")
             #self.avatar.robot.putOnSuit(suitType='p')
             #self.avatar.robot.loop('neutral')
 
         self.avatar.setPos(base.camera.getPos())
         self.avatar.reparentTo(render)
-        Sequence(Func(self.avatar.robot.animFSM.request, 'TeleportIn'), Wait(1.5), Func(self.avatar.robot.animFSM.request, 'neutral')).start()
+        self.avatar.initInterface()
+        Sequence(Func(self.avatar.animFSM.request, 'TeleportIn'), Wait(1.5), Func(self.avatar.animFSM.request, 'neutral')).start()
 
 ##         pos = base.direct.camera.getPos()
 ##         pos.setZ(4.0)
@@ -788,12 +794,17 @@ class LevelEditor(NodePath, DirectObject):
             floorOffset = OTPGlobals.FloorOffset
             reach = 4.0
 
-            #walkControls=GravityWalker.GravityWalker(gravity = -32.1740 * 2.0)
-            walkControls=NonPhysicsWalker.NonPhysicsWalker()
+            #def getAirborneHeight():
+            #    return offset + 0.025
+
+            walkControls=GravityWalker.GravityWalker(legacyLifter=True, gravity=20)
+            #walkControls=GravityWalker.GravityWalker()
             walkControls.setWallBitMask(OTPGlobals.WallBitmask)
             walkControls.setFloorBitMask(OTPGlobals.FloorBitmask)
             walkControls.initializeCollisions(self.cTrav, self.avatar,
                                               avatarRadius, floorOffset, reach)
+            walkControls.setAirborneHeightFunc(walkControls.getAirborneHeight)
+            self.avatar.physControls = walkControls
             self.controlManager.add(walkControls, "walk")
             self.controlManager.use("walk", self)
 
@@ -804,8 +815,11 @@ class LevelEditor(NodePath, DirectObject):
                 OTPGlobals.ToonReverseSpeed,
                 OTPGlobals.ToonRotateSpeed
                 )
+            #self.controlManager.enableAvatarJump()
         else:
             self.controlManager.enable()
+
+        self.avatar.setSpeed(OTPGlobals.ToonForwardSpeed, OTPGlobals.ToonRotateSpeed)
 
         self.avatarAnimTask = taskMgr.add(self.avatarAnimate, 'avatarAnimTask', 24)
         self.avatar.startUpdateSmartCamera()
@@ -820,22 +834,53 @@ class LevelEditor(NodePath, DirectObject):
     #--------------------------------------------------------------------------
     def avatarAnimate(self,task=None):
         if (self.controlManager):
-            moving = self.controlManager.currentControls.speed or self.controlManager.currentControls.slideSpeed or self.controlManager.currentControls.rotationSpeed
-            if (moving and
-                self.avatarMoving == 0):
-                self.clearPageUpDown()
-                # moving, play walk anim
-                if (self.controlManager.currentControls.speed < 0 or
-                    self.controlManager.currentControls.rotationSpeed):
-                    self.avatar.robot.loop('walk')
+            #moving = self.controlManager.currentControls.speed or self.controlManager.currentControls.slideSpeed or self.controlManager.currentControls.rotationSpeed
+            #if (moving and
+            #    self.avatarMoving == 0):
+            #    self.clearPageUpDown()
+            #    # moving, play walk anim
+            #    if (self.controlManager.currentControls.speed < 0):
+            #        self.avatar.setPlayRate(-1, 'walk')
+            #        self.avatar.loop('walk')
+            #    elif self.controlManager.currentControls.rotationSpeed:
+            #        self.avatar.setPlayRate(1, 'walk')
+            #        self.avatar.loop('walk')
+            #    elif self.controlManager.getIsAirborne():
+            #        self.avatar.loop('')
+            #    else:
+            #        self.avatar.loop('run')
+            #    self.avatarMoving = 1
+            #elif (moving == 0 and
+            #      self.avatarMoving == 1):
+            #    # no longer moving, play neutral anim
+            #    self.avatar.loop('neutral')
+            #    self.avatarMoving = 0
+            anim = 'neutral'
+            if self.controlManager.getIsAirborne():
+                if self.controlManager.currentControls.speed != 0:
+                    if anim == 'jump-idle':
+                        pass
+                    else:
+                        anim = 'running-jump-idle'
                 else:
-                    self.avatar.robot.loop('run')
-                self.avatarMoving = 1
-            elif (moving == 0 and
-                  self.avatarMoving == 1):
-                # no longer moving, play neutral anim
-                self.avatar.robot.loop('neutral')
-                self.avatarMoving = 0
+                    if anim == 'running-jump-idle':
+                        pass
+                    else:
+                        anim = 'jump-idle'
+            elif self.controlManager.currentControls.speed > 0:
+                anim = 'run'
+            elif self.controlManager.currentControls.speed < 0:
+                anim = 'walk'
+                self.avatar.setPlayRate(-1, 'walk')
+            elif self.controlManager.currentControls.rotationSpeed:
+                anim = 'walk'
+                self.avatar.setPlayRate(1, 'walk')
+            else:
+                anim = 'neutral'
+            if self.avatar.getCurrentAnim() == anim:
+                pass
+            else:
+                self.avatar.loop(anim)
         return Task.cont
 
     def configureDriveModeCollisionData(self):
@@ -5569,9 +5614,9 @@ class VisGroupsEditor(Pmw.MegaToplevel):
             self.balloon.configure(state = 'none')
 
 # [gjeon] for LevelEditor specific Avatar
-class LEAvatar(LocalAvatar.LocalAvatar):
+class LEAvatar(LocalToon.LocalToon):
     def __init__(self, cr, chatMgr, chatAssistant, passMessagesThrough = False):
-        LocalAvatar.LocalAvatar.__init__(self,  cr, chatMgr, chatAssistant, passMessagesThrough)
+        LocalToon.LocalToon.__init__(self,  cr)
 
     def getAutoRun(self):
         return 0

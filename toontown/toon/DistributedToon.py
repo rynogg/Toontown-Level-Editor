@@ -53,8 +53,6 @@ from toontown.distributed import DelayDelete
 from otp.otpbase import OTPLocalizer
 import random
 import copy
-if base.wantKarts:
-    from toontown.racing.KartDNA import *
 if (__debug__):
     import pdb
 
@@ -111,9 +109,6 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         self.savedCheesyEffect = CENormal
         self.savedCheesyHoodId = 0
         self.savedCheesyExpireTime = 0
-        if hasattr(base, 'wantPets') and base.wantPets:
-            self.petTrickPhrases = []
-            self.petDNA = None
         self.customMessages = []
         self.resistanceMessages = []
         self.cogSummonsEarned = []
@@ -161,8 +156,6 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         self.bFishBingoTutorialDone = False
         self.bFishBingoMarkTutorialDone = False
         self.accessories = []
-        if base.wantKarts:
-            self.kartDNA = [-1] * getNumFields()
         self.flowerCollection = None
         self.shovel = 0
         self.shovelSkill = 0
@@ -265,16 +258,16 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
         Toon.Toon.setDNAString(self, dnaString)
 
     def setDNA(self, dna):
-        if base.cr.newsManager:
-            if base.cr.newsManager.isHolidayRunning(ToontownGlobals.SPOOKY_BLACK_CAT):
-                black = 26
-                heads = ['cls',
-                 'css',
-                 'csl',
-                 'cll']
-                dna.setTemporary(random.choice(heads), black, black, black)
-            else:
-                dna.restoreTemporary(self.style)
+        #if base.cr.newsManager:
+        #    if base.cr.newsManager.isHolidayRunning(ToontownGlobals.SPOOKY_BLACK_CAT):
+        #        black = 26
+        #        heads = ['cls',
+        #         'css',
+        #         'csl',
+        #         'cll']
+        #        dna.setTemporary(random.choice(heads), black, black, black)
+        #    else:
+        #        dna.restoreTemporary(self.style)
         oldHat = self.getHat()
         oldGlasses = self.getGlasses()
         oldBackpack = self.getBackpack()
@@ -1583,203 +1576,6 @@ class DistributedToon(DistributedPlayer.DistributedPlayer, Toon.Toon, Distribute
 
     def getShadowJoint(self):
         return Toon.Toon.getShadowJoint(self)
-
-    if base.wantKarts:
-
-        def hasKart(self):
-            return self.kartDNA[KartDNA.bodyType] != -1
-
-        def getKartDNA(self):
-            return self.kartDNA
-
-        def setTickets(self, numTickets):
-            self.tickets = numTickets
-
-        def getTickets(self):
-            return self.tickets
-
-        def getAccessoryByType(self, accType):
-            return self.kartDNA[accType]
-
-        def setCurrentKart(self, avId):
-            self.kartId = avId
-
-        def releaseKart(self):
-            self.kartId = None
-            return
-
-        def setKartBodyType(self, bodyType):
-            self.kartDNA[KartDNA.bodyType] = bodyType
-
-        def getKartBodyType(self):
-            return self.kartDNA[KartDNA.bodyType]
-
-        def setKartBodyColor(self, bodyColor):
-            self.kartDNA[KartDNA.bodyColor] = bodyColor
-
-        def getKartBodyColor(self):
-            return self.kartDNA[KartDNA.bodyColor]
-
-        def setKartAccessoryColor(self, accColor):
-            self.kartDNA[KartDNA.accColor] = accColor
-
-        def getKartAccessoryColor(self):
-            return self.kartDNA[KartDNA.accColor]
-
-        def setKartEngineBlockType(self, ebType):
-            self.kartDNA[KartDNA.ebType] = ebType
-
-        def getKartEngineBlockType(self):
-            return self.kartDNA[KartDNA.ebType]
-
-        def setKartSpoilerType(self, spType):
-            self.kartDNA[KartDNA.spType] = spType
-
-        def getKartSpoilerType(self):
-            return self.kartDNA[KartDNA.spType]
-
-        def setKartFrontWheelWellType(self, fwwType):
-            self.kartDNA[KartDNA.fwwType] = fwwType
-
-        def getKartFrontWheelWellType(self):
-            return self.kartDNA[KartDNA.fwwType]
-
-        def setKartBackWheelWellType(self, bwwType):
-            self.kartDNA[KartDNA.bwwType] = bwwType
-
-        def getKartBackWheelWellType(self):
-            return self.kartDNA[KartDNA.bwwType]
-
-        def setKartRimType(self, rimsType):
-            self.kartDNA[KartDNA.rimsType] = rimsType
-
-        def setKartDecalType(self, decalType):
-            self.kartDNA[KartDNA.decalType] = decalType
-
-        def getKartDecalType(self):
-            return self.kartDNA[KartDNA.decalType]
-
-        def getKartRimType(self):
-            return self.kartDNA[KartDNA.rimsType]
-
-        def setKartAccessoriesOwned(self, accessories):
-            while len(accessories) < 16:
-                accessories.append(-1)
-
-            self.accessories = accessories
-
-        def getKartAccessoriesOwned(self):
-            owned = copy.deepcopy(self.accessories)
-            while InvalidEntry in owned:
-                owned.remove(InvalidEntry)
-
-            return owned
-
-        def requestKartDNAFieldUpdate(self, dnaField, fieldValue):
-            self.notify.debug('requestKartDNAFieldUpdate - dnaField %s, fieldValue %s' % (dnaField, fieldValue))
-            self.sendUpdate('updateKartDNAField', [dnaField, fieldValue])
-
-        def requestAddOwnedAccessory(self, accessoryId):
-            self.notify.debug('requestAddOwnedAccessor - purchased accessory %s' % accessoryId)
-            self.sendUpdate('addOwnedAccessory', [accessoryId])
-
-        def requestRemoveOwnedAccessory(self, accessoryId):
-            self.notify.debug('requestRemoveOwnedAccessor - removed accessory %s' % accessoryId)
-            self.sendUpdate('removeOwnedAccessory', [accessoryId])
-
-        def setKartingTrophies(self, trophyList):
-            self.kartingTrophies = trophyList
-
-        def getKartingTrophies(self):
-            return self.kartingTrophies
-
-        def setKartingHistory(self, history):
-            self.kartingHistory = history
-
-        def getKartingHistory(self):
-            return self.kartingHistory
-
-        def setKartingPersonalBest(self, bestTimes):
-            self.kartingPersonalBest = bestTimes
-
-        def getKartingPersonalBest(self):
-            return self.kartingPersonalBest
-
-        def setKartingPersonalBest2(self, bestTimes2):
-            self.kartingPersonalBest2 = bestTimes2
-
-        def getKartingPersonalBest2(self):
-            return self.kartingPersonalBest2
-
-        def getKartingPersonalBestAll(self):
-            return self.kartingPersonalBest + self.kartingPersonalBest2
-
-    if hasattr(base, 'wantPets') and base.wantPets:
-
-        def setPetId(self, petId):
-            self.petId = petId
-            if petId == 0:
-                self.petDNA = None
-            elif self.isLocal():
-                base.cr.addPetToFriendsMap()
-            return
-
-        def getPetId(self):
-            return self.petId
-
-        def getPetId(self):
-            return self.petId
-
-        def hasPet(self):
-            return self.petId != 0
-
-        def b_setPetTutorialDone(self, bDone):
-            self.d_setPetTutorialDone(bDone)
-            self.setPetTutorialDone(bDone)
-
-        def d_setPetTutorialDone(self, bDone):
-            self.sendUpdate('setPetTutorialDone', [bDone])
-
-        def setPetTutorialDone(self, bDone):
-            self.bPetTutorialDone = bDone
-
-        def b_setFishBingoTutorialDone(self, bDone):
-            self.d_setFishBingoTutorialDone(bDone)
-            self.setFishBingoTutorialDone(bDone)
-
-        def d_setFishBingoTutorialDone(self, bDone):
-            self.sendUpdate('setFishBingoTutorialDone', [bDone])
-
-        def setFishBingoTutorialDone(self, bDone):
-            self.bFishBingoTutorialDone = bDone
-
-        def b_setFishBingoMarkTutorialDone(self, bDone):
-            self.d_setFishBingoMarkTutorialDone(bDone)
-            self.setFishBingoMarkTutorialDone(bDone)
-
-        def d_setFishBingoMarkTutorialDone(self, bDone):
-            self.sendUpdate('setFishBingoMarkTutorialDone', [bDone])
-
-        def setFishBingoMarkTutorialDone(self, bDone):
-            self.bFishBingoMarkTutorialDone = bDone
-
-        def b_setPetMovie(self, petId, flag):
-            self.d_setPetMovie(petId, flag)
-            self.setPetMovie(petId, flag)
-
-        def d_setPetMovie(self, petId, flag):
-            self.sendUpdate('setPetMovie', [petId, flag])
-
-        def setPetMovie(self, petId, flag):
-            pass
-
-        def lookupPetDNA(self):
-            if self.petId and not self.petDNA:
-                from toontown.pets import PetDetail
-                PetDetail.PetDetail(self.petId, self.__petDetailsLoaded)
-
-        def __petDetailsLoaded(self, pet):
-            self.petDNA = pet.style
 
     def trickOrTreatTargetMet(self, beanAmount):
         if self.effect:
