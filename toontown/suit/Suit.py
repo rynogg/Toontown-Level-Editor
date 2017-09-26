@@ -169,7 +169,7 @@ HeadModelDict = {'a': ('/models/char/suitA-', 4),
  'c': ('/models/char/suitC-', 3.5)}
 
 def loadTutorialSuit():
-    loader.loadModelNode('phase_3.5/models/char/suitC-mod')
+    loader.loadModelNode('phase_3.5/models/char/suitC-mod.bam')
     loadDialog(1)
 
 
@@ -192,20 +192,20 @@ def loadSuitModelsAndAnims(level, flag = 0):
             headModel, headPhase = ModelDict[key]
         if flag:
             if base.config.GetBool('want-new-cogs', 0):
-                filepath = 'phase_3.5' + model + 'zero'
+                filepath = 'phase_3.5' + model + 'zero.bam'
                 if cogExists(model + 'zero.bam'):
                     loader.loadModelNode(filepath)
             else:
-                loader.loadModelNode('phase_3.5' + model + 'mod')
-            loader.loadModelNode('phase_' + str(headPhase) + headModel + 'heads')
+                loader.loadModelNode('phase_3.5' + model + 'mod.bam')
+            loader.loadModelNode('phase_' + str(headPhase) + headModel + 'heads.bam')
         else:
             if base.config.GetBool('want-new-cogs', 0):
-                filepath = 'phase_3.5' + model + 'zero'
+                filepath = 'phase_3.5' + model + 'zero.bam'
                 if cogExists(model + 'zero.bam'):
                     loader.unloadModel(filepath)
             else:
-                loader.unloadModel('phase_3.5' + model + 'mod')
-            loader.unloadModel('phase_' + str(headPhase) + headModel + 'heads')
+                loader.unloadModel('phase_3.5' + model + 'mod.bam')
+            loader.unloadModel('phase_' + str(headPhase) + headModel + 'heads.bam')
 
 
 def cogExists(filePrefix):
@@ -620,11 +620,11 @@ class Suit(Avatar.Avatar):
         filePrefix, bodyPhase = ModelDict[self.style.body]
         if base.config.GetBool('want-new-cogs', 0):
             if cogExists(filePrefix + 'zero.bam'):
-                self.loadModel('phase_3.5' + filePrefix + 'zero')
+                self.loadModel('phase_3.5' + filePrefix + 'zero.bam')
             else:
-                self.loadModel('phase_3.5' + filePrefix + 'mod')
+                self.loadModel('phase_3.5' + filePrefix + 'mod.bam')
         else:
-            self.loadModel('phase_3.5' + filePrefix + 'mod')
+            self.loadModel('phase_3.5' + filePrefix + 'mod.bam')
         self.loadAnims(animDict)
         self.setSuitClothes()
 
@@ -646,17 +646,17 @@ class Suit(Avatar.Avatar):
 
         if not base.config.GetBool('want-new-cogs', 0):
             if self.style.body == 'a':
-                animDict['neutral'] = 'phase_4/models/char/suitA-neutral'
+                animDict['neutral'] = 'phase_4/models/char/suitA-neutral.bam'
                 for anim in SuitsCEOBattle:
                     animDict[anim[0]] = 'phase_12/models/char/suitA-' + anim[1]
 
             elif self.style.body == 'b':
-                animDict['neutral'] = 'phase_4/models/char/suitB-neutral'
+                animDict['neutral'] = 'phase_4/models/char/suitB-neutral.bam'
                 for anim in SuitsCEOBattle:
                     animDict[anim[0]] = 'phase_12/models/char/suitB-' + anim[1]
 
             elif self.style.body == 'c':
-                animDict['neutral'] = 'phase_3.5/models/char/suitC-neutral'
+                animDict['neutral'] = 'phase_3.5/models/char/suitC-neutral.bam'
                 for anim in SuitsCEOBattle:
                     animDict[anim[0]] = 'phase_12/models/char/suitC-' + anim[1]
 
@@ -763,7 +763,7 @@ class Suit(Avatar.Avatar):
             filePrefix, phase = HeadModelDict[self.style.body]
         else:
             filePrefix, phase = ModelDict[self.style.body]
-        headModel = loader.loadModel('phase_' + str(phase) + filePrefix + 'heads')
+        headModel = loader.loadModel('phase_' + str(phase) + filePrefix + 'heads.bam')
         headReferences = headModel.findAllMatches('**/' + headType)
         for i in range(0, headReferences.getNumPaths()):
             if base.config.GetBool('want-new-cogs', 0):
@@ -804,7 +804,7 @@ class Suit(Avatar.Avatar):
         tie.setTexture(tieTex, 1)
 
     def generateCorporateMedallion(self):
-        icons = loader.loadModel('phase_3/models/gui/cog_icons')
+        icons = loader.loadModel('phase_3/models/gui/cog_icons.bam')
         dept = self.style.dept
         if base.config.GetBool('want-new-cogs', 0):
             chestNull = self.find('**/def_joint_attachMeter')
@@ -826,7 +826,7 @@ class Suit(Avatar.Avatar):
 
     def generateHealthBar(self):
         self.removeHealthBar()
-        model = loader.loadModel('phase_3.5/models/gui/matching_game_gui')
+        model = loader.loadModel('phase_3.5/models/gui/matching_game_gui.bam')
         button = model.find('**/minnieCircle')
         button.setScale(3.0)
         button.setH(180.0)
@@ -915,8 +915,8 @@ class Suit(Avatar.Avatar):
         if self.loseActor == None:
             if not self.isSkeleton:
                 filePrefix, phase = TutorialModelDict[self.style.body]
-                loseModel = 'phase_' + str(phase) + filePrefix + 'lose-mod'
-                loseAnim = 'phase_' + str(phase) + filePrefix + 'lose'
+                loseModel = 'phase_' + str(phase) + filePrefix + 'lose-mod.bam'
+                loseAnim = 'phase_' + str(phase) + filePrefix + 'lose.bam'
                 self.loseActor = Actor.Actor(loseModel, {'lose': loseAnim})
                 loseNeck = self.loseActor.find('**/joint_head')
                 for part in self.headParts:
@@ -927,9 +927,9 @@ class Suit(Avatar.Avatar):
                 else:
                     self.setSuitClothes(self.loseActor)
             else:
-                loseModel = 'phase_5/models/char/cog' + string.upper(self.style.body) + '_robot-lose-mod'
+                loseModel = 'phase_5/models/char/cog' + string.upper(self.style.body) + '_robot-lose-mod.bam'
                 filePrefix, phase = TutorialModelDict[self.style.body]
-                loseAnim = 'phase_' + str(phase) + filePrefix + 'lose'
+                loseAnim = 'phase_' + str(phase) + filePrefix + 'lose.bam'
                 self.loseActor = Actor.Actor(loseModel, {'lose': loseAnim})
                 self.generateCorporateTie(self.loseActor)
         self.loseActor.setScale(self.scale)

@@ -2709,8 +2709,8 @@ class RobotToon(Avatar.Avatar, ToonHead):
     def putOnSuit(self, suitType, setDisplayName = True, rental = False):
         if self.isDisguised:
             self.takeOffSuit()
-        if launcher and not launcher.getPhaseComplete(5):
-            return
+        #if launcher and not launcher.getPhaseComplete(5):
+        #    return
         from toontown.suit import Suit
         deptIndex = suitType
         suit = Suit.Suit()
@@ -2777,17 +2777,17 @@ class RobotToon(Avatar.Avatar, ToonHead):
         self.suit.loop('neutral')
         self.isDisguised = 1
         self.setFont(ToontownGlobals.getSuitFont())
-        if setDisplayName:
-            if hasattr(base, 'idTags') and base.idTags:
-                name = self.getAvIdName()
-            else:
-                name = self.getName()
-            suitDept = SuitDNA.suitDepts.index(SuitDNA.getSuitDept(suitType))
-            suitName = SuitBattleGlobals.SuitAttributes[suitType]['name']
-            self.nametag.setDisplayName(TTLocalizer.SuitBaseNameWithLevel % {'name': name,
-             'dept': suitName,
-             'level': self.cogLevels[suitDept] + 1})
-            self.nametag.setNameWordwrap(9.0)
+        #if setDisplayName:
+        #    if hasattr(base, 'idTags') and base.idTags:
+        #        name = self.getAvIdName()
+        #    else:
+        #        name = self.getName()
+        #    suitDept = SuitDNA.suitDepts.index(SuitDNA.getSuitDept(suitType))
+        #    suitName = SuitBattleGlobals.SuitAttributes[suitType]['name']
+        #    self.nametag.setDisplayName(TTLocalizer.SuitBaseNameWithLevel % {'name': name,
+        #     'dept': suitName,
+        #     'level': self.cogLevels[suitDept] + 1})
+        #    self.nametag.setNameWordwrap(9.0)
 
     def takeOffSuit(self):
         if not self.isDisguised:

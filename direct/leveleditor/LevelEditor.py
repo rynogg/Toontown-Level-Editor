@@ -710,8 +710,10 @@ class LevelEditor(NodePath, DirectObject):
             self.avatar.robot = RobotToon.RobotToon()
             self.avatar.robot.reparentTo(self.avatar)
             self.avatar.setHeight(self.avatar.robot.getHeight())
-            self.avatar.robot.setDNAString('t\x01\x01\x01\x01\x03\x03\x03\x03\x07\x02\x11\x00\x11\x11')
-            self.avatar.setName("Flippy")
+            #self.avatar.robot.setDNAString('t\x01\x01\x01\x01\x03\x03\x03\x03\x07\x02\x11\x00\x11\x11')
+            self.avatar.robot.setDNAString('t\x0E\x02\x01\x01\x11\x00\x00\x00\x05\x04\x0C\x00\x0C\x0C')
+            self.avatar.setName("Ryno")
+            #self.avatar.robot.putOnSuit(suitType='p')
             #self.avatar.robot.loop('neutral')
 
         self.avatar.setPos(base.camera.getPos())
